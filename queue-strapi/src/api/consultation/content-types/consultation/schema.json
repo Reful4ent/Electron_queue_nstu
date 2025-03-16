@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "consultations",
+  "info": {
+    "singularName": "consultation",
+    "pluralName": "consultations",
+    "displayName": "Консультации",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "dateOfStart": {
+      "type": "datetime",
+      "required": true
+    },
+    "dateOfEnd": {
+      "type": "datetime",
+      "required": true
+    },
+    "recordedStudents": {
+      "displayName": "recordedStudents",
+      "type": "component",
+      "repeatable": true,
+      "component": "recorded-students.recorded-students"
+    },
+    "discipline": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::discipline.discipline",
+      "inversedBy": "consultations"
+    },
+    "employee": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::employee.employee",
+      "inversedBy": "consultations"
+    },
+    "duration": {
+      "type": "string"
+    }
+  }
+}

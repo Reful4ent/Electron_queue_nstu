@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_recorded_students_recorded_students",
+  "info": {
+    "displayName": "recordedStudents",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "student": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "dateStartConsultation": {
+      "type": "datetime"
+    },
+    "dateEndConsultation": {
+      "type": "datetime"
+    }
+  }
+}
