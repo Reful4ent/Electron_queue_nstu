@@ -1,10 +1,14 @@
+import {useRoutes} from "react-router-dom";
+import {router} from "./router/router/router.tsx";
+import './App.scss'
+import {AuthProvider} from "./context/AuthProvider/AuthProvider.tsx";
+
 function App() {
   return (
     <>
-
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+        <AuthProvider>
+          { useRoutes(router) }
+        </AuthProvider>
     </>
   )
 }

@@ -1,0 +1,1 @@
+export const routeURL = 'http://localhost:1337/api'
