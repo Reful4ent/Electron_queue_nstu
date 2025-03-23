@@ -526,6 +526,7 @@ export interface ApiFacultyFaculty extends Struct.CollectionTypeSchema {
 export interface ApiGroupGroup extends Struct.CollectionTypeSchema {
   collectionName: 'groups';
   info: {
+    description: '';
     displayName: '\u0413\u0440\u0443\u043F\u043F\u044B';
     pluralName: 'groups';
     singularName: 'group';
@@ -1092,6 +1093,7 @@ export interface PluginUsersPermissionsUser
         minLength: 6;
       }>;
     employee: Schema.Attribute.Relation<'oneToOne', 'api::employee.employee'>;
+    fio: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

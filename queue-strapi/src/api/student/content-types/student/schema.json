@@ -23,15 +23,15 @@
       "target": "api::faculty.faculty",
       "inversedBy": "students"
     },
+    "fio": {
+      "type": "string",
+      "required": true
+    },
     "group": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::group.group",
       "inversedBy": "students"
-    },
-    "fio": {
-      "type": "string",
-      "required": true
     }
   }
 }

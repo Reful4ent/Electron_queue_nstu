@@ -23,12 +23,6 @@
       "target": "api::faculty.faculty",
       "inversedBy": "employees"
     },
-    "groups": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::group.group",
-      "inversedBy": "employees"
-    },
     "consultations": {
       "type": "relation",
       "relation": "oneToMany",
@@ -46,6 +40,12 @@
     "fio": {
       "type": "string",
       "required": true
+    },
+    "groups": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::group.group",
+      "inversedBy": "employees"
     }
   }
 }

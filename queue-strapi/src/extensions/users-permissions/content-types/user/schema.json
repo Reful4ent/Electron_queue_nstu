@@ -76,6 +76,10 @@
       "relation": "oneToOne",
       "target": "api::employee.employee",
       "inversedBy": "user"
+    },
+    "fio": {
+      "type": "string",
+      "required": true
     }
   }
 }

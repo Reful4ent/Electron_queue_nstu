@@ -1,9 +1,9 @@
-import {FC, useCallback, useState} from "react";
+import {FC, useCallback, useEffect, useState} from "react";
 import {Button, ConfigProvider, Form, Input, Select, Typography} from "antd";
 import {Link, useNavigate} from "react-router-dom";
-import {useAuth} from "../../app/context/AuthProvider/context.ts";
+import {useAuth} from "../../app/context/AuthProvider/context";
 import axios from "axios";
-import {routeURL} from "../../shared/api/route.ts";
+import {routeURL} from "../../shared/api/route";
 import './RegistrationPage.scss'
 
 const ROLES = [
@@ -12,25 +12,75 @@ const ROLES = [
     { label: 'Студент-Сотрудник', value: 'StudentEmployee'},
 ]
 
+export interface IFaculty {
+    title: string;
+    id: number;
+    specialities: {
+        title: string;
+        id: number;
+        groups: {
+            id: number;
+            title: string;
+        }[]
+    }[];
+}
+
 export const RegistrationPage: FC = () => {
     const auth = useAuth();
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const [error, setError] = useState<string | null>('')
+    const [selectedRole, setSelectedRole] = useState<string>('')
+    const [faculties, setFaculties] = useState<IFaculty[] | null>([])
+    const [selectedFacultyID, setSelectedFacultyID] = useState<number | null>();
+    const [selectedSpecialityID, setSelectedSpecialityID] = useState<number | null>();
+    const [selectedGroupID, setSelectedGroupID] = useState<number | null>();
 
     const registerMe = useCallback( async () => {
-        setError('')
-        try {
-            const response = await axios.post(`${routeURL}/auth/local`,{
-                identifier: form.getFieldValue('email'),
+        try{
+            const response = await axios.post(`${routeURL}/auth/local/register`,{
+                username: form.getFieldValue('email'),
+                email: form.getFieldValue('email'),
                 password: form.getFieldValue('password'),
+                fio: `${form.getFieldValue('surname')} ${form.getFieldValue('name')} ${form.getFieldValue('lastname')}`,
+                roleID: 14,
+                faculty: selectedFacultyID,
+                speciality: selectedSpecialityID,
+                group: form.getFieldValue('group'),
             })
             auth?.setJwt(response?.data.jwt);
-            navigate('/home')
         } catch (error) {
-            setError('Неправильный логин или пароль')
+            setError('Пользователь уже зарегистрирован!')
         }
     },[])
+
+    const getFaculties = useCallback(async () => {
+        const facultiesData = await axios.get(
+            `${routeURL}/faculties?populate[specialities][populate][groups][populate]=*`
+        )
+        setFaculties(facultiesData?.data?.data?.map((faculty: any) => ({
+            id: faculty.id,
+            title: faculty.title,
+            specialities: faculty?.specialities.map((speciality: any) => ({
+                id: speciality.id,
+                title: speciality.title,
+                groups: speciality?.groups?.map((group: any) => ({
+                    id: group.id,
+                    title: group.title,
+                }))
+            }))
+        })))
+    },[])
+
+    useEffect(() => {
+        console.log(selectedFacultyID)
+    }, [selectedFacultyID]);
+
+    useEffect(() => {
+        getFaculties();
+    }, []);
+
+
 
     return(
         <ConfigProvider
@@ -75,8 +125,71 @@ export const RegistrationPage: FC = () => {
                     <Form.Item
                         name={'role'}
                     >
-                        <Select options={ROLES} className={'input'}/>
+                        <Select
+                            options={ROLES}
+                            className={'input'}
+                            onSelect={(value) => setSelectedRole(value)}
+                            showSearch
+                            filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                        />
                     </Form.Item>
+                    {selectedRole == 'Student' &&
+                        <>
+                            <Form.Item
+                                name={'faculty'}
+                            >
+                                <Select
+                                    showSearch
+                                    options={faculties?.map((faculty) => ({label: faculty.title, value: faculty.id}))}
+                                    className={'input'}
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
+                                    onSelect={(value) => setSelectedFacultyID(value)}
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name={'speciality'}
+                            >
+                                <Select
+                                    showSearch
+                                    options={
+                                        faculties
+                                            ?.find((faculty) => faculty.id == selectedFacultyID)
+                                            ?.specialities
+                                                ?.map((speciality) => ({label: speciality.title, value: speciality.id}))
+                                    }
+                                    className={'input'}
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
+                                    onSelect={(value) => setSelectedSpecialityID(value)}
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name={'group'}
+                            >
+                                <Select
+                                    showSearch
+                                    options={
+                                        faculties
+                                            ?.find((faculty) => faculty.id == selectedFacultyID)
+                                            ?.specialities
+                                                ?.find((speciality) => speciality.id == selectedSpecialityID)
+                                                ?.groups
+                                                    ?.map((group) => ({label: group.title, value: group.id}))
+                                    }
+                                    className={'input'}
+                                    filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
+                                    onSelect={(value) => setSelectedGroupID(value)}
+                                />
+                            </Form.Item>
+                        </>
+                    }
                     <Form.Item
                         name={'email'}
                         rules={[{required: true, message: "Введите почту!"}]}
