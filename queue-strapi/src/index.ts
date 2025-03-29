@@ -31,8 +31,7 @@ export default {
        */
       async afterCreate(event: any) {
         const { result, params } = event;
-        console.log(event.result)
-
+        console.log(event)
         await strapi.documents("plugin::users-permissions.user").update({
           documentId: event.result.documentId,
           data: {
@@ -42,14 +41,45 @@ export default {
           }
         })
 
-        await strapi.documents('api::student.student').create({
-          data: {
-            faculty: event.params.data.faculty,
-            user: event.result.id,
-            fio: event.params.data.fio,
-            group: event.params.data.group
-          }
-        })
+        if(event?.params?.data?.roleID == 14) {
+          await strapi.documents('api::student.student').create({
+            data: {
+              faculty: event.params.data.faculty,
+              user: event.result.id,
+              fio: event.params.data.fio,
+              group: event.params.data.group
+            }
+          })
+        } else if (event?.params?.data?.roleID == 15) {
+          await strapi.documents('api::employee.employee').create({
+            data: {
+              faculties: event.params.data.faculties,
+              user: event.result.id,
+              fio: event.params.data.fio,
+              groups: event.params.data.groups,
+              subRole: event.params.data.subRole
+            }
+          })
+        } else if (event?.params?.data?.roleID == 16) {
+          await strapi.documents('api::student.student').create({
+            data: {
+              faculty: event.params.data.faculty,
+              user: event.result.id,
+              fio: event.params.data.fio,
+              group: event.params.data.group
+            }
+          })
+
+          await strapi.documents('api::employee.employee').create({
+            data: {
+              faculties: event.params.data.faculties,
+              user: event.result.id,
+              fio: event.params.data.fio,
+              groups: event.params.data.groups,
+              subRole: event.params.data.subRole
+            }
+          })
+        }
         //console.log(event);
       },
 

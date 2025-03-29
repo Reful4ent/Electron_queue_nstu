@@ -5,25 +5,63 @@ import {useAuth} from "../../app/context/AuthProvider/context";
 import axios from "axios";
 import {routeURL} from "../../shared/api/route";
 import './RegistrationPage.scss'
+import {
+    RegistrationStudentPart
+} from "../../entities/RegistrationForm/RegistrationStudentPart/RegistrationStudentPart.tsx";
+import {
+    RegistrationEmployeePart
+} from "../../entities/RegistrationForm/RegistrationEmployeePart/RegistrationEmployeePart.tsx";
 
-const ROLES = [
-    { label: 'Студент', value: 'Student'},
-    { label: 'Сотрудник', value: 'Employee'},
-    { label: 'Студент-Сотрудник', value: 'StudentEmployee'},
+export interface OptionsType {
+    label: string;
+    value: number | string;
+}
+
+const ROLES_OPTIONS: OptionsType[] = [
+    { label: 'Студент', value: 'Student' },
+    { label: 'Сотрудник', value: 'Employee' },
+    { label: 'Студент-Сотрудник', value: 'StudentEmployee' },
 ]
+
+const SUBROLES_OPTIONS: OptionsType[] = [
+    { label: 'Преподаватель', value: 'LECTURER' },
+    { label: 'Сотрудник деканата', value: 'DEPUTY_DEAN' },
+    { label: 'Инспектор', value: 'INSPECTOR' },
+]
+
+export interface IGroup {
+    id: number;
+    title: string;
+}
+
+export interface ISpeciality {
+    title: string;
+    id: number;
+    groups: IGroup[]
+}
 
 export interface IFaculty {
     title: string;
     id: number;
-    specialities: {
-        title: string;
-        id: number;
-        groups: {
-            id: number;
-            title: string;
-        }[]
-    }[];
+    specialities: ISpeciality[];
 }
+
+export interface IUserRegistration {
+    username: string;
+    email: string;
+    password: string;
+    fio: string;
+    roleID?: number | null,
+    faculty?: number | null,
+    speciality?: number | null,
+    group?: number | null,
+    faculties?: number[] | null,
+    specialities?: number[] | null,
+    groups?: number[] | null,
+    subRole?: string | null,
+}
+
+
 
 export const RegistrationPage: FC = () => {
     const auth = useAuth();
@@ -32,27 +70,59 @@ export const RegistrationPage: FC = () => {
     const [error, setError] = useState<string | null>('')
     const [selectedRole, setSelectedRole] = useState<string>('')
     const [faculties, setFaculties] = useState<IFaculty[] | null>([])
-    const [selectedFacultyID, setSelectedFacultyID] = useState<number | null>();
-    const [selectedSpecialityID, setSelectedSpecialityID] = useState<number | null>();
-    const [selectedGroupID, setSelectedGroupID] = useState<number | null>();
+    const [specialities, setSpecialities] = useState<ISpeciality[] | null>([])
+    const [specialitiesOptions, setSpecialitiesOptions] = useState<OptionsType[]>([])
+    const [groupsOptions, setGroupsOptions] = useState<OptionsType[]>([])
+    const [specialitiesStudent, setSpecialitiesStudent] = useState<ISpeciality[] | null>([])
+    const [specialitiesStudentOptions, setSpecialitiesStudentOptions] = useState<OptionsType[]>([])
+    const [groupsStudentOptions, setGroupsStudentOptions] = useState<OptionsType[]>([])
 
-    const registerMe = useCallback( async () => {
-        try{
-            const response = await axios.post(`${routeURL}/auth/local/register`,{
+
+    const registerMe = useCallback(async () => {
+        try {
+            let data: IUserRegistration = {
                 username: form.getFieldValue('email'),
                 email: form.getFieldValue('email'),
                 password: form.getFieldValue('password'),
                 fio: `${form.getFieldValue('surname')} ${form.getFieldValue('name')} ${form.getFieldValue('lastname')}`,
-                roleID: 14,
-                faculty: selectedFacultyID,
-                speciality: selectedSpecialityID,
-                group: form.getFieldValue('group'),
-            })
+            };
+            if (form.getFieldValue('role') == 'Student') {
+                data = {
+                    ...data,
+                    roleID: 14,
+                    faculty: form.getFieldValue('faculty'),
+                    speciality: form.getFieldValue('speciality'),
+                    group: form.getFieldValue('group'),
+                };
+            } else if (form.getFieldValue('role') == 'Employee') {
+                data = {
+                    ...data,
+                    roleID: 15,
+                    faculties: form.getFieldValue('faculties'),
+                    specialities: form.getFieldValue('specialities'),
+                    groups: form.getFieldValue('groups'),
+                    subRole: form.getFieldValue('subRole')
+                };
+            } else if (form.getFieldValue('role') == 'StudentEmployee') {
+                data = {
+                    ...data,
+                    roleID: 16,
+                    faculty: form.getFieldValue('faculty'),
+                    speciality: form.getFieldValue('speciality'),
+                    group: form.getFieldValue('group'),
+                    faculties: form.getFieldValue('faculties'),
+                    specialities: form.getFieldValue('specialities'),
+                    groups: form.getFieldValue('groups'),
+                    subRole: form.getFieldValue('subRole')
+                }
+            }
+            const response = await axios.post(`${routeURL}/auth/local/register`, data)
             auth?.setJwt(response?.data.jwt);
+            navigate('/home')
         } catch (error) {
             setError('Пользователь уже зарегистрирован!')
         }
-    },[])
+    }, [])
 
     const getFaculties = useCallback(async () => {
         const facultiesData = await axios.get(
@@ -70,23 +140,18 @@ export const RegistrationPage: FC = () => {
                 }))
             }))
         })))
-    },[])
-
-    useEffect(() => {
-        console.log(selectedFacultyID)
-    }, [selectedFacultyID]);
+    }, [])
 
     useEffect(() => {
         getFaculties();
     }, []);
 
 
-
-    return(
+    return (
         <ConfigProvider
             theme={{
                 components: {
-                    Button:{
+                    Button: {
                         colorPrimaryHover: '#02a66b',
                         colorPrimaryActive: '#02a66b',
                     },
@@ -126,68 +191,64 @@ export const RegistrationPage: FC = () => {
                         name={'role'}
                     >
                         <Select
-                            options={ROLES}
+                            options={ROLES_OPTIONS}
                             className={'input'}
                             onSelect={(value) => setSelectedRole(value)}
                             showSearch
+                            placeholder={'Роль'}
                             filterOption={(input, option) =>
                                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                             }
                         />
                     </Form.Item>
                     {selectedRole == 'Student' &&
+                        <RegistrationStudentPart
+                            form={form}
+                            faculties={faculties}
+                            specialitiesStudentOptions={specialitiesStudentOptions}
+                            groupsStudentOptions={groupsStudentOptions}
+                            specialitiesStudent={specialitiesStudent}
+                            setSpecialitiesStudentOptions={setSpecialitiesStudentOptions}
+                            setGroupsStudentOptions={setGroupsStudentOptions}
+                            setSpecialitiesStudent={setSpecialitiesStudent}
+                        />
+                    }
+                    {selectedRole == 'Employee' &&
+                        <RegistrationEmployeePart
+                            form={form}
+                            faculties={faculties}
+                            specialities={specialities}
+                            subroleOptions={SUBROLES_OPTIONS}
+                            specialitiesOptions={specialitiesOptions}
+                            groupsOptions={groupsOptions}
+                            setSpecialitiesOptions={setSpecialitiesOptions}
+                            setGroupsOptions={setGroupsOptions}
+                            setSpecialities={setSpecialities}
+                        />
+                    }
+                    {selectedRole == 'StudentEmployee' &&
                         <>
-                            <Form.Item
-                                name={'faculty'}
-                            >
-                                <Select
-                                    showSearch
-                                    options={faculties?.map((faculty) => ({label: faculty.title, value: faculty.id}))}
-                                    className={'input'}
-                                    filterOption={(input, option) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                    }
-                                    onSelect={(value) => setSelectedFacultyID(value)}
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                name={'speciality'}
-                            >
-                                <Select
-                                    showSearch
-                                    options={
-                                        faculties
-                                            ?.find((faculty) => faculty.id == selectedFacultyID)
-                                            ?.specialities
-                                                ?.map((speciality) => ({label: speciality.title, value: speciality.id}))
-                                    }
-                                    className={'input'}
-                                    filterOption={(input, option) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                    }
-                                    onSelect={(value) => setSelectedSpecialityID(value)}
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                name={'group'}
-                            >
-                                <Select
-                                    showSearch
-                                    options={
-                                        faculties
-                                            ?.find((faculty) => faculty.id == selectedFacultyID)
-                                            ?.specialities
-                                                ?.find((speciality) => speciality.id == selectedSpecialityID)
-                                                ?.groups
-                                                    ?.map((group) => ({label: group.title, value: group.id}))
-                                    }
-                                    className={'input'}
-                                    filterOption={(input, option) =>
-                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                    }
-                                    onSelect={(value) => setSelectedGroupID(value)}
-                                />
-                            </Form.Item>
+                            <RegistrationStudentPart
+                                form={form}
+                                faculties={faculties}
+                                specialitiesStudentOptions={specialitiesStudentOptions}
+                                groupsStudentOptions={groupsStudentOptions}
+                                specialitiesStudent={specialitiesStudent}
+                                setSpecialitiesStudentOptions={setSpecialitiesStudentOptions}
+                                setGroupsStudentOptions={setGroupsStudentOptions}
+                                setSpecialitiesStudent={setSpecialitiesStudent}
+                            />
+                            <RegistrationEmployeePart
+                                form={form}
+                                faculties={faculties}
+                                specialities={specialities}
+                                subroleOptions={SUBROLES_OPTIONS}
+                                specialitiesOptions={specialitiesOptions}
+                                groupsOptions={groupsOptions}
+                                setSpecialitiesOptions={setSpecialitiesOptions}
+                                setGroupsOptions={setGroupsOptions}
+                                setSpecialities={setSpecialities}
+                            />
                         </>
                     }
                     <Form.Item
@@ -212,7 +273,8 @@ export const RegistrationPage: FC = () => {
                         <p className="sign-in__error">Неверный логин или пароль</p>
                     }
                     <Form.Item>
-                        <Button type="primary" block htmlType="submit" className="form-submit-button">Зарегистрироваться</Button>
+                        <Button type="primary" block htmlType="submit"
+                                className="form-submit-button">Зарегистрироваться</Button>
                     </Form.Item>
                     <div className={'link'}>
                         <Link to={'/auth/login'} className={'linkIn'}>Уже есть аккаунт? Войти!</Link>
