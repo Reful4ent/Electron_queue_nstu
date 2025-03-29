@@ -13,6 +13,14 @@ export const router: RouteObject[] = [
             {
                 path: 'home',
                 element: <HomePage/>,
+            },
+            {
+                path: "*",
+                element: <Navigate to="home"/>
+            },
+            {
+                path: "",
+                element: <Navigate to="home"/>
             }
         ]
     },
