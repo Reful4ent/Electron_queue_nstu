@@ -79,48 +79,55 @@ export const RegistrationPage: FC = () => {
 
 
     const registerMe = useCallback(async () => {
-        try {
-            let data: IUserRegistration = {
-                username: form.getFieldValue('email'),
-                email: form.getFieldValue('email'),
-                password: form.getFieldValue('password'),
-                fio: `${form.getFieldValue('surname')} ${form.getFieldValue('name')} ${form.getFieldValue('lastname')}`,
-            };
-            if (form.getFieldValue('role') == 'Student') {
-                data = {
-                    ...data,
-                    roleID: 14,
-                    faculty: form.getFieldValue('faculty'),
-                    speciality: form.getFieldValue('speciality'),
-                    group: form.getFieldValue('group'),
+        console.log(form.getFieldValue('password'))
+        console.log(form.getFieldValue('passwordRepeat'))
+        console.log(form.getFieldValue('password') == form.getFieldValue('passwordRepeat'))
+        if (form.getFieldValue('password') == form.getFieldValue('passwordRepeat')) {
+            try {
+                let data: IUserRegistration = {
+                    username: form.getFieldValue('email'),
+                    email: form.getFieldValue('email'),
+                    password: form.getFieldValue('password'),
+                    fio: `${form.getFieldValue('surname')} ${form.getFieldValue('name')} ${form.getFieldValue('lastname')}`,
                 };
-            } else if (form.getFieldValue('role') == 'Employee') {
-                data = {
-                    ...data,
-                    roleID: 15,
-                    faculties: form.getFieldValue('faculties'),
-                    specialities: form.getFieldValue('specialities'),
-                    groups: form.getFieldValue('groups'),
-                    subRole: form.getFieldValue('subRole')
-                };
-            } else if (form.getFieldValue('role') == 'StudentEmployee') {
-                data = {
-                    ...data,
-                    roleID: 16,
-                    faculty: form.getFieldValue('faculty'),
-                    speciality: form.getFieldValue('speciality'),
-                    group: form.getFieldValue('group'),
-                    faculties: form.getFieldValue('faculties'),
-                    specialities: form.getFieldValue('specialities'),
-                    groups: form.getFieldValue('groups'),
-                    subRole: form.getFieldValue('subRole')
+                if (form.getFieldValue('role') == 'Student') {
+                    data = {
+                        ...data,
+                        roleID: 14,
+                        faculty: form.getFieldValue('faculty'),
+                        speciality: form.getFieldValue('speciality'),
+                        group: form.getFieldValue('group'),
+                    };
+                } else if (form.getFieldValue('role') == 'Employee') {
+                    data = {
+                        ...data,
+                        roleID: 15,
+                        faculties: form.getFieldValue('faculties'),
+                        specialities: form.getFieldValue('specialities'),
+                        groups: form.getFieldValue('groups'),
+                        subRole: form.getFieldValue('subRole')
+                    };
+                } else if (form.getFieldValue('role') == 'StudentEmployee') {
+                    data = {
+                        ...data,
+                        roleID: 16,
+                        faculty: form.getFieldValue('faculty'),
+                        speciality: form.getFieldValue('speciality'),
+                        group: form.getFieldValue('group'),
+                        faculties: form.getFieldValue('faculties'),
+                        specialities: form.getFieldValue('specialities'),
+                        groups: form.getFieldValue('groups'),
+                        subRole: form.getFieldValue('subRole')
+                    }
                 }
+                const response = await axios.post(`${routeURL}/auth/local/register`, data)
+                auth?.setJwt(response?.data.jwt);
+                navigate('/home')
+            } catch (error) {
+                setError('Пользователь уже зарегистрирован!')
             }
-            const response = await axios.post(`${routeURL}/auth/local/register`, data)
-            auth?.setJwt(response?.data.jwt);
-            navigate('/home')
-        } catch (error) {
-            setError('Пользователь уже зарегистрирован!')
+        } else {
+            setError('Пароли должны совпадать')
         }
     }, [])
 
@@ -270,7 +277,7 @@ export const RegistrationPage: FC = () => {
                         <Input.Password placeholder={'Повторите пароль'} className={'input'}/>
                     </Form.Item>
                     {error &&
-                        <p className="sign-in__error">Неверный логин или пароль</p>
+                        <p className="sign-in__error">{error}</p>
                     }
                     <Form.Item>
                         <Button type="primary" block htmlType="submit"
