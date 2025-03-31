@@ -1,8 +1,17 @@
 import {Navigate, RouteObject} from "react-router-dom";
 import {MainLayout} from "../../layout/MainLayout/MainLayout.tsx";
-import {ErrorPage, HomePage, RegistrationPage, SignInPage} from "../lazyPages/lazyPages.tsx";
+import {
+    ConsultationCreatePage,
+    DeansConsultationsPage,
+    EmployeesConsultationsPage,
+    ErrorPage,
+    HomePage,
+    RegistrationPage,
+    SignInPage
+} from "../lazyPages/lazyPages.tsx";
 import {SignLayout} from "../../layout/SIgnInLayout/SignInLayout.tsx";
-//import {PrivateRoute} from "../../../features/PrivateRoute/PrivateRoute.tsx";
+import {PrivateRoute} from "../../../features/PrivateRoute/PrivateRoute.tsx";
+import {EmployeeMeConsultationsPage} from "../../../pages/EmployeeMeConsultationsPage/EmployeeMeConsultationsPage.tsx";
 
 export const router: RouteObject[] = [
     {
@@ -12,7 +21,23 @@ export const router: RouteObject[] = [
         children: [
             {
                 path: 'home',
-                element: <HomePage/>,
+                element: <HomePage/>
+            },
+            {
+                path: '/consultations/deans',
+                element: <DeansConsultationsPage/>
+            },
+            {
+                path: '/consultations/employees',
+                element: <PrivateRoute><EmployeesConsultationsPage/></PrivateRoute>
+            },
+            {
+                path: '/consultations/create',
+                element: <PrivateRoute><ConsultationCreatePage/></PrivateRoute>
+            },
+            {
+                path: '/profile/employee/my-consultations',
+                element: <PrivateRoute><EmployeeMeConsultationsPage/></PrivateRoute>
             },
             {
                 path: "*",

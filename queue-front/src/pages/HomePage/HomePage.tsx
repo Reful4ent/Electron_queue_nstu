@@ -1,8 +1,94 @@
-import {FC} from "react";
+import {FC, useCallback, useEffect, useState} from "react";
+import {useAuth} from "../../app/context/AuthProvider/context.ts";
+import axios from "axios";
+import {routeURL} from "../../shared/api/route.ts";
+import {RedirectCard} from "../../widgets/RedirectCard/RedirectCard.tsx";
+import './HomePage.scss'
+import {Col, Row} from "antd";
+import {CardSVGDean} from "../../shared/ui/CardSVG/CardSVGDean.tsx";
+import {CardSVGEmployee} from "../../shared/ui/CardSVG/CardSVGEmployee.tsx";
+import {CardSVGEmployeeCon} from "../../shared/ui/CardSVG/CardSVGEmployeeCon.tsx";
+import {CardSVGCreate} from "../../shared/ui/CardSVG/CardSVGCreate.tsx";
 
+const ROLES = [
+    'Student',
+    'Employee',
+    'StudentEmployee'
+]
 
 export const HomePage: FC = () => {
+    const auth = useAuth();
+    const [currentRole, setCurrentRole] = useState<string>('')
+
+    const getMyData = useCallback(async () => {
+        const myData = await axios.get(
+            `${routeURL}/users/me?populate=*`,
+            {
+                headers: {
+                    Authorization: `Bearer ${auth?.jwt}`,
+                }
+            }
+        )
+        console.log(myData?.data)
+        if (myData?.data?.student && myData?.data?.employee) {
+            setCurrentRole(ROLES[2])
+        } else if (myData?.data?.employee) {
+            setCurrentRole(ROLES[1])
+        } else if (myData?.data?.student) {
+            setCurrentRole(ROLES[0])
+        }
+    },[])
+
+    useEffect(() => {
+        if(auth?.jwt) {
+            getMyData()
+        }
+    }, [auth?.jwt]);
+
     return (
-        <p>Домашняя страница)</p>
+        <div className={'container'}>
+            <p className={'headerText'}>Электронная очередь</p>
+            {(currentRole == ROLES[1] || currentRole == ROLES[2]) &&
+                <Row gutter={[52,52]} style={{marginBottom: 52}}>
+                    <Col>
+                        <RedirectCard
+                            url={'/profile/employee/my-consultations'}
+                            svgIcon={<CardSVGEmployeeCon/>}
+                            name={'Мои консультации'}
+                            text={'Просмотр информации существующих консультаций'}
+                        />
+                    </Col>
+                    <Col>
+                        <RedirectCard
+                            url={'/consultations/create'}
+                            svgIcon={<CardSVGCreate/>}
+                            name={'Создание консультации'}
+                            text={'Добавление новых дополнительных консультаций для студентов'}/>
+                    </Col>
+                </Row>
+            }
+            {currentRole !== ROLES[1] &&
+                <Row gutter={[52,52]}>
+                    {(currentRole == ROLES[0] || currentRole == ROLES[2]) &&
+                        <Col>
+                            <RedirectCard
+                                url={'/consultations/employees'}
+                                svgIcon={<CardSVGEmployee/>}
+                                name={'Консультации'}
+                                text={'Запись к преподавателю на консультацию'}
+                            />
+                        </Col>
+                    }
+                    <Col>
+                        <RedirectCard
+                            url={'/consultations/deans'}
+                            svgIcon={<CardSVGDean/>}
+                            name={'Деканат'}
+                            text={'Запись на прием в деканат'}
+                        />
+                    </Col>
+                </Row>
+            }
+        </div>
     )
 }
