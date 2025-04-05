@@ -37,15 +37,23 @@
         "INSPECTOR"
       ]
     },
-    "fio": {
-      "type": "string",
-      "required": true
-    },
     "groups": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::group.group",
       "inversedBy": "employees"
+    },
+    "surname": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
+    },
+    "fio": {
+      "type": "string"
     }
   }
 }

@@ -45,7 +45,10 @@ export default {
             data: {
               faculty: event.params.data.faculty,
               user: event.result.id,
+              surname: event.params.data.surname,
               fio: `${event.params.data.surname} ${event.params.data.name} ${event.params.data.lastname ?? ''}`,
+              name: event.params.data.name,
+              lastname: event.params.data.lastname ?? '',
               group: event.params.data.group
             }
           })
@@ -54,7 +57,10 @@ export default {
             data: {
               faculties: event.params.data.faculties,
               user: event.result.id,
+              surname: event.params.data.surname,
+              name: event.params.data.name,
               fio: `${event.params.data.surname} ${event.params.data.name} ${event.params.data.lastname ?? ''}`,
+              lastname: event.params.data.lastname ?? '',
               groups: event.params.data.groups,
               subRole: event.params.data.subRole
             }
@@ -65,6 +71,9 @@ export default {
               faculty: event.params.data.faculty,
               user: event.result.id,
               fio: `${event.params.data.surname} ${event.params.data.name} ${event.params.data.lastname ?? ''}`,
+              surname: event.params.data.surname,
+              name: event.params.data.name,
+              lastname: event.params.data.lastname ?? '',
               group: event.params.data.group
             }
           })
@@ -74,6 +83,9 @@ export default {
               faculties: event.params.data.faculties,
               user: event.result.id,
               fio: `${event.params.data.surname} ${event.params.data.name} ${event.params.data.lastname ?? ''}`,
+              surname: event.params.data.surname,
+              name: event.params.data.name,
+              lastname: event.params.data.lastname ?? '',
               groups: event.params.data.groups,
               subRole: event.params.data.subRole
             }

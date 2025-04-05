@@ -22,6 +22,15 @@
       "type": "component",
       "repeatable": false,
       "component": "common.not-registered-user"
+    },
+    "isOffByStudent": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    },
+    "isOffByEmployee": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

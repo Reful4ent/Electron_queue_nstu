@@ -382,6 +382,8 @@ export interface ApiConsultationConsultation
     draftAndPublish: false;
   };
   attributes: {
+    audience: Schema.Attribute.String;
+    corps: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -393,6 +395,8 @@ export interface ApiConsultationConsultation
     >;
     duration: Schema.Attribute.String;
     employee: Schema.Attribute.Relation<'manyToOne', 'api::employee.employee'>;
+    isOffByEmployee: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -463,18 +467,21 @@ export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     faculties: Schema.Attribute.Relation<'manyToMany', 'api::faculty.faculty'>;
-    fio: Schema.Attribute.String & Schema.Attribute.Required;
+    fio: Schema.Attribute.String;
     groups: Schema.Attribute.Relation<'manyToMany', 'api::group.group'>;
+    lastname: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::employee.employee'
     > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     subRole: Schema.Attribute.Enumeration<
       ['LECTURER', 'DEPUTY_DEAN', 'INSPECTOR']
     >;
+    surname: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -605,15 +612,18 @@ export interface ApiStudentStudent extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     faculty: Schema.Attribute.Relation<'manyToOne', 'api::faculty.faculty'>;
-    fio: Schema.Attribute.String & Schema.Attribute.Required;
+    fio: Schema.Attribute.String;
     group: Schema.Attribute.Relation<'manyToOne', 'api::group.group'>;
+    lastname: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::student.student'
     > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    surname: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

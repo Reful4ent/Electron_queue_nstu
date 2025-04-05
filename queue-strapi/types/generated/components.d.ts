@@ -21,6 +21,10 @@ export interface RecordedStudentsRecordedStudents
   attributes: {
     dateEndConsultation: Schema.Attribute.DateTime;
     dateStartConsultation: Schema.Attribute.DateTime;
+    isOffByEmployee: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    isOffByStudent: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     notRegisteredUser: Schema.Attribute.Component<
       'common.not-registered-user',
       false
