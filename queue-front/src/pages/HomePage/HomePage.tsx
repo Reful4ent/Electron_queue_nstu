@@ -10,7 +10,7 @@ import {CardSVGEmployee} from "../../shared/ui/CardSVG/CardSVGEmployee.tsx";
 import {CardSVGEmployeeCon} from "../../shared/ui/CardSVG/CardSVGEmployeeCon.tsx";
 import {CardSVGCreate} from "../../shared/ui/CardSVG/CardSVGCreate.tsx";
 
-const ROLES = [
+export const ROLES = [
     'Student',
     'Employee',
     'StudentEmployee'
@@ -19,6 +19,7 @@ const ROLES = [
 export const HomePage: FC = () => {
     const auth = useAuth();
     const [currentRole, setCurrentRole] = useState<string>('')
+    const [id, setID] = useState()
 
     const getMyData = useCallback(async () => {
         const myData = await axios.get(
@@ -29,7 +30,7 @@ export const HomePage: FC = () => {
                 }
             }
         )
-        console.log(myData?.data)
+        setID(myData?.data?.id)
         if (myData?.data?.student && myData?.data?.employee) {
             setCurrentRole(ROLES[2])
         } else if (myData?.data?.employee) {
@@ -46,13 +47,13 @@ export const HomePage: FC = () => {
     }, [auth?.jwt]);
 
     return (
-        <div className={'container'}>
+        <div className={'containerHome'}>
             <p className={'headerText'}>Электронная очередь</p>
             {(currentRole == ROLES[1] || currentRole == ROLES[2]) &&
                 <Row gutter={[52,52]} style={{marginBottom: 52}}>
                     <Col>
                         <RedirectCard
-                            url={'/profile/employee/my-consultations'}
+                            url={`/profile/${id}/my-consultations`}
                             svgIcon={<CardSVGEmployeeCon/>}
                             name={'Мои консультации'}
                             text={'Просмотр информации существующих консультаций'}
@@ -60,7 +61,7 @@ export const HomePage: FC = () => {
                     </Col>
                     <Col>
                         <RedirectCard
-                            url={'/consultations/create'}
+                            url={`/profile/${id}/my-consultations/create`}
                             svgIcon={<CardSVGCreate/>}
                             name={'Создание консультации'}
                             text={'Добавление новых дополнительных консультаций для студентов'}/>

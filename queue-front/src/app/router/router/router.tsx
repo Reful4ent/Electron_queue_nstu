@@ -5,7 +5,7 @@ import {
     DeansConsultationsPage,
     EmployeesConsultationsPage,
     ErrorPage,
-    HomePage,
+    HomePage, MyProfilePage,
     RegistrationPage,
     SignInPage
 } from "../lazyPages/lazyPages.tsx";
@@ -32,12 +32,16 @@ export const router: RouteObject[] = [
                 element: <PrivateRoute><EmployeesConsultationsPage/></PrivateRoute>
             },
             {
-                path: '/consultations/create',
+                path: '/profile/:id/my-consultations/create',
                 element: <PrivateRoute><ConsultationCreatePage/></PrivateRoute>
             },
             {
-                path: '/profile/employee/my-consultations',
+                path: '/profile/:id/my-consultations',
                 element: <PrivateRoute><EmployeeMeConsultationsPage/></PrivateRoute>
+            },
+            {
+                path: '/profile/:id',
+                element: <PrivateRoute><MyProfilePage/></PrivateRoute>
             },
             {
                 path: "*",

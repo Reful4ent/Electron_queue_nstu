@@ -16,6 +16,12 @@
     },
     "dateEndConsultation": {
       "type": "datetime"
+    },
+    "notRegisteredUser": {
+      "displayName": "notRegisteredUser",
+      "type": "component",
+      "repeatable": false,
+      "component": "common.not-registered-user"
     }
   }
 }

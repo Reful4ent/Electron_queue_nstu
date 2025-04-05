@@ -1093,13 +1093,14 @@ export interface PluginUsersPermissionsUser
         minLength: 6;
       }>;
     employee: Schema.Attribute.Relation<'oneToOne', 'api::employee.employee'>;
-    fio: Schema.Attribute.String & Schema.Attribute.Required;
+    lastname: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
@@ -1113,6 +1114,7 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.role'
     >;
     student: Schema.Attribute.Relation<'oneToOne', 'api::student.student'>;
+    surname: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

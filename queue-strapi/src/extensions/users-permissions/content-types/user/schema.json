@@ -77,9 +77,14 @@
       "target": "api::employee.employee",
       "inversedBy": "user"
     },
-    "fio": {
-      "type": "string",
-      "required": true
+    "surname": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
     }
   }
 }

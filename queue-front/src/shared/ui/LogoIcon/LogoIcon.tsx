@@ -1,8 +1,13 @@
 import {FC} from "react";
+import {useNavigate} from "react-router-dom";
+export interface LogoIconProps {
+    link?: string;
+}
 
-export const LogoIcon: FC = () => {
+export const LogoIcon: FC<LogoIconProps> = ({link}) => {
+    const navigate = useNavigate();
     return (
-        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => navigate(link ?? '#')}>
             <mask id="mask0_177_837" maskUnits="userSpaceOnUse" x="0" y="0" width="42"
                   height="42">
                 <path fillRule="evenodd" clipRule="evenodd" d="M42 0H0V42H42V0ZM30 12H12V30H30V12Z"

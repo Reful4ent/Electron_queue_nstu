@@ -41,7 +41,7 @@ export const SignInPage: FC = () => {
                 }
             }}
         >
-            <div className={'container'}>
+            <div className={'containerSignIn'}>
                 <Form layout={'vertical'} className={'form'} form={form} onFinish={() => authMe()}>
                     <Typography.Text className={'text'}>E-Queue | NSTU NETI</Typography.Text>
                     <Typography.Title className={'title'}>Вход</Typography.Title>

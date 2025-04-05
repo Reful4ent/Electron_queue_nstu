@@ -23,7 +23,7 @@ const ROLES_OPTIONS: OptionsType[] = [
     { label: 'Студент-Сотрудник', value: 'StudentEmployee' },
 ]
 
-const SUBROLES_OPTIONS: OptionsType[] = [
+export const SUBROLES_OPTIONS: OptionsType[] = [
     { label: 'Преподаватель', value: 'LECTURER' },
     { label: 'Сотрудник деканата', value: 'DEPUTY_DEAN' },
     { label: 'Инспектор', value: 'INSPECTOR' },
@@ -50,7 +50,6 @@ export interface IUserRegistration {
     username: string;
     email: string;
     password: string;
-    fio: string;
     roleID?: number | null,
     faculty?: number | null,
     speciality?: number | null,
@@ -59,6 +58,9 @@ export interface IUserRegistration {
     specialities?: number[] | null,
     groups?: number[] | null,
     subRole?: string | null,
+    surname: string,
+    name: string,
+    lastname?: string | null,
 }
 
 
@@ -79,16 +81,15 @@ export const RegistrationPage: FC = () => {
 
 
     const registerMe = useCallback(async () => {
-        console.log(form.getFieldValue('password'))
-        console.log(form.getFieldValue('passwordRepeat'))
-        console.log(form.getFieldValue('password') == form.getFieldValue('passwordRepeat'))
         if (form.getFieldValue('password') == form.getFieldValue('passwordRepeat')) {
             try {
                 let data: IUserRegistration = {
                     username: form.getFieldValue('email'),
                     email: form.getFieldValue('email'),
                     password: form.getFieldValue('password'),
-                    fio: `${form.getFieldValue('surname')} ${form.getFieldValue('name')} ${form.getFieldValue('lastname')}`,
+                    surname: `${form.getFieldValue('surname')}`,
+                    name: `${form.getFieldValue('name')}`,
+                    lastname: `${form.getFieldValue('lastname') ?? ''}`
                 };
                 if (form.getFieldValue('role') == 'Student') {
                     data = {
@@ -173,7 +174,7 @@ export const RegistrationPage: FC = () => {
                 }
             }}
         >
-            <div className={'container'}>
+            <div className={'containerRegistration'}>
                 <Form className={'form'} form={form} onFinish={() => registerMe()}>
                     <Typography.Text className={'text'}>E-Queue | NSTU NETI</Typography.Text>
                     <Typography.Title className={'title'}>Регистрация</Typography.Title>

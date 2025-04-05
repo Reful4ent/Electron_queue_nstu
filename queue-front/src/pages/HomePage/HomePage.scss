@@ -1,5 +1,7 @@
-.container {
+.containerHome {
   padding: 40px 139px;
+  display: flex;
+  flex-direction: column;
 
   .headerText {
     font-family: Stem;

@@ -4,7 +4,9 @@ export default ({ env }) => ({
         config: {
             register: {
                 allowedFields: [
-                    "fio",
+                    "surname",
+                    "name",
+                    "lastname",
                     'roleID',
                     'faculty',
                     'faculties',

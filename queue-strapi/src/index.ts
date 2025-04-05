@@ -31,7 +31,6 @@ export default {
        */
       async afterCreate(event: any) {
         const { result, params } = event;
-        console.log(event)
         await strapi.documents("plugin::users-permissions.user").update({
           documentId: event.result.documentId,
           data: {
@@ -46,7 +45,7 @@ export default {
             data: {
               faculty: event.params.data.faculty,
               user: event.result.id,
-              fio: event.params.data.fio,
+              fio: `${event.params.data.surname} ${event.params.data.name} ${event.params.data.lastname ?? ''}`,
               group: event.params.data.group
             }
           })
@@ -55,7 +54,7 @@ export default {
             data: {
               faculties: event.params.data.faculties,
               user: event.result.id,
-              fio: event.params.data.fio,
+              fio: `${event.params.data.surname} ${event.params.data.name} ${event.params.data.lastname ?? ''}`,
               groups: event.params.data.groups,
               subRole: event.params.data.subRole
             }
@@ -65,7 +64,7 @@ export default {
             data: {
               faculty: event.params.data.faculty,
               user: event.result.id,
-              fio: event.params.data.fio,
+              fio: `${event.params.data.surname} ${event.params.data.name} ${event.params.data.lastname ?? ''}`,
               group: event.params.data.group
             }
           })
@@ -74,15 +73,13 @@ export default {
             data: {
               faculties: event.params.data.faculties,
               user: event.result.id,
-              fio: event.params.data.fio,
+              fio: `${event.params.data.surname} ${event.params.data.name} ${event.params.data.lastname ?? ''}`,
               groups: event.params.data.groups,
               subRole: event.params.data.subRole
             }
           })
         }
-        //console.log(event);
       },
-
     });
   },
 };
