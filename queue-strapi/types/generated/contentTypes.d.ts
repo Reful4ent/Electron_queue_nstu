@@ -394,7 +394,9 @@ export interface ApiConsultationConsultation
       'api::discipline.discipline'
     >;
     duration: Schema.Attribute.String;
+    durationNumber: Schema.Attribute.Integer;
     employee: Schema.Attribute.Relation<'manyToOne', 'api::employee.employee'>;
+    groups: Schema.Attribute.Relation<'oneToMany', 'api::group.group'>;
     isOffByEmployee: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;

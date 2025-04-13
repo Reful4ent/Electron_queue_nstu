@@ -1,0 +1,45 @@
+.consultationCreateContainer{
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+
+  .consultationCreateHead {
+    margin-top: 76px;
+    font-family: Stem;
+    font-weight: 500;
+    font-size: 36px;
+  }
+
+  .consultationCreateContent {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+
+    .consultationCreateForm {
+      width: 110%;
+      padding: 23px;
+      background-color: white;
+      border-radius: 15px;
+
+      .consultationCreateFormInner{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .consultationCreateFormHead {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: 24px;
+          margin-bottom: 20px;
+          margin-top: 0;
+        }
+
+        .consultationCreateDateContainer {
+          display: flex;
+          flex-direction: row;
+          gap: 16px;
+        }
+      }
+    }
+  }
+}

@@ -53,6 +53,14 @@
     },
     "audience": {
       "type": "string"
+    },
+    "groups": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::group.group"
+    },
+    "durationNumber": {
+      "type": "integer"
     }
   }
 }

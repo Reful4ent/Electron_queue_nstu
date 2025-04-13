@@ -2,15 +2,14 @@ import {FC, useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import {routeURL} from "../../shared/api/route.ts";
 import {useAuth} from "../../app/context/AuthProvider/context.ts";
-import {Col, Image, Modal, Row} from "antd";
+import {Col, Modal, Row} from "antd";
 import './MyProfilePage.scss'
-import {SUBROLES_OPTIONS} from "../RegistrationPage/RegistrationPage.tsx";
 import {ROLES} from "../HomePage/HomePage.tsx";
 import {RedirectCard} from "../../widgets/RedirectCard/RedirectCard.tsx";
 import {CardSVGEmployeeCon} from "../../shared/ui/CardSVG/CardSVGEmployeeCon.tsx";
 import {CardSVGCreate} from "../../shared/ui/CardSVG/CardSVGCreate.tsx";
-import {SocialLinks} from "../../widgets/SocialLinks/SocialLinks.tsx";
 import {ConsultationStudentProfileCard} from "../../entities/Consultation/ConsultationStudentProfileCard.tsx";
+import {ProfileCard} from "../../entities/Profile/ProfileCard.tsx";
 
 
 export interface MyProfilePageProps {
@@ -157,26 +156,7 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
 
     return (
         <div className={'containerProfile'}>
-            <div className={'profileCard'}>
-                {/*ToDo: Поменять изображение*/}
-                <Image className={'profileImage'} width={128} height={128} preview={false} src={'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Example_of_SVG_code.png/330px-Example_of_SVG_code.png'}/>
-                <div>
-                    <div className={'profileFIO'}>
-                        {`${userData?.surname} ${userData?.name} ${userData?.lastname}`}
-                    </div>
-                    <div className={'profileSubRole'}>
-                        {
-                            currentRole == ROLES[0]
-                                ? `${userData?.student?.faculty?.title}(${userData?.student?.group?.title})`
-                                : currentRole == ROLES[1]
-                                    ? SUBROLES_OPTIONS.find((subRole) => subRole.value === userData?.employee?.subRole)?.label
-                                    : `${SUBROLES_OPTIONS.find((subRole) => subRole.value === userData?.employee?.subRole)?.label}, ${userData?.student?.faculty?.title}(${userData?.student?.group?.title})`
-                        }
-                    </div>
-                    {/*ToDo: Создать социалс в страпи и сделать универсальным*/}
-                    <SocialLinks vkLink={'#'} phone={'#'} telegramLink={'#'} email={'#'}/>
-                </div>
-            </div>
+            <ProfileCard userData={userData ?? null} currentRole={currentRole}/>
             {(currentRole != ROLES[0]) &&
                 <div>
                     <Row gutter={[52,52]} style={{marginBottom: 52}}>

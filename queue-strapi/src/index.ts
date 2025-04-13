@@ -93,5 +93,42 @@ export default {
         }
       },
     });
+    strapi.db.lifecycles.subscribe({
+      models: ["api::consultation.consultation"],
+
+      async afterCreate(event: any) {
+        console.log(event);
+        const dateOfStart = new Date(event.params.data.dateOfStart);
+        const dateOfEnd = new Date(event.params.data.dateOfEnd);
+        const minutes = event.params.data.durationNumber * 60 * 1000;
+
+        const intervals = [];
+        let currentDate = dateOfStart;
+
+        while (currentDate.getTime() < dateOfEnd.getTime()) {
+          const endTime = new Date(currentDate.getTime() + minutes);
+          const end = endTime > dateOfEnd ? dateOfEnd : endTime;
+
+          intervals.push(`${currentDate.toISOString()} - ${end.toISOString()}`);
+          currentDate = end;
+        }
+
+        await strapi.documents('api::consultation.consultation').update({
+          documentId: event.result.documentId,
+          data: {
+            recordedStudents: intervals.map((interval) => ({
+              dateStartConsultation: interval.split(' - ')[0],
+              dateEndConsultation: interval.split(' - ')[1],
+              isOffByStudent: false,
+              isOffByEmployee: false,
+              notRegisteredUser: null,
+              student: null,
+            })),
+          }
+        })
+
+        console.log(intervals);
+      }
+    });
   },
 };
