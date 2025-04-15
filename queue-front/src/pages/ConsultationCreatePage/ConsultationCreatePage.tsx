@@ -138,7 +138,7 @@ export const ConsultationCreatePage: FC = () => {
                 content: e.message,
             });
         }
-    },[])
+    },[userData])
 
     return (
         <div className={'consultationCreateContainer'}>

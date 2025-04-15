@@ -1,0 +1,41 @@
+.consultationMeContainer{
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+
+  .consultationMeHead {
+    margin-top: 76px;
+    font-family: Stem;
+    font-weight: 500;
+    font-size: 36px;
+  }
+
+  .consultationMeContent {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+
+    .consultationMeForm {
+      width: 110%;
+      padding: 23px;
+      height: 214px;
+      background-color: white;
+      border-radius: 15px;
+
+      .consultationMeFormInner {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .consultationMeFormHead {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: 24px;
+          margin-bottom: 20px;
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+
