@@ -3,6 +3,7 @@ export default {
     getEmployeeConsultation: async(data) => {
         const startDate = new Date(data?.startPeriod);
         const endDate = new Date(data?.endPeriod);
+        console.log(data);
 
         const employeeConsultation = await strapi.documents('api::consultation.consultation').findMany({
             populate: {
@@ -20,7 +21,7 @@ export default {
                         notRegisteredUser: {
                             populate: '*'
                         }
-                    }
+                    },
                 }
             },
             filters: {
@@ -35,12 +36,20 @@ export default {
                 },
                 isOffByEmployee: {
                     $eq: false,
+                },
+                recordedStudents: {
+                    isOffByEmployee: {
+                        $eq: false,
+                    },
+                    isOffByStudent: {
+                        $eq: false,
+                    }
                 }
             },
         })
 
         const groupedByDisciplineTitle = employeeConsultation.reduce((acc, consultation) => {
-            const disciplineTitle = consultation.discipline.title; // Путь к title дисциплины
+            const disciplineTitle = consultation.discipline.title;
             if (!acc[disciplineTitle]) {
                 acc[disciplineTitle] = [];
             }

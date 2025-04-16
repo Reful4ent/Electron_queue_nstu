@@ -8,13 +8,39 @@ import {useAuth} from "../../app/context/AuthProvider/context.ts";
 export interface IConsultationStudentsList {
     isModalOpen: boolean;
     setIsModalOpen: (isOpen: boolean) => void;
+    setIsModalUpdated: (isOpen: boolean) => void;
+    setCurrentConsultationId: (currentConsultationId: string) => void;
     modalItemHead: string;
     modalData?: IConsultation | null;
-    handleFinish: () => void;
 }
 
-export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isModalOpen, setIsModalOpen, modalItemHead, modalData, handleFinish}) => {
+export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isModalOpen, setIsModalOpen, modalItemHead, modalData, setIsModalUpdated, setCurrentConsultationId}) => {
     const auth = useAuth();
+
+    const handleCancelRecord = useCallback( async (consId: string, recordId: number) => {
+        if (consId && recordId) {
+            try {
+                await axios.post(
+                    `${routeURL}/deleteStudentRecord`,
+                    {
+                        consultationId: consId,
+                        recordId: recordId,
+                        userType: 'Employee'
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${auth?.jwt}`,
+                        }
+                    }
+                )
+                setCurrentConsultationId(consId);
+                setIsModalUpdated(true);
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    },[])
+
 
     const handleCancelConsultation = useCallback(async (id?: string) => {
         if(id) {
@@ -32,7 +58,7 @@ export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isM
                         }
                     }
                 )
-                handleFinish()
+                setIsModalUpdated(true);
                 setIsModalOpen(false);
             } catch (e) {
                 console.log(e)
@@ -67,7 +93,10 @@ export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isM
                 </div>
                 <div className={'modalConsultationBody'}>
                     {
-                        modalData?.recordedStudents.map((recordedStudent, index) => (
+                        modalData?.recordedStudents
+                            .sort((a, b) => new Date(a?.dateStartConsultation).getHours() - new Date(b?.dateStartConsultation).getHours())
+                            .filter((a) => !a.isOffByEmployee && !a.isOffByStudent)
+                            .map((recordedStudent, index) => (
                             <>
                                 {(recordedStudent.student || recordedStudent.notRegisteredUser) ?
                                     <div key={index} className={'modalStudentsListItem'}>
@@ -114,7 +143,7 @@ export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isM
                                                          ${String(new Date(recordedStudent?.dateEndConsultation).getMinutes()) == '0' ? '00' : new Date(recordedStudent?.dateEndConsultation).getMinutes()}`}
                                                 </div>
                                             </div>
-                                            <Button color="danger" variant="solid" onClick={() => {}}>
+                                            <Button color="danger" variant="solid" onClick={() => handleCancelRecord(modalData?.documentId, recordedStudent?.id)}>
                                                 Отменить запись
                                             </Button>
                                         </div>

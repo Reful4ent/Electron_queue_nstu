@@ -17,8 +17,8 @@ export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard>
     return (
         <div
             key={index}
-            className={(!consultation?.recordedStudents.find((student) => student?.student?.id == userData?.id)?.isOffByStudent
-                && !consultation?.recordedStudents.find((student) => student?.student?.id == userData?.id)?.isOffByEmployee
+            className={(!consultation?.recordedStudents.find((student) => student?.student?.id == userData?.student.id)?.isOffByStudent
+                && !consultation?.recordedStudents.find((student) => student?.student?.id == userData?.student.id)?.isOffByEmployee
                 && !consultation.isOffByEmployee)
                 ?
                 'myConsultationCard'
@@ -27,8 +27,8 @@ export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard>
             }
         >
             <div className={'cardHeader'}>
-                {(!consultation?.recordedStudents.find((student) => student?.student?.id == userData?.id)?.isOffByStudent
-                    && !consultation?.recordedStudents.find((student) => student?.student?.id == userData?.id)?.isOffByEmployee
+                {(!consultation?.recordedStudents.find((student) => student?.student?.id == userData?.student.id)?.isOffByStudent
+                    && !consultation?.recordedStudents.find((student) => student?.student?.id == userData?.student.id)?.isOffByEmployee
                     && !consultation.isOffByEmployee)
                     ?
                     <>

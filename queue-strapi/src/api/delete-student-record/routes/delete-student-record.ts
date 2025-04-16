@@ -2,7 +2,7 @@ export default {
     routes: [
         {
             method: 'POST',
-            path: '/delete-student-record',
+            path: '/deleteStudentRecord',
             handler: 'delete-student-record.deleteStudentRecord',
             config: {
                 policies: [],
