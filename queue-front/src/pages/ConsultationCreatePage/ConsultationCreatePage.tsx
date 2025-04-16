@@ -35,11 +35,16 @@ export const CORP_OPTIONS: OptionsType[] = [
     {label: '7', value: 7},
 ]
 
-function formatDate(dateString: any) {
+function formatTime(dateString: any) {
     const date = new Date(dateString);
     return date.toISOString().split('.')[0] + '.000Z';
 }
 
+function formatDate(dateString: any) {
+    const date = new Date(dateString);
+    date.setHours(date.getHours() + 7);
+    return date.toISOString().split('.')[0] + '.000Z';
+}
 
 export const ConsultationCreatePage: FC = () => {
     const auth = useAuth();
@@ -103,8 +108,8 @@ export const ConsultationCreatePage: FC = () => {
     }, [auth?.jwt]);
 
     const handleFinish = useCallback(async () => {
-        const timeStart = formatDate(form.getFieldValue('time')[0]);
-        const timeEnd = formatDate(form.getFieldValue('time')[1]);
+        const timeStart = formatTime(form.getFieldValue('time')[0]);
+        const timeEnd = formatTime(form.getFieldValue('time')[1]);
         const date = formatDate(form.getFieldValue('date'));
         try {
             await axios.post(
