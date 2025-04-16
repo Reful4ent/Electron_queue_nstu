@@ -1,22 +1,52 @@
-import {FC} from "react";
+import {FC, useCallback} from "react";
 import {DAYS, IConsultation} from "../../pages/MyProfilePage/MyProfilePage.tsx";
 import {Button, Image, Modal} from "antd";
+import axios from "axios";
+import {routeURL} from "../../shared/api/route.ts";
+import {useAuth} from "../../app/context/AuthProvider/context.ts";
 
 export interface IConsultationStudentsList {
     isModalOpen: boolean;
     setIsModalOpen: (isOpen: boolean) => void;
     modalItemHead: string;
     modalData?: IConsultation | null;
+    handleFinish: () => void;
 }
 
-export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isModalOpen, setIsModalOpen, modalItemHead, modalData}) => {
+export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isModalOpen, setIsModalOpen, modalItemHead, modalData, handleFinish}) => {
+    const auth = useAuth();
+
+    const handleCancelConsultation = useCallback(async (id?: string) => {
+        if(id) {
+            try {
+                await axios.put(
+                    `${routeURL}/consultations/${id}`,
+                    {
+                        data: {
+                            isOffByEmployee: true,
+                        }
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${auth?.jwt}`,
+                        }
+                    }
+                )
+                handleFinish()
+                setIsModalOpen(false);
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    },[])
+
     return (
         <Modal
             centered
             open={isModalOpen}
             onCancel={() => setIsModalOpen(false)}
             footer={[
-                <Button key="submit" color="danger" variant="solid" onClick={() => {}}>
+                <Button key="submit" color="danger" variant="solid" onClick={() => handleCancelConsultation(modalData?.documentId)}>
                     Отменить консультацию
                 </Button>,
                 <Button key="back" color="primary" variant="solid" onClick={() => setIsModalOpen(false)}>

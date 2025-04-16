@@ -32,6 +32,9 @@ export default {
                 },
                 dateOfEnd: {
                     $lte: endDate,
+                },
+                isOffByEmployee: {
+                    $eq: false,
                 }
             },
         })

@@ -43,6 +43,7 @@ export interface IEmployee {
 
 export interface IConsultation {
     id: number;
+    documentId: string
     title: string;
     discipline: {
         id: number

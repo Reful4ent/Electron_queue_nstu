@@ -147,6 +147,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
                 setIsModalOpen={setIsModalOpen}
                 modalItemHead={modalItemHead}
                 modalData={modalData}
+                handleFinish={handleFinish}
             />
         </div>
     )
