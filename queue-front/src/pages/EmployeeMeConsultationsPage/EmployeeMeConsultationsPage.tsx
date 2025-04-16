@@ -7,7 +7,8 @@ import {routeURL} from "../../shared/api/route.ts";
 import {ROLES} from "../HomePage/HomePage.tsx";
 import {useAuth} from "../../app/context/AuthProvider/context.ts";
 import './EmployeeMeConsultationsPage.scss'
-import {Button, Collapse, CollapseProps, DatePicker, Form, Modal} from "antd";
+import {Button, Collapse, CollapseProps, DatePicker, Form} from "antd";
+import {ConsultationStudentModalList} from "../../entities/Consultation/ConsultationStudentsModalList.tsx";
 
 export const EmployeeMeConsultationsPage: FC = () => {
     const auth = useAuth();
@@ -15,8 +16,9 @@ export const EmployeeMeConsultationsPage: FC = () => {
     const [userData, setUserData] = useState<IUser | null>();
     const [currentRole, setCurrentRole] = useState<string>('')
     const [consultations, setConsultations] = useState<CollapseProps['items']>([])
-    const [modalData, setModalData] = useState();
+    const [modalData, setModalData] = useState<IConsultation | null>();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [modalItemHead, setModalItemHead] = useState<string>('')
     const itemsForBreadcrumbs = [
         {
             title: 'Электронная очередь',
@@ -55,6 +57,13 @@ export const EmployeeMeConsultationsPage: FC = () => {
         }
     }, [auth?.jwt]);
 
+    const handleConsultation = useCallback( (consultationItem: IConsultation, item: string) => {
+        console.log(consultationItem)
+        setModalData(consultationItem)
+        setIsModalOpen(true)
+        setModalItemHead(item)
+    },[])
+
     const handleFinish = useCallback(async () => {
         const myEmployeeConsultationsData = await axios.post(
             `${routeURL}/getEmployeeConsultation`,
@@ -72,15 +81,14 @@ export const EmployeeMeConsultationsPage: FC = () => {
         let collapseConsultationsItems: CollapseProps['items'] = [];
         let idx = 1;
         for (const item of Object.keys(myEmployeeConsultationsData.data)) {
-            console.log(myEmployeeConsultationsData.data[item])
             collapseConsultationsItems.push(
                 {
                     key: String(idx),
                     label: item,
                     children: (
                         <div>
-                            {myEmployeeConsultationsData.data[item].map((consultationItem: IConsultation) => (
-                                <div>
+                            {myEmployeeConsultationsData.data[item].map((consultationItem: IConsultation, idx: number) => (
+                                <div key={idx}>
                                     <div>
                                         <div className={'date'}>
                                             {DAYS[new Date(consultationItem.dateOfStart).getDay()]}
@@ -89,7 +97,13 @@ export const EmployeeMeConsultationsPage: FC = () => {
                                             {Intl.DateTimeFormat('ru-RU').format(new Date(consultationItem.dateOfStart))}
                                         </div>
                                     </div>
-                                    <Button>Узнать записавшихся</Button>
+                                    <Button
+                                        onClick={() => {
+                                            handleConsultation(consultationItem, item)
+                                        }}>
+
+                                        Узнать записавшихся
+                                    </Button>
                                 </div>
                             ))}
                         </div>
@@ -128,8 +142,11 @@ export const EmployeeMeConsultationsPage: FC = () => {
                 </div>
             </div>
             <Collapse items={consultations}/>
-            <Modal
-                open={isModalOpen}
+            <ConsultationStudentModalList
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                modalItemHead={modalItemHead}
+                modalData={modalData}
             />
         </div>
     )

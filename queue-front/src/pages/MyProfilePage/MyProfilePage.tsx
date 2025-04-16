@@ -57,7 +57,12 @@ export interface IConsultation {
     recordedStudents: {
         id: number;
         student: {
-            id: number
+            id: number;
+            fio: string;
+            name: string;
+            surname: string;
+            lastname: string;
+            group: IGroup;
         };
         isOffByEmployee: boolean;
         isOffByStudent: boolean;
@@ -135,7 +140,7 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
         const myConsultations = await axios.post(
             `${routeURL}/getMyConsultations`,
             {
-                id: myData.data.id,
+                id: myData?.data?.student?.id,
             },
             {
                 headers: {

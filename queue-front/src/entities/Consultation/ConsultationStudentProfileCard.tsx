@@ -70,13 +70,13 @@ export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard>
             </div>
             <div className={'interval'}>
                 {`${
-                    new Date(consultation?.recordedStudents.find((student) => student?.student?.id == userData?.id)?.dateStartConsultation).getHours()}
+                    new Date(consultation?.recordedStudents.find((student) => student?.student?.id == userData?.student.id)?.dateStartConsultation).getHours()}
                                     :
-                                    ${new Date(consultation?.recordedStudents.find((student) => student?.student?.id == userData?.id)?.dateStartConsultation).getMinutes() == '0' ? '00' : new Date(consultation?.recordedStudents.find((student) => student?.student?.id == userData?.id)?.dateStartConsultation).getMinutes()}
+                                    ${new Date(consultation?.recordedStudents.find((student) => student?.student?.id == userData?.student.id)?.dateStartConsultation).getMinutes() == '0' ? '00' : new Date(consultation?.recordedStudents.find((student) => student?.student?.id == userData?.student.id)?.dateStartConsultation).getMinutes()}
                                      - 
-                                     ${new Date(consultation?.recordedStudents.find((student) => student?.student?.id == userData?.id)?.dateEndConsultation).getHours()}
+                                     ${new Date(consultation?.recordedStudents.find((student) => student?.student?.id == userData?.student.id)?.dateEndConsultation).getHours()}
                                      :
-                                     ${new Date(consultation?.recordedStudents.find((student) => student?.student?.id == userData?.id)?.dateEndConsultation).getMinutes() == '0' ? '00' : new Date(consultation?.recordedStudents.find((student) => student?.student?.id == userData?.id)?.dateEndConsultation).getMinutes()}`}
+                                     ${new Date(consultation?.recordedStudents.find((student) => student?.student?.id == userData?.student.id)?.dateEndConsultation).getMinutes() == '0' ? '00' : new Date(consultation?.recordedStudents.find((student) => student?.student?.id == userData?.student.id)?.dateEndConsultation).getMinutes()}`}
             </div>
             <div className={'employeePart'}>
                 <div className={'employeeInfo'}>

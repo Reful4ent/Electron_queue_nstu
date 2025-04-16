@@ -3,7 +3,7 @@ import {LogoIcon} from "../../shared/ui/LogoIcon/LogoIcon.tsx";
 import './Header.scss'
 import {Button, ConfigProvider, Image} from "antd";
 import {useAuth} from "../../app/context/AuthProvider/context.ts";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {routeURL} from "../../shared/api/route.ts";
 import {SUBROLES_OPTIONS} from "../../pages/RegistrationPage/RegistrationPage.tsx";
@@ -23,8 +23,8 @@ export interface ISmallUserData {
 export const Header: FC = ({}) => {
     const auth = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
     const [userData, setUserData] = useState<ISmallUserData | null>();
-
 
     const getMyData = useCallback(async () => {
         const myData = await axios.get(
@@ -78,7 +78,7 @@ export const Header: FC = ({}) => {
                               strokeLinejoin="round"/>
                     </svg>
                 </Button>
-                {!auth?.jwt &&
+                {!auth?.jwt && location?.pathname?.split('/')?.[1] !== 'auth' &&
                     <Button className={'languageButton'} onClick={() => {
                         navigate('/auth/login')
                     }}>

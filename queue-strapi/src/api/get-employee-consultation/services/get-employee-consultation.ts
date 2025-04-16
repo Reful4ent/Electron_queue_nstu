@@ -5,7 +5,24 @@ export default {
         const endDate = new Date(data?.endPeriod);
 
         const employeeConsultation = await strapi.documents('api::consultation.consultation').findMany({
-            populate: '*',
+            populate: {
+                discipline: {
+                    populate: '*'
+                },
+                employee: {
+                    populate: '*'
+                },
+                recordedStudents: {
+                    populate: {
+                        student: {
+                            populate: ['group']
+                        },
+                        notRegisteredUser: {
+                            populate: '*'
+                        }
+                    }
+                }
+            },
             filters: {
                 employee: {
                     id: data.employee,

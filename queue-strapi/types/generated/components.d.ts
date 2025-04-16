@@ -29,10 +29,7 @@ export interface RecordedStudentsRecordedStudents
       'common.not-registered-user',
       false
     >;
-    student: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
+    student: Schema.Attribute.Relation<'oneToOne', 'api::student.student'>;
   };
 }
 
