@@ -1,5 +1,5 @@
 import {FC, useCallback, useEffect, useState} from "react";
-import {ProfileCard} from "../../entities/Profile/ProfileCard.tsx";
+import {ProfileCard} from "../../entities/Profile/ProfileCard/ProfileCard.tsx";
 import axios from "axios";
 import {routeURL} from "../../shared/api/route.ts";
 import {ROLES} from "../HomePage/HomePage.tsx";

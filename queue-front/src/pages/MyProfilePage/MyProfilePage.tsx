@@ -9,7 +9,7 @@ import {RedirectCard} from "../../widgets/RedirectCard/RedirectCard.tsx";
 import {CardSVGEmployeeCon} from "../../shared/ui/CardSVG/CardSVGEmployeeCon.tsx";
 import {CardSVGCreate} from "../../shared/ui/CardSVG/CardSVGCreate.tsx";
 import {ConsultationStudentProfileCard} from "../../entities/Consultation/ConsultationStudentProfileCard.tsx";
-import {ProfileCard} from "../../entities/Profile/ProfileCard.tsx";
+import {ProfileCard} from "../../entities/Profile/ProfileCard/ProfileCard.tsx";
 
 
 export interface MyProfilePageProps {
