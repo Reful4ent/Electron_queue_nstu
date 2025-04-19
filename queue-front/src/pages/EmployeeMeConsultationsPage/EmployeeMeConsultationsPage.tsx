@@ -1,4 +1,4 @@
-import {FC, use, useCallback, useEffect, useState} from "react";
+import {FC, useCallback, useEffect, useState} from "react";
 import {Breadcrumbs} from "../../widgets/Breadcrumbs/Breadcrumbs.tsx";
 import {ProfileCard} from "../../entities/Profile/ProfileCard.tsx";
 import {DAYS, IConsultation, IUser} from "../MyProfilePage/MyProfilePage.tsx";
@@ -119,9 +119,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
             idx++;
         }
         setConsultationsList(collapseConsultationsItems);
-        console.log(isModalOpen)
         if (isModalOpen) {
-            console.log(myEmployeeConsultationsData.data[currentItem].find((cons: IConsultation) => cons.documentId == currentConsultationId))
             setModalData(myEmployeeConsultationsData.data[currentItem].find((cons: IConsultation) => cons.documentId == currentConsultationId))
         }
     },[userData, isModalOpen, currentConsultationId])

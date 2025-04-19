@@ -9,11 +9,15 @@ import './ConsultationStudentProfileCard.scss'
 export interface IConsultationStudentProfileCard {
     consultation: IConsultation;
     userData?: IUser | null;
-    index: number
-    setIsModalOpen: (isModalOpen: boolean) => void
+    index: number;
+    setIsModalOpen: (isModalOpen: boolean) => void;
+    setCurrentConsultationId: (currentConsultationId: string) => void;
+    setCurrentRecordId: (currentRecordId: number) => void;
 }
 
 export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard> = ({consultation, userData, setIsModalOpen, index}) => {
+
+
     return (
         <div
             key={index}
@@ -48,7 +52,9 @@ export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard>
                             <Button
                                 type={'text'}
                                 className={'revokeButton'}
-                                onClick={() => setIsModalOpen(true)}
+                                onClick={() => {
+                                    setIsModalOpen(true);
+                                }}
                             >
                                 Отменить
                             </Button>

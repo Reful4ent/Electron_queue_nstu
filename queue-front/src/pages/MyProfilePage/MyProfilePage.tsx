@@ -159,6 +159,10 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
         }
     }, [auth?.jwt]);
 
+    const handleCancel = useCallback(async () => {
+
+    },[])
+
 
     return (
         <div className={'containerProfile'}>
@@ -207,6 +211,7 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
                     cancelText={'Нет'}
                     onOk={() => {
                         setIsModalOpen(false);
+                        handleCancel();
                     }}
                 />
             }
