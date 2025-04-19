@@ -1,9 +1,9 @@
 import {FC} from "react";
 import {Image} from "antd";
-import {ROLES} from "../../pages/HomePage/HomePage.tsx";
-import {SUBROLES_OPTIONS} from "../../pages/RegistrationPage/RegistrationPage.tsx";
-import {SocialLinks} from "../../widgets/SocialLinks/SocialLinks.tsx";
-import {IUser} from "../../pages/MyProfilePage/MyProfilePage.tsx";
+import {ROLES} from "../../../pages/HomePage/HomePage.tsx";
+import {SUBROLES_OPTIONS} from "../../../pages/RegistrationPage/RegistrationPage.tsx";
+import {SocialLinks} from "../../../widgets/SocialLinks/SocialLinks.tsx";
+import {IUser} from "../../../pages/MyProfilePage/MyProfilePage.tsx";
 import './ProfileCard.scss'
 
 export interface IProfileCard {
