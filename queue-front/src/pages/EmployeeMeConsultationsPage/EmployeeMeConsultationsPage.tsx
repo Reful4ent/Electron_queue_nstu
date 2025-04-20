@@ -1,6 +1,6 @@
 import {FC, useCallback, useEffect, useState} from "react";
 import {Breadcrumbs} from "../../widgets/Breadcrumbs/Breadcrumbs.tsx";
-import {ProfileCard} from "../../entities/Profile/ProfileCard.tsx";
+import {ProfileCard} from "../../entities/Profile/ProfileCard/ProfileCard.tsx";
 import {DAYS, IConsultation, IUser} from "../MyProfilePage/MyProfilePage.tsx";
 import axios from "axios";
 import {routeURL} from "../../shared/api/route.ts";
