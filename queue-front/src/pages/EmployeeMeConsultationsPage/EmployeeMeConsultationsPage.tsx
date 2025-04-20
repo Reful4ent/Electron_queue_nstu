@@ -34,7 +34,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
 
     const getMyData = useCallback(async () => {
         const myData = await axios.get(
-            `${routeURL}/users/me?populate[student][populate][group][populate]=*&populate[student][populate][faculty][populate]=*&populate[employee][populate][groups][populate]=*&populate[employee][populate][faculties][populate]=*&populate[employee][populate][consultations][populate]=*
+            `${routeURL}/users/me?populate[student][populate][group][populate]=*&populate[student][populate][socialLinks][populate]=*&populate[student][populate][faculty][populate]=*&populate[employee][populate][groups][populate]=*&populate[employee][populate][faculties][populate]=*&populate[employee][populate][consultations][populate]=*&populate[employee][populate][socialLinks][populate]=*
             `,
             {
                 headers: {

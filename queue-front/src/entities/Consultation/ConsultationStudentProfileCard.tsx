@@ -90,7 +90,7 @@ export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard>
                            src={'https://t4.ftcdn.net/jpg/05/17/69/51/360_F_517695126_xVHlxMfMqZlBw1dtwgtiRKjunSjxX0wj.jpg'}/>
                     <div className={'employeeTextCard'}>
                         <div
-                            className={'employeeFIO'}>{`${consultation.employee.surname} ${consultation?.employee?.name[0]}. ${consultation?.employee?.lastname && consultation.employee.lastname[0] + '.'}`}</div>
+                            className={'employeeFIO'}>{`${consultation.employee.surname} ${consultation?.employee?.name[0]}. ${consultation?.employee?.lastname ? consultation.employee.lastname[0] + '.' : ''}`}</div>
                         <div
                             className={'employeeSubRole'}>{SUBROLES_OPTIONS.find((subRole) => subRole.value == consultation.employee.subRole)?.label}</div>
                         {/*Придумать как сделать линку*/}

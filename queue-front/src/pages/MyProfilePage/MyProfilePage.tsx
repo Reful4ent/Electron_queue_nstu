@@ -34,11 +34,18 @@ export interface IGroup {
 }
 
 export interface IEmployee {
+    documentId: string;
     id: number;
     surname: string;
     name: string;
     lastname?: string | null;
     subRole: string;
+    socialLinks?: {
+        vk?: string,
+        phone?: string,
+        email?: string,
+        telegram?: string,
+    }
 }
 
 export interface IConsultation {
@@ -87,6 +94,12 @@ export interface IUser {
         id: number;
         group: IGroup;
         faculty: IFaculty
+        socialLinks?: {
+            vk?: string,
+            phone?: string,
+            email?: string,
+            telegram?: string,
+        }
     };
     employee: {
         id: number;
@@ -94,7 +107,13 @@ export interface IUser {
         groups: IGroup[];
         faculties: IFaculty[];
         consultations: IConsultation[];
-    }
+        socialLinks?: {
+            vk?: string,
+            phone?: string,
+            email?: string,
+            telegram?: string,
+        }
+    },
 }
 
 export const STATUS_OF_CONSULTATION = [
@@ -124,7 +143,7 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
 
     const getMyData = useCallback(async () => {
         const myData = await axios.get(
-            `${routeURL}/users/me?populate[student][populate][group][populate]=*&populate[student][populate][faculty][populate]=*&populate[employee][populate][groups][populate]=*&populate[employee][populate][faculties][populate]=*&populate[employee][populate][consultations][populate]=*
+            `${routeURL}/users/me?populate[student][populate][group][populate]=*&populate[student][populate][socialLinks][populate]=*&populate[student][populate][faculty][populate]=*&populate[employee][populate][groups][populate]=*&populate[employee][populate][faculties][populate]=*&populate[employee][populate][consultations][populate]=*&populate[employee][populate][socialLinks][populate]=*
             `,
             {
                 headers: {

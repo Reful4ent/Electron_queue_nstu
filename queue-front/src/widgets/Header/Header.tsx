@@ -46,7 +46,6 @@ export const Header: FC = ({}) => {
                 }
             }
         )
-        console.log(myData.data)
         setUserData(({
             id: myData?.data?.id,
             surname: myData?.data?.surname ?? '',
@@ -54,7 +53,7 @@ export const Header: FC = ({}) => {
             lastname: myData?.data?.lastname ?? '',
             subRole: myData?.data?.employee?.subRole ?? 'Студент'
         }))
-    },[])
+    },[auth?.jwt])
 
     const changeTheme = () => {
       let value;

@@ -40,6 +40,12 @@
     },
     "fio": {
       "type": "string"
+    },
+    "socialLinks": {
+      "displayName": "socialLInks",
+      "type": "component",
+      "repeatable": false,
+      "component": "common.social-l-inks"
     }
   }
 }

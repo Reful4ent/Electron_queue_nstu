@@ -9,5 +9,6 @@ export const RegistrationPage = lazy(() => import('../../../pages/RegistrationPa
 export const DeansConsultationsPage = lazy(() => import('../../../pages/DeansConsultationsPage/DeansConsultationsPage').then(m => ({default: m.DeansConsultationsPage})))
 export const EmployeesConsultationsPage = lazy(() => import('../../../pages/EmployeesConsultationsPage/EmployeesConsultationsPage').then(m => ({default: m.EmployeesConsultationsPage})))
 export const ConsultationCreatePage = lazy(() => import('../../../pages/ConsultationCreatePage/ConsultationCreatePage').then(m => ({default: m.ConsultationCreatePage})))
-export const EmployeeMeConsultationPage = lazy(() => import('../../../pages/EmployeeMeConsultationsPage/EmployeeMeConsultationsPage').then(m => ({default: m.EmployeeMeConsultationsPage})))
+export const EmployeeMeConsultationsPage = lazy(() => import('../../../pages/EmployeeMeConsultationsPage/EmployeeMeConsultationsPage').then(m => ({default: m.EmployeeMeConsultationsPage})))
 export const MyProfilePage = lazy(() => import('../../../pages/MyProfilePage/MyProfilePage').then(m => ({default: m.MyProfilePage})))
+export const RecordToEmployeePage = lazy(() => import('../../../pages/RecordToEmployeePage/RecordToEmployeePage').then(m => ({default: m.RecordToEmployeePage})))
