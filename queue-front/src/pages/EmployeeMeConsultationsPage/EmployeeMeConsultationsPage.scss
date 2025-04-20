@@ -2,6 +2,8 @@
   padding: 40px;
   display: flex;
   flex-direction: column;
+  background-color: #F5F5F5;
+  min-height: 100vh;
 
   .consultationMeHead {
     margin-top: 76px;
@@ -14,13 +16,15 @@
     display: flex;
     flex-direction: row;
     gap: 24px;
+    margin-bottom: 24px;
 
     .consultationMeForm {
       width: 110%;
-      padding: 23px;
+      padding: 24px;
       height: 214px;
       background-color: white;
       border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 
       .consultationMeFormInner {
         display: flex;
@@ -34,9 +38,165 @@
           margin-bottom: 20px;
           margin-top: 0;
         }
+
+        /* Стили для двух полей даты со стрелкой */
+        .date-picker-wrapper {
+          position: relative;
+          margin-bottom: 16px;
+
+          .date-range-picker {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            cursor: pointer;
+          }
+
+          .date-fields-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+
+            .date-field {
+              flex: 1;
+              height: 48px;
+              border: 2px solid #D9D9D9;
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              padding: 0 15px;
+              position: relative;
+              overflow: hidden;
+
+              .calendar-icon {
+                color: #00B265;
+                font-size: 20px;
+                margin-right: 10px;
+              }
+              
+              .date-text {
+                font-family: Stem;
+                font-size: 16px;
+                color: #666;
+                width: 100%;
+                text-align: center;
+              }
+            }
+            
+            .arrow-separator {
+              font-size: 25px;
+              color: #999;
+              margin: 0 12px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+          }
+        }
+
+        .get-schedule-button {
+          background-color: #FFFFFF;
+          color: #000000;
+          border: 2px solid #000000;
+          border-radius: 25px;
+          height: 48px;
+          width: 100%;
+          font-weight: 500;
+          font-size: 16px;
+          font-family: Stem;
+          
+          &:hover {
+            background-color: #f5f5f5;
+            border-color: #00B265;
+          }
+        }
       }
     }
+  }
 
+  .consultations-collapse {
+    width: 100%;
+    
+    .consultation-subject {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      font-weight: 500;
+      font-size: 16px;
+      
+      .room-number {
+        color: #006431;
+        font-weight: normal;
+      }
+    }
+    
+    .consultation-dates-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      
+      .consultation-date-item {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        
+        .consultation-date-info {
+          text-align: center;
+          margin-bottom: 16px;
+          
+          .date-day {
+            font-weight: 500;
+            font-size: 20px;
+            margin-bottom: 4px;
+          }
+          
+          .date-value {
+            font-size: 20px;
+            color: #333;
+          }
+        }
+        
+        .consultation-button {
+          width: 100%;
+          border-radius: 10px;
+          background-color: #fafafa;
+          border: 1px solid #e8e8e8;
+          
+          &:hover {
+            background-color: #f0f0f0;
+          }
+        }
+      }
+    }
+    
+    .ant-collapse-content-box {
+      padding: 24px;
+    }
+    
+    .ant-collapse-item {
+      margin-bottom: 16px;
+      border-radius: 12px !important;
+      overflow: hidden;
+      
+      .ant-collapse-header {
+        padding: 16px 24px;
+        background-color: #fff;
+        border-radius: 12px 12px 0 0;
+      }
+      
+      .ant-collapse-content {
+        border-top: 1px solid #f0f0f0;
+      }
+    }
   }
 }
 
@@ -46,7 +206,6 @@
   font-size: 28px;
   margin-bottom: 20px;
   margin-top: 0;
-
 }
 
 .modalConsultationList {
@@ -96,7 +255,59 @@
         gap: 10px;
         .modalStudentsListItemProfileImage {
           border-radius: 50%;
+        }
+      }
+    }
+  }
+}
 
+/* Стили для календаря */
+.ant-picker-dropdown {
+  .ant-picker-panel-container {
+    .ant-picker-panel {
+      .ant-picker-header {
+        color: #000;
+        font-weight: 500;
+        
+        .ant-picker-header-view {
+          font-weight: 500;
+          font-size: 16px;
+        }
+      }
+      
+      .ant-picker-body {
+        .ant-picker-content {
+          th {
+            font-weight: 500;
+          }
+          
+          .ant-picker-cell {
+            &.ant-picker-cell-in-view {
+              &.ant-picker-cell-selected, 
+              &.ant-picker-cell-range-start,
+              &.ant-picker-cell-range-end {
+                .ant-picker-cell-inner {
+                  background-color: #00B265;
+                }
+              }
+              
+              &.ant-picker-cell-in-range {
+                &::before {
+                  background-color: rgba(0, 178, 101, 0.1);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    .ant-picker-footer {
+      .ant-picker-ranges {
+        .ant-picker-ok {
+          .ant-btn {
+            background-color: #00B265;
+          }
         }
       }
     }
