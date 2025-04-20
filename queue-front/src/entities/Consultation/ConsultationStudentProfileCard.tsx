@@ -9,18 +9,16 @@ import './ConsultationStudentProfileCard.scss'
 export interface IConsultationStudentProfileCard {
     consultation: IConsultation;
     userData?: IUser | null;
-    index: number;
     setIsModalOpen: (isModalOpen: boolean) => void;
     setCurrentConsultationId: (currentConsultationId: string) => void;
-    setCurrentRecordId: (currentRecordId: number) => void;
+    setCurrentRecordId: (currentRecordId: number| undefined) => void;
 }
 
-export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard> = ({consultation, userData, setIsModalOpen, index}) => {
+export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard> = ({consultation, userData, setIsModalOpen, setCurrentConsultationId, setCurrentRecordId}) => {
 
 
     return (
         <div
-            key={index}
             className={(!consultation?.recordedStudents.find((student) => student?.student?.id == userData?.student.id)?.isOffByStudent
                 && !consultation?.recordedStudents.find((student) => student?.student?.id == userData?.student.id)?.isOffByEmployee
                 && !consultation.isOffByEmployee)
@@ -54,6 +52,8 @@ export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard>
                                 className={'revokeButton'}
                                 onClick={() => {
                                     setIsModalOpen(true);
+                                    setCurrentConsultationId(consultation.documentId)
+                                    setCurrentRecordId(consultation?.recordedStudents?.find((student) => student?.student?.id == userData?.student.id)?.id)
                                 }}
                             >
                                 Отменить

@@ -119,6 +119,8 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
     const [currentRole, setCurrentRole] = useState<string>('')
     const [myConsultationsStudent, setMyConsultationsStudent] = useState<IConsultation[] | null>([])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [currentConsultationId, setCurrentConsultationId] = useState<string>('')
+    const [currentRecordId, setCurrentRecordId] = useState<number | null>()
 
     const getMyData = useCallback(async () => {
         const myData = await axios.get(
@@ -160,8 +162,42 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
     }, [auth?.jwt]);
 
     const handleCancel = useCallback(async () => {
+        console.log(currentConsultationId, currentRecordId)
+        if (currentConsultationId && currentRecordId) {
+            try {
+                await axios.post(
+                    `${routeURL}/deleteStudentRecord`,
+                    {
+                        consultationId: currentConsultationId,
+                        recordId: currentRecordId,
+                        userType: 'Student'
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${auth?.jwt}`,
+                        }
+                    }
+                )
+            } catch (e) {
+                console.log(e)
+            }
+        }
 
-    },[])
+
+        const myConsultations = await axios.post(
+            `${routeURL}/getMyConsultations`,
+            {
+                id: userData?.student?.id,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${auth?.jwt}`,
+                }
+            }
+        )
+
+        setMyConsultationsStudent(myConsultations.data)
+    },[currentConsultationId, currentRecordId])
 
 
     return (
@@ -192,10 +228,12 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
                 <div className={'myConsultationList'}>
                     {myConsultationsStudent?.map((consultation, index) => (
                         <ConsultationStudentProfileCard
+                            key={index}
                             consultation={consultation}
                             userData={userData}
-                            index={index}
                             setIsModalOpen={setIsModalOpen}
+                            setCurrentConsultationId={setCurrentConsultationId}
+                            setCurrentRecordId={setCurrentRecordId}
                         />
                     ))}
                 </div>
@@ -210,8 +248,8 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
                     okType={'primary'}
                     cancelText={'Нет'}
                     onOk={() => {
-                        setIsModalOpen(false);
                         handleCancel();
+                        setIsModalOpen(false);
                     }}
                 />
             }
