@@ -3,11 +3,12 @@ import {Breadcrumbs} from "../../widgets/Breadcrumbs/Breadcrumbs.tsx";
 import {Button, Collapse, CollapseProps, DatePicker, Form, Image} from "antd";
 import {useAuth} from "../../app/context/AuthProvider/context.ts";
 import './RecordToEmployeePage.scss'
-import {IEmployee} from "../MyProfilePage/MyProfilePage.tsx";
+import {IConsultation, IEmployee} from "../MyProfilePage/MyProfilePage.tsx";
 import {SocialLinks} from "../../widgets/SocialLinks/SocialLinks.tsx";
 import axios from "axios";
 import {routeURL} from "../../shared/api/route.ts";
 import {useParams} from "react-router-dom";
+import {RecordConsultationListCard} from "../../entities/Consultation/RecordConsultationListCard.tsx";
 
 export const RecordToEmployeePage: FC = () => {
     const auth = useAuth();
@@ -15,6 +16,7 @@ export const RecordToEmployeePage: FC = () => {
     const [form] = Form.useForm();
     const [currentEmployee, setCurrentEmployee] = useState<IEmployee | null>()
     const [consultationsList, setConsultationsList] = useState<CollapseProps['items']>([])
+
     const itemsForBreadcrumbs = [
         {
             title: 'Электронная очередь',
@@ -38,10 +40,47 @@ export const RecordToEmployeePage: FC = () => {
                 }
             }
         )
-        console.log(employeeData)
 
         setCurrentEmployee(employeeData.data.data)
     },[])
+
+    const handleFinish = useCallback(async () => {
+        const myEmployeeConsultationsData = await axios.post(
+            `${routeURL}/getEmployeeConsultation`,
+            {
+                employee: currentEmployee?.id,
+                startPeriod: form.getFieldValue('period')[0],
+                endPeriod: form.getFieldValue('period')[1],
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${auth?.jwt}`,
+                }
+            }
+        )
+        let collapseConsultationsItems: CollapseProps['items'] = [];
+        let idx = 1;
+        for (const item of Object.keys(myEmployeeConsultationsData.data)) {
+            collapseConsultationsItems.push(
+                {
+                    key: String(idx),
+                    label: item,
+                    children: (
+                        <div>
+                            {myEmployeeConsultationsData.data[item].map((consultationItem: IConsultation, idx: number) => (
+                                <RecordConsultationListCard
+                                    key={idx}
+                                    consultationItem={consultationItem}
+                                />
+                            ))}
+                        </div>
+                    )
+                }
+            )
+            idx++;
+        }
+        setConsultationsList(collapseConsultationsItems);
+    }, [currentEmployee])
 
     useEffect(() => {
         if (auth?.jwt) {
@@ -74,8 +113,7 @@ export const RecordToEmployeePage: FC = () => {
                     </div>
                 </div>
                 <div className={'consultationMeForm'}>
-                    <Form layout={'vertical'} className={'consultationMeFormInner'} onFinish={() => {
-                    }} form={form}>
+                    <Form layout={'vertical'} className={'consultationMeFormInner'} onFinish={handleFinish} form={form}>
                         <p className={'consultationMeFormHead'}>
                             Выберите период
                         </p>
