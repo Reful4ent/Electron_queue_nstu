@@ -9,15 +9,9 @@ import './ProfileCard.scss'
 export interface IProfileCard {
     userData: IUser | null,
     currentRole: string
-    socialLinks?: {
-        vk?: string,
-        phone?: string,
-        email?: string,
-        telegram?: string,
-    }
 }
 
-export const ProfileCard: FC<IProfileCard> = ({userData, currentRole, socialLinks}) => {
+export const ProfileCard: FC<IProfileCard> = ({userData, currentRole}) => {
     return (
         <div className={'profileCard'}>
             {/*ToDo: Поменять изображение*/}
@@ -37,12 +31,30 @@ export const ProfileCard: FC<IProfileCard> = ({userData, currentRole, socialLink
                     }
                 </div>
                 {/*ToDo: Создать социалс в страпи и сделать универсальным*/}
-                {socialLinks &&
+                {userData && currentRole == ROLES[0] &&
                     <SocialLinks
-                        vkLink={socialLinks.vk}
-                        phone={socialLinks.phone}
-                        telegramLink={socialLinks.telegram}
-                        email={socialLinks.email}
+                        vkLink={userData?.student?.socialLinks?.vk}
+                        phone={userData?.student?.socialLinks?.phone}
+                        telegramLink={userData?.student?.socialLinks?.telegram}
+                        email={userData?.student?.socialLinks?.email}
+                    />
+                }
+                {
+                    userData && currentRole == ROLES[1] &&
+                    <SocialLinks
+                        vkLink={userData?.employee?.socialLinks?.vk}
+                        phone={userData?.employee?.socialLinks?.phone}
+                        telegramLink={userData?.student?.socialLinks?.telegram}
+                        email={userData?.employee?.socialLinks?.email}
+                    />
+                }
+                {
+                    userData && currentRole == ROLES[2] &&
+                    <SocialLinks
+                        vkLink={userData?.employee?.socialLinks?.vk || userData?.student?.socialLinks?.vk}
+                        phone={userData?.employee?.socialLinks?.phone || userData?.student?.socialLinks?.phone}
+                        telegramLink={userData?.student?.socialLinks?.telegram || userData?.student?.socialLinks?.telegram}
+                        email={userData?.employee?.socialLinks?.email || userData?.student?.socialLinks?.email}
                     />
                 }
             </div>

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_common_social_l_inks",
+  "info": {
+    "displayName": "socialLInks"
+  },
+  "options": {},
+  "attributes": {
+    "vk": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "telegram": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    }
+  }
+}

@@ -34,15 +34,23 @@ export interface IGroup {
 }
 
 export interface IEmployee {
+    documentId: string;
     id: number;
     surname: string;
     name: string;
     lastname?: string | null;
     subRole: string;
+    socialLinks?: {
+        vk?: string,
+        phone?: string,
+        email?: string,
+        telegram?: string,
+    }
 }
 
 export interface IConsultation {
     id: number;
+    documentId: string
     title: string;
     discipline: {
         id: number
@@ -86,6 +94,12 @@ export interface IUser {
         id: number;
         group: IGroup;
         faculty: IFaculty
+        socialLinks?: {
+            vk?: string,
+            phone?: string,
+            email?: string,
+            telegram?: string,
+        }
     };
     employee: {
         id: number;
@@ -93,7 +107,13 @@ export interface IUser {
         groups: IGroup[];
         faculties: IFaculty[];
         consultations: IConsultation[];
-    }
+        socialLinks?: {
+            vk?: string,
+            phone?: string,
+            email?: string,
+            telegram?: string,
+        }
+    },
 }
 
 export const STATUS_OF_CONSULTATION = [
@@ -118,10 +138,12 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
     const [currentRole, setCurrentRole] = useState<string>('')
     const [myConsultationsStudent, setMyConsultationsStudent] = useState<IConsultation[] | null>([])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [currentConsultationId, setCurrentConsultationId] = useState<string>('')
+    const [currentRecordId, setCurrentRecordId] = useState<number | null>()
 
     const getMyData = useCallback(async () => {
         const myData = await axios.get(
-            `${routeURL}/users/me?populate[student][populate][group][populate]=*&populate[student][populate][faculty][populate]=*&populate[employee][populate][groups][populate]=*&populate[employee][populate][faculties][populate]=*&populate[employee][populate][consultations][populate]=*
+            `${routeURL}/users/me?populate[student][populate][group][populate]=*&populate[student][populate][socialLinks][populate]=*&populate[student][populate][faculty][populate]=*&populate[employee][populate][groups][populate]=*&populate[employee][populate][faculties][populate]=*&populate[employee][populate][consultations][populate]=*&populate[employee][populate][socialLinks][populate]=*
             `,
             {
                 headers: {
@@ -137,10 +159,56 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
         } else if (myData?.data?.student) {
             setCurrentRole(ROLES[0])
         }
+        if(myData?.data?.student) {
+            const myConsultations = await axios.post(
+                `${routeURL}/getMyConsultations`,
+                {
+                    id: myData?.data?.student?.id,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth?.jwt}`,
+                    }
+                }
+            )
+
+            setMyConsultationsStudent(myConsultations.data)
+        }
+    },[])
+
+    useEffect(() => {
+        if(auth?.jwt) {
+            getMyData()
+        }
+    }, [auth?.jwt]);
+
+    const handleCancel = useCallback(async () => {
+        console.log(currentConsultationId, currentRecordId)
+        if (currentConsultationId && currentRecordId) {
+            try {
+                await axios.post(
+                    `${routeURL}/deleteStudentRecord`,
+                    {
+                        consultationId: currentConsultationId,
+                        recordId: currentRecordId,
+                        userType: 'Student'
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${auth?.jwt}`,
+                        }
+                    }
+                )
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
+
         const myConsultations = await axios.post(
             `${routeURL}/getMyConsultations`,
             {
-                id: myData?.data?.student?.id,
+                id: userData?.student?.id,
             },
             {
                 headers: {
@@ -150,13 +218,7 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
         )
 
         setMyConsultationsStudent(myConsultations.data)
-    },[])
-
-    useEffect(() => {
-        if(auth?.jwt) {
-            getMyData()
-        }
-    }, [auth?.jwt]);
+    },[currentConsultationId, currentRecordId])
 
 
     return (
@@ -187,10 +249,12 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
                 <div className={'myConsultationList'}>
                     {myConsultationsStudent?.map((consultation, index) => (
                         <ConsultationStudentProfileCard
+                            key={index}
                             consultation={consultation}
                             userData={userData}
-                            index={index}
                             setIsModalOpen={setIsModalOpen}
+                            setCurrentConsultationId={setCurrentConsultationId}
+                            setCurrentRecordId={setCurrentRecordId}
                         />
                     ))}
                 </div>
@@ -205,6 +269,7 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
                     okType={'primary'}
                     cancelText={'Нет'}
                     onOk={() => {
+                        handleCancel();
                         setIsModalOpen(false);
                     }}
                 />

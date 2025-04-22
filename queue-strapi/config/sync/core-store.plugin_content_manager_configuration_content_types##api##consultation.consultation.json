@@ -1,0 +1,331 @@
+{
+  "key": "plugin_content_manager_configuration_content_types::api::consultation.consultation",
+  "value": {
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "title",
+      "defaultSortBy": "title",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "title": {
+        "edit": {
+          "label": "title",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "Название",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "dateOfStart": {
+        "edit": {
+          "label": "dateOfStart",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "Дата начала",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "dateOfEnd": {
+        "edit": {
+          "label": "dateOfEnd",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "дата окончания",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "recordedStudents": {
+        "edit": {
+          "label": "recordedStudents",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "recordedStudents",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "discipline": {
+        "edit": {
+          "label": "discipline",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "title"
+        },
+        "list": {
+          "label": "Дисциплина",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "employee": {
+        "edit": {
+          "label": "employee",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "fio"
+        },
+        "list": {
+          "label": "Сотрудник",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "duration": {
+        "edit": {
+          "label": "duration",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "duration",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "isOffByEmployee": {
+        "edit": {
+          "label": "isOffByEmployee",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "isOffByEmployee",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "corps": {
+        "edit": {
+          "label": "corps",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "corps",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "audience": {
+        "edit": {
+          "label": "audience",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "audience",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "groups": {
+        "edit": {
+          "label": "groups",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "title"
+        },
+        "list": {
+          "label": "groups",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "durationNumber": {
+        "edit": {
+          "label": "durationNumber",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "durationNumber",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "createdAt": {
+        "edit": {
+          "label": "createdAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "createdAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedAt": {
+        "edit": {
+          "label": "updatedAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "updatedAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "createdBy": {
+        "edit": {
+          "label": "createdBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "createdBy",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedBy": {
+        "edit": {
+          "label": "updatedBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "updatedBy",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "list": [
+        "id",
+        "title",
+        "employee",
+        "discipline",
+        "dateOfStart",
+        "dateOfEnd"
+      ],
+      "edit": [
+        [
+          {
+            "name": "title",
+            "size": 6
+          },
+          {
+            "name": "dateOfStart",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "dateOfEnd",
+            "size": 6
+          },
+          {
+            "name": "duration",
+            "size": 4
+          }
+        ],
+        [
+          {
+            "name": "recordedStudents",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "discipline",
+            "size": 6
+          },
+          {
+            "name": "employee",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "isOffByEmployee",
+            "size": 4
+          },
+          {
+            "name": "corps",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "audience",
+            "size": 6
+          },
+          {
+            "name": "groups",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "durationNumber",
+            "size": 4
+          }
+        ]
+      ]
+    },
+    "uid": "api::consultation.consultation"
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

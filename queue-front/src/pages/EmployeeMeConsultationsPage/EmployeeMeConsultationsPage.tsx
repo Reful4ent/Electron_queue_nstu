@@ -15,9 +15,12 @@ export const EmployeeMeConsultationsPage: FC = () => {
     const [form] = Form.useForm();
     const [userData, setUserData] = useState<IUser | null>();
     const [currentRole, setCurrentRole] = useState<string>('')
-    const [consultations, setConsultations] = useState<CollapseProps['items']>([])
+    const [consultationsList, setConsultationsList] = useState<CollapseProps['items']>([])
+    const [currentConsultationId, setCurrentConsultationId] = useState<string>('')
+    const [currentItem, setCurrentItem] = useState<string>('')
     const [modalData, setModalData] = useState<IConsultation | null>();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [isModalUpdated, setIsModalUpdated] = useState<boolean>(true)
     const [modalItemHead, setModalItemHead] = useState<string>('')
     const itemsForBreadcrumbs = [
         {
@@ -31,7 +34,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
 
     const getMyData = useCallback(async () => {
         const myData = await axios.get(
-            `${routeURL}/users/me?populate[student][populate][group][populate]=*&populate[student][populate][faculty][populate]=*&populate[employee][populate][groups][populate]=*&populate[employee][populate][faculties][populate]=*&populate[employee][populate][consultations][populate]=*
+            `${routeURL}/users/me?populate[student][populate][group][populate]=*&populate[student][populate][socialLinks][populate]=*&populate[student][populate][faculty][populate]=*&populate[employee][populate][groups][populate]=*&populate[employee][populate][faculties][populate]=*&populate[employee][populate][consultations][populate]=*&populate[employee][populate][socialLinks][populate]=*
             `,
             {
                 headers: {
@@ -58,13 +61,15 @@ export const EmployeeMeConsultationsPage: FC = () => {
     }, [auth?.jwt]);
 
     const handleConsultation = useCallback( (consultationItem: IConsultation, item: string) => {
-        console.log(consultationItem)
         setModalData(consultationItem)
         setIsModalOpen(true)
+        setIsModalUpdated(false)
         setModalItemHead(item)
     },[])
 
+
     const handleFinish = useCallback(async () => {
+        setIsModalUpdated(false)
         const myEmployeeConsultationsData = await axios.post(
             `${routeURL}/getEmployeeConsultation`,
             {
@@ -100,6 +105,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
                                     <Button
                                         onClick={() => {
                                             handleConsultation(consultationItem, item)
+                                            setCurrentItem(item)
                                         }}>
 
                                         Узнать записавшихся
@@ -112,8 +118,17 @@ export const EmployeeMeConsultationsPage: FC = () => {
             )
             idx++;
         }
-        setConsultations(collapseConsultationsItems);
-    },[userData])
+        setConsultationsList(collapseConsultationsItems);
+        if (isModalOpen) {
+            setModalData(myEmployeeConsultationsData.data[currentItem].find((cons: IConsultation) => cons.documentId == currentConsultationId))
+        }
+    },[userData, isModalOpen, currentConsultationId])
+
+    useEffect(() => {
+        if(isModalUpdated) {
+            handleFinish();
+        }
+    }, [isModalUpdated, currentConsultationId]);
 
     return (
         <div className={'consultationMeContainer'}>
@@ -125,7 +140,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
                     currentRole={currentRole}
                 />
                 <div className={'consultationMeForm'}>
-                    <Form layout={'vertical'} className={'consultationMeFormInner'} onFinish={() => handleFinish()} form={form}>
+                    <Form layout={'vertical'} className={'consultationMeFormInner'} onFinish={handleFinish} form={form}>
                         <p className={'consultationMeFormHead'}>
                             Выберите период
                         </p>
@@ -141,10 +156,12 @@ export const EmployeeMeConsultationsPage: FC = () => {
                     </Form>
                 </div>
             </div>
-            <Collapse items={consultations}/>
+            <Collapse items={consultationsList}/>
             <ConsultationStudentModalList
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
+                setCurrentConsultationId={setCurrentConsultationId}
+                setIsModalUpdated={setIsModalUpdated}
                 modalItemHead={modalItemHead}
                 modalData={modalData}
             />

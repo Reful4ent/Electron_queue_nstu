@@ -7,10 +7,11 @@ import {
     ErrorPage,
     HomePage, MyProfilePage,
     RegistrationPage,
-    SignInPage
+    SignInPage,
+    EmployeeMeConsultationsPage, RecordToEmployeePage
 } from "../lazyPages/lazyPages.tsx";
 import {PrivateRoute} from "../../../features/PrivateRoute/PrivateRoute.tsx";
-import {EmployeeMeConsultationsPage} from "../../../pages/EmployeeMeConsultationsPage/EmployeeMeConsultationsPage.tsx";
+
 
 export const router: RouteObject[] = [
     {
@@ -41,6 +42,14 @@ export const router: RouteObject[] = [
             {
                 path: '/profile/:id',
                 element: <PrivateRoute><MyProfilePage/></PrivateRoute>
+            },
+            {
+                path: '/recording/employee/:id',
+                element: <PrivateRoute><RecordToEmployeePage/></PrivateRoute>
+            },
+            {
+                path: '/recording/deans/:id',
+                element: <RecordToEmployeePage/>
             },
             {
                 path: "*",

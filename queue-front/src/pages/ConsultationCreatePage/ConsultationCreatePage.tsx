@@ -66,7 +66,7 @@ export const ConsultationCreatePage: FC = () => {
 
     const getMyData = useCallback(async () => {
         const myData = await axios.get(
-            `${routeURL}/users/me?populate[student][populate][group][populate]=*&populate[student][populate][faculty][populate]=*&populate[employee][populate][groups][populate]=*&populate[employee][populate][faculties][populate]=*&populate[employee][populate][consultations][populate]=*
+            `${routeURL}/users/me?populate[student][populate][group][populate]=*&populate[student][populate][socialLinks][populate]=*&populate[student][populate][faculty][populate]=*&populate[employee][populate][groups][populate]=*&populate[employee][populate][faculties][populate]=*&populate[employee][populate][consultations][populate]=*&populate[employee][populate][socialLinks][populate]=*
             `,
             {
                 headers: {
@@ -74,6 +74,8 @@ export const ConsultationCreatePage: FC = () => {
                 }
             }
         )
+
+        console.log(myData.data)
 
         setGroupOptions([{ label: 'Для всех', value: 0 }].concat(
             myData?.data?.employee?.groups?.map((group: IGroup) => ({
@@ -98,7 +100,20 @@ export const ConsultationCreatePage: FC = () => {
                 }
             }
         )
-        setDisciplinesOptions(disciplinesData?.data?.data?.map((discipline: IDiscipline) => ({label: discipline.title, value: discipline.id})) ?? [])
+
+        setDisciplinesOptions(
+            disciplinesData?.data?.data
+                ?.map((discipline: IDiscipline) => ({label: discipline.title, value: discipline.id}))
+                ?.filter((option: OptionsType) => {
+                    if (myData?.data?.employee?.subRole == 'LECTURER') {
+                        return !option.label.toLowerCase().includes('консультация')
+                    } else {
+                        return option.label.toLowerCase().includes('консультация')
+                    }
+                })
+            ??
+            []
+        )
     },[])
 
     useEffect(() => {

@@ -1,22 +1,78 @@
-import {FC} from "react";
+import {FC, useCallback} from "react";
 import {DAYS, IConsultation} from "../../pages/MyProfilePage/MyProfilePage.tsx";
 import {Button, Image, Modal} from "antd";
+import axios from "axios";
+import {routeURL} from "../../shared/api/route.ts";
+import {useAuth} from "../../app/context/AuthProvider/context.ts";
 
 export interface IConsultationStudentsList {
     isModalOpen: boolean;
     setIsModalOpen: (isOpen: boolean) => void;
+    setIsModalUpdated: (isOpen: boolean) => void;
+    setCurrentConsultationId: (currentConsultationId: string) => void;
     modalItemHead: string;
     modalData?: IConsultation | null;
 }
 
-export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isModalOpen, setIsModalOpen, modalItemHead, modalData}) => {
+export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isModalOpen, setIsModalOpen, modalItemHead, modalData, setIsModalUpdated, setCurrentConsultationId}) => {
+    const auth = useAuth();
+
+    const handleCancelRecord = useCallback( async (consId: string, recordId: number) => {
+        if (consId && recordId) {
+            try {
+                await axios.post(
+                    `${routeURL}/deleteStudentRecord`,
+                    {
+                        consultationId: consId,
+                        recordId: recordId,
+                        userType: 'Employee'
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${auth?.jwt}`,
+                        }
+                    }
+                )
+                setCurrentConsultationId(consId);
+                setIsModalUpdated(true);
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    },[])
+
+
+    const handleCancelConsultation = useCallback(async (id?: string) => {
+        if(id) {
+            try {
+                await axios.put(
+                    `${routeURL}/consultations/${id}`,
+                    {
+                        data: {
+                            isOffByEmployee: true,
+                        }
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${auth?.jwt}`,
+                        }
+                    }
+                )
+                setIsModalUpdated(true);
+                setIsModalOpen(false);
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    },[])
+
     return (
         <Modal
             centered
             open={isModalOpen}
             onCancel={() => setIsModalOpen(false)}
             footer={[
-                <Button key="submit" color="danger" variant="solid" onClick={() => {}}>
+                <Button key="submit" color="danger" variant="solid" onClick={() => handleCancelConsultation(modalData?.documentId)}>
                     Отменить консультацию
                 </Button>,
                 <Button key="back" color="primary" variant="solid" onClick={() => setIsModalOpen(false)}>
@@ -37,7 +93,10 @@ export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isM
                 </div>
                 <div className={'modalConsultationBody'}>
                     {
-                        modalData?.recordedStudents.map((recordedStudent, index) => (
+                        modalData?.recordedStudents
+                            .sort((a, b) => new Date(a?.dateStartConsultation).getTime() - new Date(b?.dateStartConsultation).getTime())
+                            .filter((a) => !a.isOffByEmployee && !a.isOffByStudent)
+                            .map((recordedStudent, index) => (
                             <>
                                 {(recordedStudent.student || recordedStudent.notRegisteredUser) ?
                                     <div key={index} className={'modalStudentsListItem'}>
@@ -84,7 +143,7 @@ export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isM
                                                          ${String(new Date(recordedStudent?.dateEndConsultation).getMinutes()) == '0' ? '00' : new Date(recordedStudent?.dateEndConsultation).getMinutes()}`}
                                                 </div>
                                             </div>
-                                            <Button color="danger" variant="solid" onClick={() => {}}>
+                                            <Button color="danger" variant="solid" onClick={() => handleCancelRecord(modalData?.documentId, recordedStudent?.id)}>
                                                 Отменить запись
                                             </Button>
                                         </div>
