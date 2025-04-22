@@ -61,7 +61,7 @@ export const DeansConsultationsPage: FC = ({}) => {
             </div>
             <div className={'employeeList'}>
                 {employees?.map((employee, index) => (
-                    <EmployeeCardSearch employee={employee} link={`/recording/deans/${employee.id}`} key={index}/>
+                    <EmployeeCardSearch employee={employee} link={`/recording/deans/${employee.documentId}`} key={index}/>
                 ))}
             </div>
         </div>

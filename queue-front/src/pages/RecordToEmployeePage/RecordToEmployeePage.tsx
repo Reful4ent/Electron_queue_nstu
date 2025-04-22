@@ -36,13 +36,7 @@ export const RecordToEmployeePage: FC = () => {
     const getEmployee = useCallback(async () => {
         const employeeData = await axios.get(
             `${routeURL}/employees/${id}?populate[socialLinks]=*`,
-            {
-                headers: {
-                    Authorization: `Bearer ${auth?.jwt}`,
-                }
-            }
         )
-
         setCurrentEmployee(employeeData.data.data)
     },[])
 
@@ -102,8 +96,8 @@ export const RecordToEmployeePage: FC = () => {
     useEffect(() => {
         if (auth?.jwt) {
             getStudentId();
-            getEmployee();
         }
+        getEmployee();
     }, []);
 
     return (

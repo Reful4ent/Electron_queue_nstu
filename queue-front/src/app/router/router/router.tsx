@@ -48,6 +48,10 @@ export const router: RouteObject[] = [
                 element: <PrivateRoute><RecordToEmployeePage/></PrivateRoute>
             },
             {
+                path: '/recording/deans/:id',
+                element: <RecordToEmployeePage/>
+            },
+            {
                 path: "*",
                 element: <Navigate to="home"/>
             },

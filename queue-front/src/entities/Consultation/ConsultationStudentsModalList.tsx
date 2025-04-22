@@ -94,7 +94,7 @@ export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isM
                 <div className={'modalConsultationBody'}>
                     {
                         modalData?.recordedStudents
-                            .sort((a, b) => new Date(a?.dateStartConsultation).getHours() - new Date(b?.dateStartConsultation).getHours())
+                            .sort((a, b) => new Date(a?.dateStartConsultation).getTime() - new Date(b?.dateStartConsultation).getTime())
                             .filter((a) => !a.isOffByEmployee && !a.isOffByStudent)
                             .map((recordedStudent, index) => (
                             <>

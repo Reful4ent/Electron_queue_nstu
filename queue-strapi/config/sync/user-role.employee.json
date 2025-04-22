@@ -71,6 +71,11 @@
       "locale": null
     },
     {
+      "documentId": "he0ykn1xrm92pa1kt35e4sor",
+      "action": "api::get-my-consultations.get-my-consultations.getMyConsultations",
+      "locale": null
+    },
+    {
       "documentId": "fbcev2jl7ilr4vrx8hi6zcfi",
       "action": "api::group.group.find",
       "locale": null

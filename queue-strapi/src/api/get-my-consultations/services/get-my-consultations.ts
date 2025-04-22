@@ -2,7 +2,6 @@
 
 export default {
     getMyConsultations: async(data) => {
-        console.log(data);
         const consultations = await strapi.documents('api::consultation.consultation').findMany({
             filters: {
                 recordedStudents: {
@@ -23,7 +22,7 @@ export default {
                 employee: {
                     populate: '*'
                 }
-            }
+            },
         })
         return consultations;
     },

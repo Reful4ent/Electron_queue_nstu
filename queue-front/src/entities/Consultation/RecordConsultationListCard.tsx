@@ -1,6 +1,6 @@
 import {FC, useCallback, useState} from "react";
 import {DAYS, IConsultation} from "../../pages/MyProfilePage/MyProfilePage.tsx";
-import {Button, Form, message, Radio} from "antd";
+import {Button, Form, Input, message, Modal, Radio} from "antd";
 import './RecordConsultationListCard.scss'
 import axios from "axios";
 import {routeURL} from "../../shared/api/route.ts";
@@ -13,9 +13,11 @@ export interface IRecordConsultationListCard {
 
 export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({consultationItem, studentId, handleFinish}) => {
     const [form] = Form.useForm();
+    const [modalForm] = Form.useForm();
     const [isOpenList, setIsOpenList] = useState<boolean>(false)
     const [isError, setIsError] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
     const handleRecord = useCallback(async () => {
         const recordResult = await axios.post(
@@ -24,6 +26,8 @@ export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({con
                 recordId: form.getFieldValue('currentSelectedTime'),
                 consultationId: consultationItem.documentId,
                 studentId: studentId,
+                surname: modalForm.getFieldValue('surname'),
+                name: modalForm.getFieldValue('name')
             }
         )
         if(!recordResult.data || recordResult.data.length === 0) {
@@ -68,8 +72,8 @@ export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({con
                     >
                         {
                             consultationItem?.recordedStudents
-                                .sort((a, b) => new Date(a?.dateStartConsultation).getHours() - new Date(b?.dateStartConsultation).getHours())
                                 .filter((a) => !a.isOffByEmployee && !a.isOffByStudent)
+                                .sort((a, b) => new Date(a?.dateStartConsultation).getTime() - new Date(b?.dateStartConsultation).getTime())
                                 .map((recordedStudent, index) => (
                                     <Radio.Button
                                         key={index}
@@ -96,10 +100,12 @@ export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({con
                     if (!isOpenList) {
                         setIsOpenList(true)
                     } else {
-                        if(typeof form.getFieldsValue().currentSelectedTime == 'undefined') {
+                        if(typeof form.getFieldValue('currentSelectedTime') == 'undefined') {
                             setIsError(true)
-                        } else {
+                        } else if (typeof form.getFieldValue('currentSelectedTime') != 'undefined' && studentId) {
                             handleRecord()
+                        } else {
+                            setIsModalOpen(true)
                         }
                     }
                 }}
@@ -107,6 +113,37 @@ export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({con
 
                 {isOpenList ? 'Записаться' : 'Узнать свободное время'}
             </Button>
+            <Modal
+                open={isModalOpen}
+                onCancel={() => setIsModalOpen(false)}
+                footer={null}
+            >
+                <Form
+                    layout={'vertical'}
+                    form={modalForm}
+                    onFinish={() => {
+                        setIsModalOpen(false)
+                        handleRecord()
+                    }}
+                >
+                    <p>Запись на консультацию в деканат</p>
+                    <Form.Item
+                        name={'surname'}
+                        rules={[{required: true, message: "Введите фамилию для записи"}]}
+                    >
+                        <Input placeholder={'Фамилия'}/>
+                    </Form.Item>
+                    <Form.Item
+                        name={'name'}
+                        rules={[{required: true, message: "Введите имя для записи"}]}
+                    >
+                        <Input placeholder={'Имя'}/>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button htmlType={'submit'}>Записаться</Button>
+                    </Form.Item>
+                </Form>
+            </Modal>
         </div>
     )
 }

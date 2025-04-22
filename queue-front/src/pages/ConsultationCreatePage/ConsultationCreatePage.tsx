@@ -100,7 +100,20 @@ export const ConsultationCreatePage: FC = () => {
                 }
             }
         )
-        setDisciplinesOptions(disciplinesData?.data?.data?.map((discipline: IDiscipline) => ({label: discipline.title, value: discipline.id})) ?? [])
+
+        setDisciplinesOptions(
+            disciplinesData?.data?.data
+                ?.map((discipline: IDiscipline) => ({label: discipline.title, value: discipline.id}))
+                ?.filter((option: OptionsType) => {
+                    if (myData?.data?.employee?.subRole == 'LECTURER') {
+                        return !option.label.toLowerCase().includes('консультация')
+                    } else {
+                        return option.label.toLowerCase().includes('консультация')
+                    }
+                })
+            ??
+            []
+        )
     },[])
 
     useEffect(() => {

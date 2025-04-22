@@ -36,6 +36,11 @@
       "locale": null
     },
     {
+      "documentId": "xxetjqrm34lih7vqq1wpnprk",
+      "action": "api::get-employee-consultation.get-employee-consultation.getEmployeeConsultation",
+      "locale": null
+    },
+    {
       "documentId": "qeg0zkobtoo82pzab9mcsty4",
       "action": "api::group.group.find",
       "locale": null

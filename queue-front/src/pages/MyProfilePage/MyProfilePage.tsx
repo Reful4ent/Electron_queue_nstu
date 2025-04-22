@@ -159,19 +159,21 @@ export const MyProfilePage: FC<MyProfilePageProps> = ({}) => {
         } else if (myData?.data?.student) {
             setCurrentRole(ROLES[0])
         }
-        const myConsultations = await axios.post(
-            `${routeURL}/getMyConsultations`,
-            {
-                id: myData?.data?.student?.id,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${auth?.jwt}`,
+        if(myData?.data?.student) {
+            const myConsultations = await axios.post(
+                `${routeURL}/getMyConsultations`,
+                {
+                    id: myData?.data?.student?.id,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth?.jwt}`,
+                    }
                 }
-            }
-        )
+            )
 
-        setMyConsultationsStudent(myConsultations.data)
+            setMyConsultationsStudent(myConsultations.data)
+        }
     },[])
 
     useEffect(() => {
