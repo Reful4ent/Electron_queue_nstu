@@ -1,0 +1,156 @@
+{
+  "key": "plugin_content_manager_configuration_components::recorded-students.recorded-students",
+  "value": {
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "id",
+      "defaultSortBy": "id",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "student": {
+        "edit": {
+          "label": "student",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "surname"
+        },
+        "list": {
+          "label": "student",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "dateStartConsultation": {
+        "edit": {
+          "label": "dateStartConsultation",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "dateStartConsultation",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "dateEndConsultation": {
+        "edit": {
+          "label": "dateEndConsultation",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "dateEndConsultation",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "notRegisteredUser": {
+        "edit": {
+          "label": "notRegisteredUser",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "notRegisteredUser",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "isOffByStudent": {
+        "edit": {
+          "label": "isOffByStudent",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "isOffByStudent",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "isOffByEmployee": {
+        "edit": {
+          "label": "isOffByEmployee",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "isOffByEmployee",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "list": [
+        "id",
+        "student",
+        "dateStartConsultation",
+        "dateEndConsultation"
+      ],
+      "edit": [
+        [
+          {
+            "name": "student",
+            "size": 6
+          },
+          {
+            "name": "dateStartConsultation",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "dateEndConsultation",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "notRegisteredUser",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "isOffByStudent",
+            "size": 4
+          },
+          {
+            "name": "isOffByEmployee",
+            "size": 4
+          }
+        ]
+      ]
+    },
+    "uid": "recorded-students.recorded-students",
+    "isComponent": true
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

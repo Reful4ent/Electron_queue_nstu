@@ -1,0 +1,119 @@
+{
+  "documentId": "dmrmgvqfrvck7dbw7g78m92a",
+  "name": "StudentEmployee",
+  "description": "Cотрудник - студент",
+  "type": "studentemployee",
+  "locale": null,
+  "permissions": [
+    {
+      "documentId": "htwak4m5ijz0a1tn1aqvoabc",
+      "action": "api::consultation.consultation.create",
+      "locale": null
+    },
+    {
+      "documentId": "ps5zmlnszc1i43ntxf2ru4b9",
+      "action": "api::consultation.consultation.delete",
+      "locale": null
+    },
+    {
+      "documentId": "ov8qpxipg9a0bz4hl9mhlmei",
+      "action": "api::consultation.consultation.find",
+      "locale": null
+    },
+    {
+      "documentId": "q099ic8ybvuzvaxevo5k1th2",
+      "action": "api::consultation.consultation.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "luhcdu2lvcagxxj6zglmv8g3",
+      "action": "api::consultation.consultation.update",
+      "locale": null
+    },
+    {
+      "documentId": "aahwa4e7qnimaiuw9ezxen3p",
+      "action": "api::delete-student-record.delete-student-record.deleteStudentRecord",
+      "locale": null
+    },
+    {
+      "documentId": "leax8k3e2uday86bq82jy3w8",
+      "action": "api::discipline.discipline.find",
+      "locale": null
+    },
+    {
+      "documentId": "lrpqb2ugvrqcqer30fynintr",
+      "action": "api::discipline.discipline.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "cpatumfjm53m2tli1764y9c9",
+      "action": "api::employee.employee.find",
+      "locale": null
+    },
+    {
+      "documentId": "xga92mgzmh8xoqgh7378nrvk",
+      "action": "api::employee.employee.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "y056de612xe9rz6gesiwlwmw",
+      "action": "api::faculty.faculty.find",
+      "locale": null
+    },
+    {
+      "documentId": "vnojnlj7d4mo19zijugto8ia",
+      "action": "api::faculty.faculty.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "l493vgjawguzs97vvjbns8y1",
+      "action": "api::get-employee-consultation.get-employee-consultation.getEmployeeConsultation",
+      "locale": null
+    },
+    {
+      "documentId": "cyuhr5qpwhy8x7d135wpxu9g",
+      "action": "api::get-my-consultations.get-my-consultations.getMyConsultations",
+      "locale": null
+    },
+    {
+      "documentId": "hy9evwm9r5r13ca1yqi7iwg5",
+      "action": "api::group.group.find",
+      "locale": null
+    },
+    {
+      "documentId": "l03l7qk18wv8doez2jcyrips",
+      "action": "api::group.group.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "j9h0yiuylf2cqqzajxyxx1nk",
+      "action": "api::record-student-to-employee.record-student-to-employee.recordStudentToEmployee",
+      "locale": null
+    },
+    {
+      "documentId": "yq1c7kfjr1mccgr7rk5oto60",
+      "action": "api::speciality.speciality.find",
+      "locale": null
+    },
+    {
+      "documentId": "zhu6mkqrpy3in92g4w3vofzm",
+      "action": "api::speciality.speciality.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "g5h0ipmhjk72kk52gx756ai9",
+      "action": "api::student.student.find",
+      "locale": null
+    },
+    {
+      "documentId": "q0gy5xzu59uvca7kvaii8iid",
+      "action": "api::student.student.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "fck2fwo3ow2plfijusj6p2m5",
+      "action": "plugin::users-permissions.user.me",
+      "locale": null
+    }
+  ]
+}

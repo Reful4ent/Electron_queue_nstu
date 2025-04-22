@@ -1,0 +1,109 @@
+{
+  "documentId": "oec4b1zhyioav9vz6vzd2duo",
+  "name": "Employee",
+  "description": "Сотрудники университета: преподаватели, заместители декана, инспекторы и др.",
+  "type": "employee",
+  "locale": null,
+  "permissions": [
+    {
+      "documentId": "wg79tqqcwxzawo9xa3eflbvl",
+      "action": "api::consultation.consultation.create",
+      "locale": null
+    },
+    {
+      "documentId": "oj2ihehp7vascipas9tceni7",
+      "action": "api::consultation.consultation.delete",
+      "locale": null
+    },
+    {
+      "documentId": "a1bio8j7te8tpuhi6lf4hpdv",
+      "action": "api::consultation.consultation.find",
+      "locale": null
+    },
+    {
+      "documentId": "b5kldoo0oi49zye55pnqq8zo",
+      "action": "api::consultation.consultation.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "nb3ja08pv1y8c06k0b2dxqjn",
+      "action": "api::consultation.consultation.update",
+      "locale": null
+    },
+    {
+      "documentId": "vvt2j7deu4p6l4u9ss9qki9u",
+      "action": "api::delete-student-record.delete-student-record.deleteStudentRecord",
+      "locale": null
+    },
+    {
+      "documentId": "grjedzzlsotpc07246is38hd",
+      "action": "api::discipline.discipline.find",
+      "locale": null
+    },
+    {
+      "documentId": "sl5a1nf7rxrlj2rojqafx28x",
+      "action": "api::discipline.discipline.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "gf0j2jambly92cnf0u6r0rl4",
+      "action": "api::employee.employee.find",
+      "locale": null
+    },
+    {
+      "documentId": "ygbf2rn4onevkl1n01j3s7o7",
+      "action": "api::employee.employee.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "at2ewpjmzhyl4himoj1so1j5",
+      "action": "api::faculty.faculty.find",
+      "locale": null
+    },
+    {
+      "documentId": "zvjlrbc0suicz0128tt6zlc8",
+      "action": "api::faculty.faculty.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "n2ccmcw8yst9hyn71xje5z8v",
+      "action": "api::get-employee-consultation.get-employee-consultation.getEmployeeConsultation",
+      "locale": null
+    },
+    {
+      "documentId": "fbcev2jl7ilr4vrx8hi6zcfi",
+      "action": "api::group.group.find",
+      "locale": null
+    },
+    {
+      "documentId": "cxuwid1hoshtxgmod9v8wej9",
+      "action": "api::group.group.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "uecipj6y4kwgabkvg7pszzgk",
+      "action": "api::speciality.speciality.find",
+      "locale": null
+    },
+    {
+      "documentId": "auaferbb0zs8c1f52u017x6z",
+      "action": "api::speciality.speciality.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "ekm59916ic6j9ggufqt9td67",
+      "action": "api::student.student.find",
+      "locale": null
+    },
+    {
+      "documentId": "ksdpzjd2p711esf6kxzvznf8",
+      "action": "api::student.student.findOne",
+      "locale": null
+    },
+    {
+      "documentId": "pfpuxjwztjsjuqa338liuigx",
+      "action": "plugin::users-permissions.user.me",
+      "locale": null
+    }
+  ]
+}

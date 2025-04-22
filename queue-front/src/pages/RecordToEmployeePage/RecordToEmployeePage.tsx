@@ -3,7 +3,7 @@ import {Breadcrumbs} from "../../widgets/Breadcrumbs/Breadcrumbs.tsx";
 import {Button, Collapse, CollapseProps, DatePicker, Form, Image} from "antd";
 import {useAuth} from "../../app/context/AuthProvider/context.ts";
 import './RecordToEmployeePage.scss'
-import {IConsultation, IEmployee} from "../MyProfilePage/MyProfilePage.tsx";
+import {IConsultation, IEmployee, IUser} from "../MyProfilePage/MyProfilePage.tsx";
 import {SocialLinks} from "../../widgets/SocialLinks/SocialLinks.tsx";
 import axios from "axios";
 import {routeURL} from "../../shared/api/route.ts";
@@ -16,6 +16,8 @@ export const RecordToEmployeePage: FC = () => {
     const [form] = Form.useForm();
     const [currentEmployee, setCurrentEmployee] = useState<IEmployee | null>()
     const [consultationsList, setConsultationsList] = useState<CollapseProps['items']>([])
+    const [userData, setUserData] = useState<IUser | null>();
+
 
     const itemsForBreadcrumbs = [
         {
@@ -44,6 +46,19 @@ export const RecordToEmployeePage: FC = () => {
         setCurrentEmployee(employeeData.data.data)
     },[])
 
+    const getStudentId = useCallback(async () => {
+        const myData = await axios.get(
+            `${routeURL}/users/me?populate[student]=*
+            `,
+            {
+                headers: {
+                    Authorization: `Bearer ${auth?.jwt}`,
+                }
+            }
+        )
+        setUserData(myData.data)
+    },[])
+
     const handleFinish = useCallback(async () => {
         const myEmployeeConsultationsData = await axios.post(
             `${routeURL}/getEmployeeConsultation`,
@@ -66,11 +81,13 @@ export const RecordToEmployeePage: FC = () => {
                     key: String(idx),
                     label: item,
                     children: (
-                        <div>
+                        <div style={{display: 'flex', flexWrap: 'wrap', gap: 25}}>
                             {myEmployeeConsultationsData.data[item].map((consultationItem: IConsultation, idx: number) => (
                                 <RecordConsultationListCard
                                     key={idx}
                                     consultationItem={consultationItem}
+                                    studentId={userData?.student.id}
+                                    handleFinish={handleFinish}
                                 />
                             ))}
                         </div>
@@ -84,6 +101,7 @@ export const RecordToEmployeePage: FC = () => {
 
     useEffect(() => {
         if (auth?.jwt) {
+            getStudentId();
             getEmployee();
         }
     }, []);
