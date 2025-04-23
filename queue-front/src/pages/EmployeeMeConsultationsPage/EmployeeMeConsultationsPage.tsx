@@ -28,6 +28,8 @@ export const EmployeeMeConsultationsPage: FC = () => {
         dayjs(),
         dayjs().add(7, 'day')
     ]);
+    const [isModalUpdated, setIsModalUpdated] = useState<boolean>(false);
+    const [currentConsultationId, setCurrentConsultationId] = useState<string>('');
     
     const itemsForBreadcrumbs = [
         {
@@ -263,6 +265,8 @@ export const EmployeeMeConsultationsPage: FC = () => {
                 modalItemHead={modalItemHead}
                 modalData={modalData}
                 onConsultationUpdate={handleFinish}
+                setIsModalUpdated={setIsModalUpdated}
+                setCurrentConsultationId={setCurrentConsultationId}
             />
         </div>
     )
