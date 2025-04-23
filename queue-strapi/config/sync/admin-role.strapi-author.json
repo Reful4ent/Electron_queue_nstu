@@ -1,0 +1,516 @@
+{
+  "documentId": "go2x6527uof4azrq5w76ks0d",
+  "name": "Author",
+  "code": "strapi-author",
+  "description": "Authors can manage the content they have created.",
+  "locale": null,
+  "permissions": [
+    {
+      "documentId": "mka45b2rrqe70e0ewyb5p9jo",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::consultation.consultation",
+      "properties": {
+        "fields": [
+          "title",
+          "dateOfStart",
+          "dateOfEnd",
+          "recordedStudents.student",
+          "recordedStudents.dateStartConsultation",
+          "recordedStudents.dateEndConsultation",
+          "discipline",
+          "employee",
+          "duration"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "hp73izyazo7p856p8x3p7gmd",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::consultation.consultation",
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "c3xkinjw30ndxkn90gajfdgw",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::consultation.consultation",
+      "properties": {
+        "fields": [
+          "title",
+          "dateOfStart",
+          "dateOfEnd",
+          "recordedStudents.student",
+          "recordedStudents.dateStartConsultation",
+          "recordedStudents.dateEndConsultation",
+          "discipline",
+          "employee",
+          "duration"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "hbc4tpztvh5p4sdtf5b0u6b1",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::consultation.consultation",
+      "properties": {
+        "fields": [
+          "title",
+          "dateOfStart",
+          "dateOfEnd",
+          "recordedStudents.student",
+          "recordedStudents.dateStartConsultation",
+          "recordedStudents.dateEndConsultation",
+          "discipline",
+          "employee",
+          "duration"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "inf6vs2dmt87zj26nwf380r8",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::discipline.discipline",
+      "properties": {
+        "fields": [
+          "title",
+          "consultations"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "cqz8nam7c2epvcpe1h2io5y5",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::discipline.discipline",
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "ccpdza0yp0v0cfudewj4cu90",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::discipline.discipline",
+      "properties": {
+        "fields": [
+          "title",
+          "consultations"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "isotnrt6yconrop1i3l8s7xa",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::discipline.discipline",
+      "properties": {
+        "fields": [
+          "title",
+          "consultations"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "r3l5qcbsqnui5f2rxnyjoroy",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::employee.employee",
+      "properties": {
+        "fields": [
+          "user",
+          "faculties",
+          "consultations",
+          "subRole",
+          "fio"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "emw7bujdae2zu4u2foojdy2m",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::employee.employee",
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "hpsvoam1qjyy9yyad9h9isdx",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::employee.employee",
+      "properties": {
+        "fields": [
+          "user",
+          "faculties",
+          "consultations",
+          "subRole",
+          "fio"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "rm5obdk2zjwabx4u48l1h9lv",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::employee.employee",
+      "properties": {
+        "fields": [
+          "user",
+          "faculties",
+          "consultations",
+          "subRole",
+          "fio"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "u4p4zwf50v09tv0xebm2uzpg",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::faculty.faculty",
+      "properties": {
+        "fields": [
+          "title",
+          "students",
+          "employees",
+          "specialities"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "uvxkp0vla3zo2je15zhi7knb",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::faculty.faculty",
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "j4h9fc2xz037meyb1wt0a96o",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::faculty.faculty",
+      "properties": {
+        "fields": [
+          "title",
+          "students",
+          "employees",
+          "specialities"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "vn62ci1bm5s98utaquizq4oc",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::faculty.faculty",
+      "properties": {
+        "fields": [
+          "title",
+          "students",
+          "employees",
+          "specialities"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "y3hozntk1575lvi1ccde2z4a",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::group.group",
+      "properties": {
+        "fields": [
+          "title"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "hnhmdq0pg0m3uif3raw8pwoz",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::group.group",
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "o8y3wx2816vqq86ulsnxdb3y",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::group.group",
+      "properties": {
+        "fields": [
+          "title"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "fb9n3yp3ma15zj9xcug33jyh",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::group.group",
+      "properties": {
+        "fields": [
+          "title"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "oaprbmk8y1czj2ap6o8l4dpj",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::speciality.speciality",
+      "properties": {
+        "fields": [
+          "title",
+          "faculties"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "faxlmn0sojnjpy53k25dif8d",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::speciality.speciality",
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "hochgc90fi83z3h2b86ldtje",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::speciality.speciality",
+      "properties": {
+        "fields": [
+          "title",
+          "faculties"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "i29w94sdm7am7hjeqy1hj6lb",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::speciality.speciality",
+      "properties": {
+        "fields": [
+          "title",
+          "faculties"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "vhw4btd3inudklo90zgblgwf",
+      "action": "plugin::content-manager.explorer.create",
+      "actionParameters": {},
+      "subject": "api::student.student",
+      "properties": {
+        "fields": [
+          "user",
+          "faculty",
+          "fio"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "kpqotznrpor3qp2tup7st2oc",
+      "action": "plugin::content-manager.explorer.delete",
+      "actionParameters": {},
+      "subject": "api::student.student",
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "q0qfnbyl6masmyade3y53gdu",
+      "action": "plugin::content-manager.explorer.read",
+      "actionParameters": {},
+      "subject": "api::student.student",
+      "properties": {
+        "fields": [
+          "user",
+          "faculty",
+          "fio"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "aoa82iodumi1xm165fbxkor3",
+      "action": "plugin::content-manager.explorer.update",
+      "actionParameters": {},
+      "subject": "api::student.student",
+      "properties": {
+        "fields": [
+          "user",
+          "faculty",
+          "fio"
+        ]
+      },
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "fp9zae0u6ofrs8tslilqzz7l",
+      "action": "plugin::upload.assets.copy-link",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "dg3lejw9rfjs74zlbvvsl3hx",
+      "action": "plugin::upload.assets.create",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "zz58uan0bl3oyxj1vug2cpls",
+      "action": "plugin::upload.assets.download",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "wonatmzwgj38g0bh5ifl20wg",
+      "action": "plugin::upload.assets.update",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    },
+    {
+      "documentId": "t43jrnondo34cw6p17b5rana",
+      "action": "plugin::upload.configure-view",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": [],
+      "locale": null
+    },
+    {
+      "documentId": "os0bawivoi7kbx0kjdc76bf1",
+      "action": "plugin::upload.read",
+      "actionParameters": {},
+      "subject": null,
+      "properties": {},
+      "conditions": [
+        "admin::is-creator"
+      ],
+      "locale": null
+    }
+  ]
+}

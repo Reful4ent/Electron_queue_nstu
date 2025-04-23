@@ -9,6 +9,8 @@ import {useAuth} from "../../app/context/AuthProvider/context.ts";
 export interface IConsultationStudentsList {
     isModalOpen: boolean;
     setIsModalOpen: (isOpen: boolean) => void;
+    setIsModalUpdated: (isOpen: boolean) => void;
+    setCurrentConsultationId: (currentConsultationId: string) => void;
     modalItemHead: string;
     modalData?: IConsultation | null;
     onConsultationUpdate?: () => void;

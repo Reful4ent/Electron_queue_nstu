@@ -480,6 +480,7 @@ export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    socialLinks: Schema.Attribute.Component<'common.social-l-inks', false>;
     subRole: Schema.Attribute.Enumeration<
       ['LECTURER', 'DEPUTY_DEAN', 'INSPECTOR']
     >;
@@ -625,6 +626,7 @@ export interface ApiStudentStudent extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    socialLinks: Schema.Attribute.Component<'common.social-l-inks', false>;
     surname: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

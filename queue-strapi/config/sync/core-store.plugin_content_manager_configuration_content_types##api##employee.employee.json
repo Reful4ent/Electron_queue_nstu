@@ -1,0 +1,292 @@
+{
+  "key": "plugin_content_manager_configuration_content_types::api::employee.employee",
+  "value": {
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "fio",
+      "defaultSortBy": "id",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "user": {
+        "edit": {
+          "label": "user",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "username"
+        },
+        "list": {
+          "label": "user",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "faculties": {
+        "edit": {
+          "label": "faculties",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "title"
+        },
+        "list": {
+          "label": "Факультеты",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "consultations": {
+        "edit": {
+          "label": "consultations",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "title"
+        },
+        "list": {
+          "label": "consultations",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "subRole": {
+        "edit": {
+          "label": "subRole",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "subRole",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "groups": {
+        "edit": {
+          "label": "groups",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true,
+          "mainField": "title"
+        },
+        "list": {
+          "label": "Группы",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "surname": {
+        "edit": {
+          "label": "surname",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "surname",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "name": {
+        "edit": {
+          "label": "name",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "name",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "lastname": {
+        "edit": {
+          "label": "lastname",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "lastname",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "fio": {
+        "edit": {
+          "label": "fio",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "fio",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "socialLinks": {
+        "edit": {
+          "label": "socialLinks",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "socialLinks",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "createdAt": {
+        "edit": {
+          "label": "createdAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "createdAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedAt": {
+        "edit": {
+          "label": "updatedAt",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true
+        },
+        "list": {
+          "label": "updatedAt",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "createdBy": {
+        "edit": {
+          "label": "createdBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "createdBy",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "updatedBy": {
+        "edit": {
+          "label": "updatedBy",
+          "description": "",
+          "placeholder": "",
+          "visible": false,
+          "editable": true,
+          "mainField": "firstname"
+        },
+        "list": {
+          "label": "updatedBy",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "list": [
+        "id",
+        "faculties",
+        "groups",
+        "user"
+      ],
+      "edit": [
+        [
+          {
+            "name": "user",
+            "size": 6
+          },
+          {
+            "name": "faculties",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "groups",
+            "size": 6
+          },
+          {
+            "name": "consultations",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "subRole",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "fio",
+            "size": 6
+          },
+          {
+            "name": "surname",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "name",
+            "size": 6
+          },
+          {
+            "name": "lastname",
+            "size": 6
+          }
+        ],
+        [
+          {
+            "name": "socialLinks",
+            "size": 12
+          }
+        ]
+      ]
+    },
+    "uid": "api::employee.employee"
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

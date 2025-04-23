@@ -11,6 +11,19 @@ export interface CommonNotRegisteredUser extends Struct.ComponentSchema {
   };
 }
 
+export interface CommonSocialLInks extends Struct.ComponentSchema {
+  collectionName: 'components_common_social_l_inks';
+  info: {
+    displayName: 'socialLInks';
+  };
+  attributes: {
+    email: Schema.Attribute.String;
+    phone: Schema.Attribute.String;
+    telegram: Schema.Attribute.String;
+    vk: Schema.Attribute.String;
+  };
+}
+
 export interface RecordedStudentsRecordedStudents
   extends Struct.ComponentSchema {
   collectionName: 'components_recorded_students_recorded_students';
@@ -37,6 +50,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'common.not-registered-user': CommonNotRegisteredUser;
+      'common.social-l-inks': CommonSocialLInks;
       'recorded-students.recorded-students': RecordedStudentsRecordedStudents;
     }
   }
