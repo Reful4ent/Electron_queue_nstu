@@ -12,7 +12,7 @@ import {ConsultationStudentModalList} from "../../entities/Consultation/Consulta
 import dayjs from "dayjs";
 import 'dayjs/locale/ru';
 import locale from 'antd/locale/ru_RU';
-import { CalendarOutlined } from '@ant-design/icons';
+import { CalendarOutlined, DownOutlined, RightOutlined } from '@ant-design/icons';
 
 const { RangePicker } = DatePicker;
 
@@ -75,60 +75,85 @@ export const EmployeeMeConsultationsPage: FC = () => {
     },[])
 
     const handleFinish = useCallback(async () => {
+        try {
         const myEmployeeConsultationsData = await axios.post(
             `${routeURL}/getEmployeeConsultation`,
             {
                 employee: userData?.employee.id,
-                startPeriod: dateRange[0],
-                endPeriod: dateRange[1],
+                    startPeriod: dateRange[0],
+                    endPeriod: dateRange[1],
             },
             {
                 headers: {
                     Authorization: `Bearer ${auth?.jwt}`,
                 }
             }
-        )
-        let collapseConsultationsItems = [];
+            );
+            
+            let collapseConsultationsItems = [];
         let idx = 1;
+            
         for (const item of Object.keys(myEmployeeConsultationsData.data)) {
-            collapseConsultationsItems.push(
-                {
+                const isFirstItem = idx === 1;
+                
+                const firstConsultation = myEmployeeConsultationsData.data[item][0];
+                const roomInfo = firstConsultation.corps && firstConsultation.audience
+                    ? `${firstConsultation.corps}-${firstConsultation.audience}`
+                    : 'Аудитория не указана';
+                
+                collapseConsultationsItems.push({
                     key: String(idx),
                     label: (
                         <div className="consultation-subject">
                             <span>{item}</span>
-                            <span className="room-number">7-218</span>
+                            <span className="room-number">{roomInfo}</span>
                         </div>
                     ),
-                    children: (
+                    children: isFirstItem, // Флаг для открытия/закрытия
+                    content: (
                         <div className="consultation-dates-container">
-                            {myEmployeeConsultationsData.data[item].map((consultationItem: IConsultation, idx: number) => (
-                                <div key={idx} className="consultation-date-item">
-                                    <div className="consultation-date-info">
-                                        <div className="date-day">
-                                            {DAYS[new Date(consultationItem.dateOfStart).getDay()]}
+                            {myEmployeeConsultationsData.data[item]
+                                .sort((a: IConsultation, b: IConsultation) => {
+                                    const dateA = new Date(a.dateOfStart);
+                                    const dateB = new Date(b.dateOfStart);
+                                    return dateA.getTime() - dateB.getTime();
+                                })
+                                .map((consultationItem: IConsultation, idx: number) => {
+                                    const dateObj = new Date(consultationItem.dateOfStart);
+                                    const dayName = DAYS[dateObj.getDay()];
+                                    const formattedDate = dateObj.getDate().toString().padStart(2, '0') + '.' + 
+                                        (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                                    
+                                    return (
+                                        <div key={idx} className="consultation-date-item">
+                                            <div className="consultation-date-info">
+                                                <div className="date-day">
+                                                    {dayName}
+                                                </div>
+                                                <div className="date-value">
+                                                    {formattedDate}
+                                                </div>
+                                            </div>
+                                            <Button
+                                                className="consultation-button"
+                                                onClick={() => handleConsultation(consultationItem, item)}>
+                                                Узнать записавшихся
+                                            </Button>
                                         </div>
-                                        <div className="date-value">
-                                            {Intl.DateTimeFormat('ru-RU').format(new Date(consultationItem.dateOfStart))}
-                                        </div>
-                                    </div>
-                                    <Button 
-                                        className="consultation-button"
-                                        onClick={() => {
-                                            handleConsultation(consultationItem, item)
-                                        }}>
-                                        Узнать записавшихся
-                                    </Button>
-                                </div>
-                            ))}
+                                    );
+                                })}
                         </div>
                     )
-                }
-            )
-            idx++;
+                });
+                idx++;
+            }
+            
+            setConsultations(collapseConsultationsItems);
+        } catch (error) {
+            console.error("Ошибка при получении консультаций:", error);
+            alert("Произошла ошибка при загрузке консультаций");
         }
-        setConsultations(collapseConsultationsItems);
-    },[userData, dateRange])
+    }, [userData, dateRange, auth?.jwt, handleConsultation]);
 
     const onDateRangeChange = (dates: any) => {
         if (dates && dates.length === 2) {
@@ -207,14 +232,27 @@ export const EmployeeMeConsultationsPage: FC = () => {
                 <div className="consultations-collapse">
                     {consultations.map((item) => (
                         <div key={item.key} className="ant-collapse-item">
-                            <div className="ant-collapse-header">
-                                {item.label}
-                            </div>
-                            <div className="ant-collapse-content">
-                                <div className="ant-collapse-content-box">
-                                    {item.children}
+                            <div className="ant-collapse-header" onClick={() => {
+                                const newConsultations = [...consultations];
+                                const idx = newConsultations.findIndex(c => c.key === item.key);
+                                if (idx !== -1) {
+                                    newConsultations[idx].children = !newConsultations[idx].children;
+                                    setConsultations(newConsultations);
+                                }
+                            }}>
+                                {item.children ? <DownOutlined className="collapse-icon" /> : <RightOutlined className="collapse-icon" />}
+                                <div className="consultation-subject">
+                                    <span>{item.label.props.children[0]}</span>
+                                    <span className="room-number">{item.label.props.children[1].props.children}</span>
                                 </div>
                             </div>
+                            {item.children && (
+                                <div className="ant-collapse-content ant-collapse-content-active">
+                                    <div className="ant-collapse-content-box">
+                                        {item.content}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>
@@ -224,6 +262,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
                 setIsModalOpen={setIsModalOpen}
                 modalItemHead={modalItemHead}
                 modalData={modalData}
+                onConsultationUpdate={handleFinish}
             />
         </div>
     )
