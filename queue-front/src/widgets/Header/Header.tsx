@@ -7,19 +7,16 @@ import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {routeURL} from "../../shared/api/route.ts";
 import { ISmallUserData } from "../../types/types.ts";
-import Icon, { MoonOutlined, SunOutlined } from "@ant-design/icons";
+import Icon from "@ant-design/icons";
 import { RussianFlagSvg } from "../../shared/ui/icons/flagIcons.tsx";
 import { ExitSvg } from "../../shared/ui/icons/icons.tsx";
 import { Profile } from "../../entities/Profile/Profile.tsx";
+import {ThemeButton} from "../../features/ThemeButton/ThemeButton.tsx";
 
 export interface HeaderProps {
 
 }
 
-enum Themes {
-  dark,
-  light
-}
 
 type CustomIconComponentProps = GetProps<typeof Icon>;
 
@@ -35,7 +32,6 @@ export const Header: FC = ({}) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [userData, setUserData] = useState<ISmallUserData | null>(null);
-    const [theme, setTheme] = useState<Themes>(Themes.light);
 
     const getMyData = useCallback(async () => {
         const myData = await axios.get(
@@ -55,12 +51,6 @@ export const Header: FC = ({}) => {
         }))
     },[auth?.jwt])
 
-    const changeTheme = () => {
-      let value;
-      if (theme == Themes.light) value = Themes.dark;
-      else value = Themes.light;
-      setTheme(value);
-    }
 
     useEffect(() => {
         if(auth?.jwt) {
@@ -72,9 +62,7 @@ export const Header: FC = ({}) => {
         <div className={'header'}>
             <LogoIcon className='headerItem' link={'/home'}/>
             <div onClick={() => {}} className={'headerItems'}>
-                <Button disabled className="headerItem themeButton" onClick={changeTheme}>
-                  {theme == Themes.light ? <MoonOutlined className='themeIcon' /> : <SunOutlined className='themeIcon' />}
-                </Button>
+                <ThemeButton/>
                
                 <Select disabled className={'select headerItem'} defaultValue={'russian'} options={[{value: 'russian', label: <RussianFlagIcon />}]} />
                     
