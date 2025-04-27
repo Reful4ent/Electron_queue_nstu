@@ -50,8 +50,19 @@ $my-consultation-card-status-dark:#181818;
 
 $input-color-text-light: #000000;
 $input-color-text-dark: #ffffff;
+
 $input-color-placeholder-dark: #B7B7B7;
 $input-color-placeholder-light: #dadada;
+
+$ant-select-item-option-active-light: #cce1ff;
+$ant-select-item-option-active-dark:  #00CC73;
+
+$ant-select-selection-item-light: #d1d1d1;
+$ant-select-selection-item-dark: #00CC73;
+
+$ant-select-selection-item-selected-light: #d1d1d1;
+$ant-select-selection-item-selected-dark: #057846;
+
 
 
 body{
@@ -69,6 +80,9 @@ body{
   --my-consultation-card-status: #{$my-consultation-card-status-light};
   --input-color-text: #{$input-color-text-light};
   --input-color-placeholder: #{$input-color-placeholder-light};
+  --ant-select-item-option-active: #{$ant-select-item-option-active-light};
+  --ant-select-selection-item: #{$ant-select-selection-item-light};
+  --ant-select-selection-selected-item: #{$ant-select-selection-item-selected-light};
 
   &.dark{
     background-color: $theme-dark;
@@ -84,5 +98,8 @@ body{
     --my-consultation-card-status: #{$my-consultation-card-status-dark};
     --input-color-text: #{$input-color-text-dark};
     --input-color-placeholder: #{$input-color-placeholder-dark};
+    --ant-select-item-option-active: #{$ant-select-item-option-active-dark};
+    --ant-select-selection-item: #{$ant-select-selection-item-dark};
+    --ant-select-selection-selected-item: #{$ant-select-selection-item-selected-dark};
   }
 }

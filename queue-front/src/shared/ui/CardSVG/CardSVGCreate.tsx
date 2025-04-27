@@ -1,9 +1,10 @@
 import {FC} from "react";
+import './CardSVG.scss'
 
 export const CardSVGCreate: FC = () => {
     return (
         <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="80" height="80" rx="10" fill="#EDFBF5"/>
+            <rect width="80" height="80" rx="10" fill="#EDFBF5" className={'CardSVGIcon'}/>
             <g transform="translate(0, 0)">
                 <path d="M30 43.3335L50 43.3335" stroke="#00CC73" strokeWidth="3" strokeLinecap="round"/>
                 <path d="M30 30L43.3333 30" stroke="#00CC73" strokeWidth="3" strokeLinecap="round"/>

@@ -1,6 +1,7 @@
 import {FC} from "react";
 import {Form, FormInstance, Select} from "antd";
 import {IFaculty, ISpeciality, OptionsType} from "../../../pages/RegistrationPage/RegistrationPage.tsx";
+import './RegistrationEmployeePart.scss'
 
 export interface IRegistrationEmployeePart {
     form: FormInstance
