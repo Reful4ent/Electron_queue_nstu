@@ -121,29 +121,29 @@ export const EmployeeMeConsultationsPage: FC = () => {
                                     return dateA.getTime() - dateB.getTime();
                                 })
                                 .map((consultationItem: IConsultation, idx: number) => {
-                                    const dateObj = new Date(consultationItem.dateOfStart);
-                                    const dayName = DAYS[dateObj.getDay()];
-                                    const formattedDate = dateObj.getDate().toString().padStart(2, '0') + '.' + 
-                                        (dateObj.getMonth() + 1).toString().padStart(2, '0');
-                                    
-                                    return (
-                                        <div key={idx} className="consultation-date-item">
-                                            <div className="consultation-date-info">
-                                                <div className="date-day">
-                                                    {dayName}
-                                                </div>
-                                                <div className="date-value">
-                                                    {formattedDate}
-                                                </div>
+                                const dateObj = new Date(consultationItem.dateOfStart);
+                                const dayName = DAYS[dateObj.getDay()];
+                                const formattedDate = dateObj.getDate().toString().padStart(2, '0') + '.' + 
+                                    (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                                
+                                return (
+                                    <div key={idx} className="consultation-date-item">
+                                        <div className="consultation-date-info">
+                                            <div className="date-day">
+                                                {dayName}
                                             </div>
-                                            <Button
-                                                className="consultation-button"
-                                                onClick={() => handleConsultation(consultationItem, item)}>
-                                                Узнать записавшихся
-                                            </Button>
+                                            <div className="date-value">
+                                                {formattedDate}
                                         </div>
-                                    );
-                                })}
+                                    </div>
+                                    <Button
+                                            className="consultation-button"
+                                            onClick={() => handleConsultation(consultationItem, item)}>
+                                        Узнать записавшихся
+                                    </Button>
+                                </div>
+                                );
+                            })}
                         </div>
                     )
                 });

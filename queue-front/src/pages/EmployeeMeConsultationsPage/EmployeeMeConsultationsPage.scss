@@ -15,12 +15,12 @@
   .consultationMeContent {
     display: flex;
     flex-direction: row;
-    gap: 24px;
+    gap: 80px;
     margin-bottom: 24px;
 
     .consultationMeForm {
-      width: 110%;
-      padding: 24px;
+      width: 100%;
+      padding: 20px;
       height: 214px;
       background-color: white;
       border-radius: 15px;
@@ -64,7 +64,7 @@
             .date-field {
               flex: 1;
               height: 48px;
-              border: 2px solid #D9D9D9;
+              border: 3px solid #D9D9D9;
               border-radius: 8px;
               display: flex;
               align-items: center;
@@ -81,7 +81,7 @@
               .date-text {
                 font-family: Stem;
                 font-size: 16px;
-                color: #666;
+                color: #808080;
                 width: 100%;
                 text-align: center;
               }
@@ -269,12 +269,30 @@
     .ant-modal-close {
       top: 16px;
       right: 16px;
+      border: none;
+      outline: none;
+      background: transparent;
       
       .ant-modal-close-x {
         font-size: 16px;
         width: 40px;
         height: 40px;
         line-height: 40px;
+        outline: none;
+        box-shadow: none;
+        border: none;
+        
+        &:hover, &:focus {
+          outline: none;
+          box-shadow: none;
+          border: none;
+        }
+      }
+      
+      &:hover, &:focus {
+        outline: none;
+        box-shadow: none;
+        border: none;
       }
     }
     

@@ -22,6 +22,29 @@
 
 .ant-modal .ant-modal-close {
   color: rgba(0, 0, 0, 0.45);
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.ant-modal .ant-modal-close:focus,
+.ant-modal .ant-modal-close:hover {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.ant-modal .ant-modal-close .ant-modal-close-x {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.ant-modal .ant-modal-close .ant-modal-close-x:focus,
+.ant-modal .ant-modal-close .ant-modal-close-x:hover {
+  outline: none;
+  border: none;
+  box-shadow: none;
 }
 
 .ant-modal .ant-modal-body {

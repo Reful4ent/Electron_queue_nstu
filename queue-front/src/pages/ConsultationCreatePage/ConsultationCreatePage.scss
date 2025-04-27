@@ -1,45 +1,619 @@
-.consultationCreateContainer{
+.consultationCreateContainer {
   padding: 40px;
-  display: flex;
-  flex-direction: column;
+  background-color: #f6f6f6;
+  height: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
 
   .consultationCreateHead {
-    margin-top: 76px;
     font-family: Stem;
-    font-weight: 500;
     font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 36px;
+    margin-top: 76px;
+    color: #000;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .consultationCreateContent {
     display: flex;
-    flex-direction: row;
-    gap: 24px;
+    flex-direction: column;
+    gap: 80px;
+    max-width: 100%;
+    margin: 0 auto;
 
-    .consultationCreateForm {
-      width: 110%;
-      padding: 23px;
-      background-color: white;
-      border-radius: 15px;
+    @media (min-width: 992px) {
+      flex-direction: row;
+      align-items: flex-start;
+      
+      & > div {
+        flex: 1;
+        width: 50%;
+        max-width: 50%;
+      }
+    }
+  }
+  
+  .consultationCreateForm {
+    flex: 1;
+  }
 
-      .consultationCreateFormInner{
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+  .consultationAppointmentCard {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+  }
 
-        .consultationCreateFormHead {
-          font-family: Stem;
-          font-weight: 500;
-          font-size: 24px;
-          margin-bottom: 20px;
-          margin-top: 0;
+  .consultationAppointmentTitle {
+    font-family: Stem;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #000;
+  }
+
+  .appointmentFormFields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .formItem {
+    position: relative;
+    margin-bottom: 12px !important;
+
+    // Стили для сообщения об ошибке
+    .ant-form-item-explain {
+      position: absolute;
+      color: #ff4d4f;
+      font-size: 12px;
+      margin-top: 7px;
+      z-index: 10;
+      
+      // Скрыть сообщения об ошибках, если форма не была отправлена
+      display: none;
+    }
+    
+    // Показывать сообщения только для полей с ошибками после попытки отправки
+    &.ant-form-item-has-error .ant-form-item-explain {
+      display: block;
+    }
+    
+    &.datePickerItem, 
+    &.timePickerItem, 
+    &.durationItem, 
+    &.corpsItem, 
+    &.audienceItem {
+      .formSelect, .corpsSelect, .audienceSelect {
+        .ant-select-selector {
+          padding: 0 40px 0 44px !important; // отступы для иконок слева и справа
         }
+      }
+      
+      .ant-picker {
+        padding: 0 15px 0 44px !important; // отступ слева для иконки
+      }
+    }
+  }
 
-        .consultationCreateDateContainer {
-          display: flex;
-          flex-direction: row;
-          gap: 16px;
+  .formSelect, .corpsSelect, .audienceSelect {
+    width: 100%;
+    position: relative;
+    
+    .ant-select-selector {
+      height: 44px !important;
+      border-radius: 8px !important;
+      padding: 0 15px !important;
+      display: flex;
+      align-items: center;
+      border: 3px solid #d9d9d9 !important;
+      
+      .ant-select-selection-placeholder {
+        font-family: Stem;
+        color: #808080;
+        line-height: 1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex;
+        align-items: center;
+        height: 100%;
+      }
+      
+      .ant-select-selection-item {
+        font-family: Stem;
+        color: #000000 !important;
+        font-weight: 500;
+        line-height: 1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex;
+        align-items: center;
+        height: 100%;
+      }
+    }
+
+    &:hover .ant-select-selector {
+      border-color: #00B265 !important;
+    }
+
+    .ant-select-arrow {
+      opacity: 0;
+    }
+    
+    &.ant-select-focused .ant-select-selector {
+      border-color: #00B265 !important;
+      box-shadow: none !important;
+    }
+    
+    // Для Select с multiple (выбор группы)
+    .ant-select-selection-overflow {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    
+    // Стили для тегов выбранных элементов в мультиселекте
+    .ant-select-selection-item {
+      height: 24px !important;
+      line-height: 22px !important;
+      margin: 3px !important;
+      padding: 0 8px !important;
+    }
+    
+    // Стили для поля поиска
+    .ant-select-selection-search {
+      input {
+        height: 38px !important;
+      }
+    }
+  }
+  
+  // Стиль для иконок в полях
+  .fieldIcon {
+    font-size: 18px;
+    color: #00B265;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  
+  // Позиционирование иконок слева
+  .icon-left {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    width: 24px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  
+  // Стили для поля ввода названия консультации
+  .consultationInput {
+    height: 44px !important;
+    border-radius: 8px !important;
+    padding: 0 15px !important;
+    font-family: Stem;
+    border: 3px solid #d9d9d9 !important;
+    
+    &:hover, &:focus {
+      border-color: #00B265 !important;
+      box-shadow: none !important;
+    }
+    
+    &::placeholder {
+      color: #808080;
+    }
+    
+    &, &:not(:placeholder-shown) {
+      color: #000000;
+      font-weight: 500;
+    }
+  }
+  
+  // Стиль для стрелки справа
+  .select-arrow {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #AEAEAE;
+    height: 44px;
+    width: 24px;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+    
+    &.open {
+      transform: rotate(90deg);
+    }
+  }
+  
+  // Стили для полей даты и времени
+  .ant-picker {
+    font-family: Stem;
+    height: 44px !important;
+    border-radius: 8px !important;
+    padding: 0 15px 0 44px !important;
+    color: #808080;
+    border: 3px solid #d9d9d9 !important;
+    width: 100%;
+    position: relative;
+
+    &:hover {
+      border-color: #00B265 !important;
+    }
+
+    .ant-picker-input {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      
+      > input::placeholder {
+        color: #808080 !important;
+        font-family: Stem;
+        line-height: 1;
+      }
+      
+      > input {
+        color: #000000 !important;
+        font-family: Stem;
+        font-weight: 500;
+        line-height: 1;
+      }
+    }
+
+    .ant-picker-suffix {
+      opacity: 0;
+    }
+  }
+
+  .dateTimeRow, .locationRow {
+    width: 100%;
+    margin: 0 -5px !important;
+  }
+
+  .submitButton {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 22px;
+    height: 44px;
+    padding: 0 25px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s;
+    width: 100%;
+    font-family: Stem;
+    font-size: 16px;
+
+    &:disabled {
+      background-color: #f5f5f5;
+      border-color: #d9d9d9;
+      color: rgba(0, 0, 0, 0.25);
+      cursor: not-allowed;
+    }
+    
+    &:hover,
+    &:focus,
+    &:active {
+      outline: none !important;
+      box-shadow: none !important;
+      background-color: #f0f0f0;
+      color: #00B265 !important;  
+      border-color: #00B265 !important;
+    }
+  }
+
+  .permanentCheckbox {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    
+    .ant-checkbox-wrapper {
+      color: #000;
+      font-family: Stem;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .ant-checkbox {
+      
+      border-radius: 3px;
+      top: 0;
+      margin-right: 8px;
+      
+      &-inner {
+        border: 3px solid #d9d9d9 !important;
+        border-radius: 3px;
+      }
+
+      &:hover .ant-checkbox-inner {
+        border-color: #00B265 !important;
+      }
+    }
+    
+    .ant-checkbox-checked .ant-checkbox-inner {
+      background-color: #00B265;
+      border-color: #00B265 !important;
+    }
+
+    &:hover .ant-checkbox-checked .ant-checkbox-inner {
+      background-color: #009f5a !important;
+      border-color: #009f5a !important;
+    }
+  
+  }
+  
+  // Стили для раскрывающегося списка
+  .ant-select-dropdown {
+    border-radius: 8px !important;
+    padding: 5px !important;
+    
+    .ant-select-item {
+      border-radius: 6px !important;
+      padding: 8px 10px !important;
+      font-family: Stem;
+      
+      &-option-selected {
+        background-color: #f0f8f4 !important;
+        font-weight: normal !important;
+        color: rgba(0, 0, 0, 0.88) !important;
+      }
+      
+      &-option-active {
+        background-color: #f0f8f4 !important;
+        color: rgba(0, 0, 0, 0.88) !important;
+      }
+    }
+  }
+  
+  // Специальные стили для галочки в правом углу поля
+  .ant-select-selection-item-remove,
+  .ant-select-selection-item-content,
+  .ant-select-selection-overflow-item {
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  // Стиль для "галочки" в правом углу поля
+  .ant-select-selection-search {
+    display: flex !important;
+    align-items: center !important;
+  }
+  
+  // Маркер выбора (галочка)
+  .select-arrow.checkmark {
+    &::before {
+      content: none;
+    }
+  }
+
+  /* Исправление стилей Ant Design при наведении и фокусе */
+  .ant-picker-focused {
+    border-color: #00B265 !important;
+    box-shadow: none !important;
+  }
+  
+  // Стили для индикатора выбора в Select
+  .ant-select-item-option-state {
+    color: #00B265 !important;
+  }
+  
+  // Стили для галочки в поле выбора
+  .ant-select-item-option-selected .ant-select-item-option-state {
+    color: #00B265 !important;
+  }
+  
+  // Стили для стрелки раскрытия списка
+  .formSelect {
+    .ant-select-selection-search {
+      input {
+        height: 30px !important;
+      }
+    }
+    
+    &.ant-select-open .ant-select-selector {
+      border-color: #00B265 !important;
+    }
+  }
+
+  .ant-select-item {
+    font-family: Stem !important;
+  }
+
+  // Специальные стили для поля ввода/поиска в select
+  .ant-select-dropdown {
+    .ant-select-item-option-content {
+      font-family: Stem;
+      font-size: 14px;
+    }
+    
+    .ant-select-item-option-selected {
+      background-color: #f0f8f4;
+    }
+    
+    .ant-select-item-option-active {
+      background-color: #f0f8f4;
+    }
+  }
+
+  // Стили для отображения поля поиска в выпадающем списке
+  .ant-select-dropdown-search {
+    padding: 8px;
+    
+    .ant-select-search-field {
+      width: 100%;
+      
+      input {
+        border-radius: 6px;
+        height: 32px;
+        border: 1px solid #d9d9d9;
+        padding: 0 10px;
+        font-family: Stem;
+        
+        &:focus {
+          border-color: #00B265;
+          box-shadow: none;
         }
       }
     }
   }
+
+  // Стили для полей с датой и временем
+  .datePicker, .timePicker {
+    input {
+      padding-left: 28px !important;
+    }
+  }
+
+  // Выравнивание текста в полях
+  .ant-picker-input, 
+  .ant-select-selection-item,
+  .ant-select-selection-placeholder {
+    height: 100%;
+    display: flex !important;
+    align-items: center !important;
+    line-height: 1 !important;
+  }
+  
+  // Выравнивание текста в полях корпуса и аудитории
+  .corpsSelect, .audienceSelect {
+    .ant-select-selection-item,
+    .ant-select-selection-placeholder {
+      padding-left: 28px !important;
+    }
+  }
+
+  // Стили для специального выравнивания
+  .formSelect, .corpsSelect, .audienceSelect {
+    .ant-select-selector {
+      padding-right: 40px !important; // Дополнительный отступ справа для стрелки
+    }
+  }
+  
+  // Убираю дополнительный padding для полей с иконками, так как они теперь выравнены глобально
+  .datePickerItem, .timePickerItem, .durationItem, .corpsItem, .audienceItem {
+    .formSelect, .corpsSelect, .audienceSelect {
+      .ant-select-selector {
+        // Отступы уже настроены правильно глобально
+      }
+    }
+  }
+
+  // Стили для RangePicker
+  .ant-picker-range {
+    width: 100%;
+    
+    .ant-picker-input {
+      width: 50%;
+      
+      &:first-child {
+        input {
+          text-align: right;
+        }
+      }
+      
+      &:last-child {
+        input {
+          text-align: left;
+        }
+      }
+    }
+    
+    .ant-picker-range-separator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #808080;
+      padding: 0 4px;
+    }
+  }
+  
+  // Дополнительные стили для полей времени
+  .timePickerItem {
+    .timeRangePicker {
+      border: 3px solid #d9d9d9 !important;
+      border-radius: 8px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      
+      &:hover {
+        border-color: #00B265 !important;
+      }
+      
+      // Делаем внутренний вид единым
+      .ant-picker-range-separator {
+        font-size: 15px !important;
+        opacity: 1 !important;
+        padding: 0 6px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      
+      // Убираем рамки вокруг внутренних полей и центрируем текст
+      .ant-picker-input {
+        border: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        
+        input {
+          border: none !important;
+          outline: none !important;
+          font-size: 15px !important;
+          text-align: center !important;
+          width: 100% !important;
+          padding: 0 !important;
+        }
+        
+        &:first-child {
+          justify-content: flex-end !important;
+          padding-right: 2px !important;
+        }
+        
+        &:last-child {
+          justify-content: flex-start !important;
+          padding-left: 2px !important;
+        }
+      }
+      
+      // Настройка контейнера picker для лучшего выравнивания
+      .ant-picker-content {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+      }
+      
+      // Скрываем границы активного поля
+      &.ant-picker-focused {
+        border-color: #00B265 !important;
+        
+        .ant-picker-active-bar {
+          opacity: 0 !important;
+        }
+      }
+    }
+  }
+
+  
 }
