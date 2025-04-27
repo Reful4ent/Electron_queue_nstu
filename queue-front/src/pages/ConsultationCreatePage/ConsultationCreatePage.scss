@@ -8,6 +8,7 @@
   .consultationCreateHead {
     font-family: Stem;
     font-size: 36px;
+
     font-weight: 700;
     margin-bottom: 36px;
     margin-top: 76px;
@@ -15,6 +16,8 @@
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+
+    color: var(--text-color);
   }
 
   .consultationCreateContent {

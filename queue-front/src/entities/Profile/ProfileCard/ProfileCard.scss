@@ -1,7 +1,10 @@
 .profileCard {
   width: 100%;
   padding: 20px;
-  background-color: #FFFFFF;
+
+  width: calc(100% - 132px);
+  padding: 66px;
+  background-color: var(--profile-card-color);
   border-radius: 15px;
   display: flex;
   flex-direction: row;
@@ -19,11 +22,13 @@
     font-weight: 500;
     font-size: 36px;
     margin-bottom: 3px;
+    color: var(--text-color);
   }
 
   .profileSubRole {
     font-family: Stem;
     font-weight: 500;
     font-size: 24px;
+    color: var(--text-color);
   }
 }

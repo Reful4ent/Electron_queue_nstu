@@ -1,3 +1,4 @@
+import employee from "../../employee/routes/employee";
 
 
 export default {
@@ -24,6 +25,11 @@ export default {
                 }
             },
         })
-        return consultations;
+
+        const sortedConsultations = consultations.sort((a, b) => {
+            return new Date(b.dateOfStart).getTime() - new Date(a.dateOfStart).getTime();
+        });
+
+        return sortedConsultations;
     },
 };

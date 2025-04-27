@@ -1,0 +1,68 @@
+.ant-select-dropdown {
+  background-color: var(--redirect-card-color) !important;
+  div {
+    div {
+      color: var(--input-color-text) !important;
+    }
+    .ant-select-item-option-active {
+      background-color: var(--ant-select-item-option-active) !important;
+    }
+  }
+}
+
+.ant-select-item-option-selected {
+  background-color: var(--ant-select-selection-selected-item) !important;
+}
+
+.ant-select-selection-item {
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-right: 5px !important;
+  .ant-select-selection-item-content {
+    padding: {
+      right: 5px;
+      left: 5px;
+    };
+    background-color: var(--ant-select-selection-item) !important;
+    margin: 0 !important;
+  }
+  .ant-select-selection-item-remove {
+    background-color: var(--ant-select-selection-item) !important;
+    padding: {
+      right: 5px;
+    };
+  }
+}
+
+.ant-select-selection-item-remove {
+  span {
+    svg {
+      color: var(--input-color-text) !important;
+    }
+  }
+}
+
+.ant-select-arrow {
+  span {
+    svg {
+      color: var(--input-color-text) !important;
+    }
+  }
+}
+
+.ant-select {
+  background-color: var(--redirect-card-color) !important;
+  color: var(--input-color-text) !important;
+  &::placeholder{
+    color: var(--input-color-placeholder) !important;
+  }
+  .ant-select-selector {
+    background-color: var(--redirect-card-color) !important;
+    color: var(--input-color-text) !important;
+    .ant-select-selection-wrap {
+      .ant-select-selection-placeholder {
+        color: var(--input-color-placeholder) !important;
+      }
+    }
+  }
+}

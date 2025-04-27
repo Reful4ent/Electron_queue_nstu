@@ -2,7 +2,7 @@
   width: 499px;
   height: 216px;
   border-radius: 15px;
-  background-color: white;
+  background-color: var(--redirect-card-color);
   padding: 30px 28px;
   overflow: hidden;
 
@@ -14,6 +14,7 @@
   .redirectCardName {
     font-weight: 500;
     font-size: 36px;
+    color: var(--text-color);
     font-family: Stem;
     margin: {
       bottom: 24px;
