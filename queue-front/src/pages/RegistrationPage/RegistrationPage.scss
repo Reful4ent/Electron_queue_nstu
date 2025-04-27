@@ -6,8 +6,9 @@
   padding-top: 50px;
   padding-bottom: 50px;
 
+
   .form{
-    background-color: white;
+    background-color: var(--redirect-card-color);
     padding: 49px 51px 49px 51px;
     border-radius: 35px;
     width: 640px;
@@ -23,12 +24,32 @@
     .title{
       margin-top: 0;
       margin-bottom: 12px;
+      color: var(--text-color);
     }
 
     .input{
       height: 56px;
       border-radius: 10px;
       margin-bottom: 12px;
+      background-color: var(--redirect-card-color);
+      color: var(--input-color-text) !important;
+      .ant-input {
+        background-color: var(--redirect-card-color);
+        color: var(--input-color-text) !important;
+        &::placeholder{
+          color: var(--input-color-placeholder) !important;
+        }
+      }
+      .ant-input-suffix {
+        span {
+          svg {
+            fill: var(--input-color-text) !important;
+          }
+        }
+      }
+      &::placeholder{
+        color: var(--input-color-placeholder) !important;
+      }
     }
 
     .form-submit-button{

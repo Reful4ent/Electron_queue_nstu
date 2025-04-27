@@ -1,0 +1,9 @@
+.input{
+  height: 56px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  background-color: var(--redirect-card-color) !important;
+  &::placeholder{
+    color: var(--text-color) !important;
+  }
+}

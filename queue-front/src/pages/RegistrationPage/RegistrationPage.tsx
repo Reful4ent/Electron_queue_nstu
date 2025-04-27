@@ -263,7 +263,7 @@ export const RegistrationPage: FC = () => {
                         name={'email'}
                         rules={[{required: true, message: "Введите почту!"}]}
                     >
-                        <Input placeholder={'Логин'} className={'input'}/>
+                        <Input placeholder={'Почта'} className={'input'}/>
                     </Form.Item>
                     <Form.Item
                         name={'password'}

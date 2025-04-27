@@ -17,6 +17,7 @@
   font-family: Stem;
   font-weight: 500;
   font-size: 14px;
+  color: var(--text-color);
 }
 
 .userDataSubRole {
@@ -34,7 +35,7 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #FFFFFF;
+  background-color: var(--header-color);
   border-radius: 10px;
   width: 350px;
   right: 0px;
@@ -46,7 +47,7 @@
     width: calc(100% - 32px);
     height: 70px;
     padding: 0 16px;
-    background-color: #EDFBF5;
+    background-color: var(--profile-dropdown-color);
     border-radius: 10px;
     display: flex;
     flex-direction: row;

@@ -19,6 +19,7 @@
       font-family: Stem;
       font-weight: 500;
       font-size: 36px;
+      color: var(--text-color);
     }
   }
 }
@@ -29,7 +30,7 @@
   justify-content: center;
   width: 178px;
   height: 45px;
-  background: #ffffff;
+  background: var(--redirect-card-color);
   border-radius: 10px;
   margin-bottom: 55px;
 
