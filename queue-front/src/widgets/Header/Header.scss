@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #ffffff;
+  background: var(--header-color);
   padding: 0 40px;
   box-sizing: border-box;
 
@@ -14,7 +14,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #F8F8F8;
+    background: var(--header-buttons-color);
     border: none;
  }
   
@@ -33,7 +33,7 @@
       min-width: 65px;
       
       .ant-select-selector {
-        background: #F8F8F8;
+        background: var(--header-buttons-color);
         border: none;
       }
     }
@@ -54,7 +54,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background: #F8F8F8;
+  background: var(--header-buttons-color);
   border-radius: 6px;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;

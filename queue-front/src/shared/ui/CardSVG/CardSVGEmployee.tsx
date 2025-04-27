@@ -1,10 +1,11 @@
 import {FC} from "react";
+import './CardSVG.scss'
 
 export const CardSVGEmployee: FC = () => {
     return (
         <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"
              xlinkHref="http://www.w3.org/1999/xlink">
-            <rect width="80" height="80" rx="10" fill="#EDFBF5"/>
+            <rect width="80" height="80" rx="10" fill="#EDFBF5" className={'CardSVGIcon'}/>
             <rect x="10" y="10" width="60" height="60" fill="url(#pattern0_177_859)"/>
             <defs>
                 <pattern id="pattern0_177_859" patternContentUnits="objectBoundingBox" width="1"

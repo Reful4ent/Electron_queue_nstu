@@ -2,7 +2,8 @@
   font-family: Stem, sans-serif;
   min-height: 80px;
   width: 100%;
-  background-color: #E6E6E6;
+  background-color: var(--footer-color);
+  transition: 0.1s;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -29,6 +30,7 @@
 .title {
   font-size: 20px;
   font-weight: bold;
+  color: var(--text-color);
 }
 
 .text {
@@ -54,5 +56,5 @@
 }
 
 .contact:hover, .link:hover {
-  color: black
+  color: var(--text-color);
 }

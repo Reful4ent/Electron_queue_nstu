@@ -3,9 +3,6 @@ html, body, #root {
   margin: 0;
 }
 
-body {
-  background-color: #F1F1F1;
-}
 
 #root{
   min-height: 100vh;
@@ -16,5 +13,93 @@ body {
     font-family: 'Stem';
     src: url('../public/fonts/Stem-Regular.ttf') format('ttf'),
          url('../public/fonts/Stem-Regular.woff') format('woff');
+  }
+}
+
+
+
+$text-white: #fff;
+$text-dark: #000;
+
+$theme-white: #F1F1F1;
+$theme-dark: #0B0B0B;
+
+$footer-light: #E6E6E6;
+$footer-dark: #080808;
+
+$redirect-card-dark: #121212;
+$redirect-card-light: #FFF;
+
+$header-light: #FFF;
+$header-dark: #121212;
+
+$header-buttons-color-dark: #181818;
+$header-buttons-color-light: #F8F8F8;
+
+$profile-dropdown-color-light: #EDFBF5;
+$profile-dropdown-color-dark: #111F19;
+
+$profile-card-color-dark: #121212;
+$profile-card-color-light: #fff;
+
+$my-consultation-card-inner-dark: #181818;
+$my-consultation-card-inner-light:#F8F8F8;
+
+$my-consultation-card-status-light:#F8F8F85C;
+$my-consultation-card-status-dark:#181818;
+
+$input-color-text-light: #000000;
+$input-color-text-dark: #ffffff;
+
+$input-color-placeholder-dark: #B7B7B7;
+$input-color-placeholder-light: #dadada;
+
+$ant-select-item-option-active-light: #cce1ff;
+$ant-select-item-option-active-dark:  #00CC73;
+
+$ant-select-selection-item-light: #d1d1d1;
+$ant-select-selection-item-dark: #00CC73;
+
+$ant-select-selection-item-selected-light: #d1d1d1;
+$ant-select-selection-item-selected-dark: #057846;
+
+
+
+body{
+  margin: 0px;
+  transition: 0.1s;
+  background-color: $theme-white;
+  --text-color: #{$text-dark};
+  --footer-color: #{$footer-light};
+  --redirect-card-color: #{$redirect-card-light};
+  --header-color: #{$header-light};
+  --header-buttons-color: #{$header-buttons-color-light};
+  --profile-dropdown-color: #{$profile-dropdown-color-light};
+  --profile-card-color: #{$profile-card-color-light};
+  --my-consultation-card-inner: #{$my-consultation-card-inner-light};
+  --my-consultation-card-status: #{$my-consultation-card-status-light};
+  --input-color-text: #{$input-color-text-light};
+  --input-color-placeholder: #{$input-color-placeholder-light};
+  --ant-select-item-option-active: #{$ant-select-item-option-active-light};
+  --ant-select-selection-item: #{$ant-select-selection-item-light};
+  --ant-select-selection-selected-item: #{$ant-select-selection-item-selected-light};
+
+  &.dark{
+    background-color: $theme-dark;
+    transition: 0.1s;
+    --text-color: #{$text-white};
+    --footer-color: #{$footer-dark};
+    --redirect-card-color: #{$redirect-card-dark};
+    --header-color: #{$header-dark};
+    --header-buttons-color: #{$header-buttons-color-dark};
+    --profile-dropdown-color: #{$profile-dropdown-color-dark};
+    --profile-card-color: #{$profile-card-color-dark};
+    --my-consultation-card-inner: #{$my-consultation-card-inner-dark};
+    --my-consultation-card-status: #{$my-consultation-card-status-dark};
+    --input-color-text: #{$input-color-text-dark};
+    --input-color-placeholder: #{$input-color-placeholder-dark};
+    --ant-select-item-option-active: #{$ant-select-item-option-active-dark};
+    --ant-select-selection-item: #{$ant-select-selection-item-dark};
+    --ant-select-selection-selected-item: #{$ant-select-selection-item-selected-dark};
   }
 }

@@ -3,13 +3,16 @@ import { createRoot } from 'react-dom/client'
 import App from './app/App.tsx'
 import {BrowserRouter} from "react-router-dom";
 import {AuthProvider} from "./app/context/AuthProvider/AuthProvider.tsx";
+import {ThemeProvider} from "./app/context/ThemeProvider/ThemeProvider.tsx";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-      <AuthProvider>
-          <BrowserRouter>
-              <App />
-          </BrowserRouter>
-      </AuthProvider>
+      <ThemeProvider>
+          <AuthProvider>
+              <BrowserRouter>
+                  <App />
+              </BrowserRouter>
+          </AuthProvider>
+      </ThemeProvider>
   </StrictMode>,
 )

@@ -60,7 +60,7 @@ export const SignInPage: FC = () => {
                     }
                     <div className={'subContainer'}>
                     <Form.Item>
-                            <Checkbox>Запомнить меня</Checkbox>
+                            <Checkbox className={'checkboxText'}>Запомнить меня</Checkbox>
                         </Form.Item>
                         <Link to={'/'} className={'linkIn'}>Забыли пароль?</Link>
                     </div>

@@ -16,9 +16,11 @@ export interface IConsultationStudentProfileCard {
 
 export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard> = ({consultation, userData, setIsModalOpen, setCurrentConsultationId, setCurrentRecordId}) => {
 
-
+    console.log(consultation?.recordedStudents
+        ?.filter((student) => student?.student?.id == userData?.student.id))
+    console.log(consultation)
     return (
-        <div>
+        <>
             {consultation?.recordedStudents
                 ?.filter((student) => student?.student?.id == userData?.student.id)
                 ?.map((recordedStudent) => (
@@ -123,7 +125,7 @@ export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard>
                     </div>
                 ))
             }
-        </div>
+        </>
     )
 }
 
