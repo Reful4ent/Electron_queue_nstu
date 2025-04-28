@@ -460,15 +460,17 @@ export const ConsultationCreatePage: FC = () => {
                                     </Col>
                                 </Row>
 
-                                <Form.Item 
-                                    name="permanent" 
-                                    className="formItem permanentCheckbox" 
-                                    valuePropName="checked"
-                                >
-                                    <Checkbox>
-                                        Сделать постоянной
-                                    </Checkbox>
-                                </Form.Item>
+                                {/*
+                                    <Form.Item
+                                        name="permanent"
+                                        className="formItem permanentCheckbox"
+                                        valuePropName="checked"
+                                    >
+                                        <Checkbox>
+                                            Сделать постоянной
+                                        </Checkbox>
+                                    </Form.Item>
+                                */}
 
                                 <Button 
                                     className="submitButton" 
