@@ -82,6 +82,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    background-color: var(--ant-modal-inner);
 
     .modalStudentsListItem {
       display: flex;

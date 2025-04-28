@@ -11,7 +11,7 @@ import {Breadcrumbs} from "../../widgets/Breadcrumbs/Breadcrumbs.tsx";
 import {IGroup, OptionsType} from "../RegistrationPage/RegistrationPage.tsx";
 import dayjs from 'dayjs';
 import locale from 'antd/es/date-picker/locale/ru_RU';
-import { CalendarOutlined, ClockCircleOutlined, FieldTimeOutlined, HomeOutlined, BankOutlined, CheckOutlined, FileTextOutlined, TeamOutlined, RightOutlined } from '@ant-design/icons';
+import { CalendarOutlined, ClockCircleOutlined, FieldTimeOutlined, HomeOutlined, BankOutlined, CheckOutlined, RightOutlined } from '@ant-design/icons';
 import { Input } from "antd";
 
 export interface IDiscipline {
@@ -143,16 +143,6 @@ export const ConsultationCreatePage: FC = () => {
         }
     }, [auth?.jwt, getMyData]);
 
-    useEffect(() => {
-        if (form && !isLoading) {
-            const today = dayjs();
-            setSelectedDate(today);
-            form.setFieldsValue({ 
-                date: today,
-                duration: 15 
-            });
-        }
-    }, [form, isLoading]);
 
     const handleCorpsChange = useCallback((value: number) => {
         form.setFieldValue('audience', undefined);
@@ -174,19 +164,12 @@ export const ConsultationCreatePage: FC = () => {
         setAudienceOptions(options);
     }, [form]);
 
-    const handleFinish = useCallback(async (values: any) => {
-        // Точно как в старом коде
+    const handleFinish = useCallback(async () => {
         const timeStart = formatTime(form.getFieldValue('time')[0]);
         const timeEnd = formatTime(form.getFieldValue('time')[1]);
         const date = formatDate(form.getFieldValue('date'));
-       
-        const startTime = dayjs(form.getFieldValue('time')[0]);
-        const endTime = dayjs(form.getFieldValue('time')[1]);
-        const durationInMinutes = form.getFieldValue('duration');
-       
-        const totalDuration = endTime.diff(startTime, 'minute');
-       
-        const numberOfSlots = Math.floor(totalDuration / durationInMinutes);
+
+        console.log(form.getFieldValue('duration'))
 
         try {
             await axios.post(
@@ -203,8 +186,6 @@ export const ConsultationCreatePage: FC = () => {
                         discipline: form.getFieldValue('discipline'),
                         dateOfStart: `${date.split('T')[0]}T${timeStart.split('T')[1]}`,
                         dateOfEnd: `${date.split('T')[0]}T${timeEnd.split('T')[1]}`,
-                        recordsNumber: numberOfSlots,
-                        shouldCreateFreeRecords: true
                     }
                 }, 
                 {
@@ -218,6 +199,19 @@ export const ConsultationCreatePage: FC = () => {
                 type: 'success',
                 content: 'Консультация успешно добавлена!',
             });
+            setSelectedGroups([]);
+            setSelectedDiscipline(null);
+            form.setFieldValue('audience', null)
+            form.setFieldValue('groups', null)
+            form.setFieldValue('corps', null)
+            form.setFieldValue('date', null)
+            form.setFieldValue('discipline', null)
+            form.setFieldValue('duration', null)
+            form.setFieldValue('title', null)
+            form.setFieldValue('time', null)
+            setSelectedDate(null);
+            setSelectedTime(null);
+            setSelectedCorps(null);
         } catch (error: any) {
             messageApi.open({
                 type: 'error',
@@ -268,10 +262,6 @@ export const ConsultationCreatePage: FC = () => {
                             onFinish={handleFinish}
                             layout="vertical"
                             requiredMark={false}
-                            validateTrigger="onSubmit"
-                            initialValues={{
-                                duration: 15
-                            }}
                         >
                             <h2 className="consultationAppointmentTitle">Назначение консультации</h2>
                             
@@ -379,11 +369,12 @@ export const ConsultationCreatePage: FC = () => {
                                             <TimePicker.RangePicker
                                                 format="HH:mm"
                                                 placeholder={['12:00', '13:30']}
-                                                minuteStep={5}
+                                                minuteStep={15}
                                                 separator="-"
                                                 suffixIcon={null}
                                                 className="timePicker timeRangePicker"
                                                 locale={locale}
+                                                disabledHours={() => [0, 1, 2, 3, 4, 5, 6, 7, 23]}
                                                 allowClear={false}
                                                 bordered={true}
                                                 value={selectedTime}
@@ -396,7 +387,7 @@ export const ConsultationCreatePage: FC = () => {
                                     </Col>
                                     <Col xs={24} sm={8}>
                                         <Form.Item 
-                                            name="duration" 
+                                            name={['duration']}
                                             className="formItem durationItem"
                                             rules={[{ required: true, message: 'Выберите длительность' }]}
                                         >
@@ -404,10 +395,11 @@ export const ConsultationCreatePage: FC = () => {
                                                 <FieldTimeOutlined className="fieldIcon" />
                                             </div>
                                             <Select 
-                                                options={INTERVAL_OPTIONS} 
+                                                options={INTERVAL_OPTIONS}
                                                 placeholder="15 мин."
                                                 suffixIcon={null}
                                                 className="formSelect"
+                                                onSelect={(value) => form.setFieldValue('duration', value) }
                                                 dropdownStyle={{ borderRadius: '8px' }}
                                             />
                                         </Form.Item>

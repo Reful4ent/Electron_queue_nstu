@@ -22,6 +22,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
     const [currentRole, setCurrentRole] = useState<string>('')
     const [consultations, setConsultations] = useState<any[]>([])
     const [modalData, setModalData] = useState<IConsultation | null>();
+    const [currentItem, setCurrentItem] = useState<string>('')
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [modalItemHead, setModalItemHead] = useState<string>('')
     const [dateRange, setDateRange] = useState<[dayjs.Dayjs, dayjs.Dayjs]>([
@@ -77,6 +78,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
     },[])
 
     const handleFinish = useCallback(async () => {
+        setIsModalUpdated(false)
         try {
         const myEmployeeConsultationsData = await axios.post(
             `${routeURL}/getEmployeeConsultation`,
@@ -138,7 +140,11 @@ export const EmployeeMeConsultationsPage: FC = () => {
                                     </div>
                                     <Button
                                             className="consultation-button"
-                                            onClick={() => handleConsultation(consultationItem, item)}>
+                                            onClick={() => {
+                                                handleConsultation(consultationItem, item)
+                                                setCurrentItem(item)
+                                            }}
+                                    >
                                         Узнать записавшихся
                                     </Button>
                                 </div>
@@ -151,17 +157,26 @@ export const EmployeeMeConsultationsPage: FC = () => {
             }
             
             setConsultations(collapseConsultationsItems);
+            if (isModalOpen) {
+                setModalData(myEmployeeConsultationsData.data[currentItem].find((cons: IConsultation) => cons.documentId == currentConsultationId))
+            }
         } catch (error) {
             console.error("Ошибка при получении консультаций:", error);
             alert("Произошла ошибка при загрузке консультаций");
         }
-    }, [userData, dateRange, auth?.jwt, handleConsultation]);
+    }, [userData, dateRange, auth?.jwt, handleConsultation, isModalOpen, currentConsultationId]);
 
     const onDateRangeChange = (dates: any) => {
         if (dates && dates.length === 2) {
             setDateRange(dates);
         }
     };
+
+    useEffect(() => {
+        if(isModalUpdated) {
+            handleFinish();
+        }
+    }, [isModalUpdated, currentConsultationId]);
 
     return (
         <div className={'consultationMeContainer'}>
@@ -264,7 +279,6 @@ export const EmployeeMeConsultationsPage: FC = () => {
                 setIsModalOpen={setIsModalOpen}
                 modalItemHead={modalItemHead}
                 modalData={modalData}
-                onConsultationUpdate={handleFinish}
                 setIsModalUpdated={setIsModalUpdated}
                 setCurrentConsultationId={setCurrentConsultationId}
             />

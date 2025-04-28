@@ -13,7 +13,6 @@ export interface IConsultationStudentsList {
     setCurrentConsultationId: (currentConsultationId: string) => void;
     modalItemHead: string;
     modalData?: IConsultation | null;
-    onConsultationUpdate?: () => void;
 }
 
 // Функция форматирования времени
@@ -23,7 +22,7 @@ const formatTime = (date: Date) => {
     return `${hours}:${minutes}`;
 };
 
-export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isModalOpen, setIsModalOpen, modalItemHead, modalData, onConsultationUpdate}) => {
+export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isModalOpen, setIsModalOpen, modalItemHead, modalData, setCurrentConsultationId, setIsModalUpdated}) => {
     const auth = useAuth();
     const [loading, setLoading] = useState<Record<number, boolean>>({});
     const [cancelConsultationLoading, setCancelConsultationLoading] = useState(false);
@@ -39,62 +38,29 @@ export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isM
         try {
             setLoading(prev => ({ ...prev, [index]: true }));
             
-            console.log('Отправляю запрос на отмену записи:', {
-                recordId: recordedStudent.id,
-                recordedStudent: recordedStudent
-            });
-            
-            const response = await axios.delete(
-                `${routeURL}/consultations/records/${recordedStudent.id}`,
+            await axios.post(
+                `${routeURL}/deleteStudentRecord`,
+                {
+                    consultationId: modalData?.documentId,
+                    recordId: recordedStudent.id,
+                    userType: 'Employee'
+                },
                 {
                     headers: {
                         Authorization: `Bearer ${auth?.jwt}`,
                     }
                 }
-            );
-            
-            console.log('Ответ сервера:', response.data);
-            
+            )
+
+
             messageApi.success('Запись успешно отменена');
-            
-            setTimeout(() => {
-                setIsModalOpen(false);
-                if (onConsultationUpdate) {
-                    onConsultationUpdate();
-                }
-            }, 1000);
+            if (modalData?.documentId) {
+                setCurrentConsultationId(modalData?.documentId);
+                setIsModalUpdated(true);
+            }
             
         } catch (error: any) {
-            console.error("Детали ошибки:", error.response?.data || error.message);
-            
-            try {
-                console.log('Пробуем альтернативный способ отмены записи');
-                const response = await axios.put(
-                    `${routeURL}/consultations/cancel-record`,
-                    {
-                        recordId: recordedStudent.id,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${auth?.jwt}`,
-                        }
-                    }
-                );
-                
-                console.log('Ответ сервера (альтернативный):', response.data);
-                messageApi.success('Запись успешно отменена');
-                
-                setTimeout(() => {
-                    setIsModalOpen(false);
-                    if (onConsultationUpdate) {
-                        onConsultationUpdate();
-                    }
-                }, 1000);
-                
-            } catch (altError: any) {
-                console.error("Ошибка при альтернативной отмене записи:", altError);
                 messageApi.error('Не удалось отменить запись. Пожалуйста, обратитесь к администратору');
-            }
         } finally {
             setLoading(prev => ({ ...prev, [index]: false }));
         }
@@ -108,62 +74,25 @@ export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isM
 
         try {
             setCancelConsultationLoading(true);
-            
-            console.log('Отправляю запрос на отмену консультации:', {
-                consultationId: modalData.id
-            });
-            
-            const response = await axios.delete(
-                `${routeURL}/consultations/${modalData.id}`,
+
+            await axios.put(
+                `${routeURL}/consultations/${modalData?.documentId}`,
+                {
+                    data: {
+                        isOffByEmployee: true,
+                    }
+                },
                 {
                     headers: {
                         Authorization: `Bearer ${auth?.jwt}`,
                     }
                 }
-            );
-            
-            console.log('Ответ сервера:', response.data);
-            messageApi.success('Консультация успешно отменена');
-            
-            setTimeout(() => {
-                setIsModalOpen(false);
-                if (onConsultationUpdate) {
-                    onConsultationUpdate();
-                }
-            }, 1500);
-            
+            )
+            setIsModalUpdated(true);
+            setIsModalOpen(false);
+
         } catch (error: any) {
-            console.error("Ошибка при отмене консультации:", error);
-            
-            try {
-                console.log('Пробуем альтернативный способ отмены консультации');
-                
-                const response = await axios.put(
-                    `${routeURL}/cancel-consultation`,
-                    {
-                        consultationId: modalData.id
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${auth?.jwt}`,
-                        }
-                    }
-                );
-                
-                console.log('Ответ сервера (альтернативный):', response.data);
-                messageApi.success('Консультация успешно отменена');
-                
-                setTimeout(() => {
-                    setIsModalOpen(false);
-                    if (onConsultationUpdate) {
-                        onConsultationUpdate();
-                    }
-                }, 1500);
-                
-            } catch (altError: any) {
-                console.error("Ошибка при альтернативной отмене консультации:", altError);
-                messageApi.error('Не удалось отменить консультацию. Пожалуйста, обратитесь к администратору');
-            }
+            messageApi.error('Не удалось отменить консультацию. Пожалуйста, обратитесь к администратору');
         } finally {
             setCancelConsultationLoading(false);
         }
@@ -173,7 +102,7 @@ export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isM
         <>
             {contextHolder}
             <Modal
-                title="Записи на косультацию"
+                title="Записи на консультацию"
                 centered
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
@@ -212,7 +141,10 @@ export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isM
                             <div>{formattedDate}</div>
                         </div>
                         <div className={'modalConsultationBody'}>
-                            {modalData?.recordedStudents.map((recordedStudent, index) => (
+                            {modalData?.recordedStudents
+                                .sort((a, b) => new Date(a?.dateStartConsultation).getTime() - new Date(b?.dateStartConsultation).getTime())
+                                .filter((a) => !a.isOffByEmployee && !a.isOffByStudent)
+                                .map((recordedStudent, index) => (
                                 <div key={index} className={'modalStudentsListItem'}>
                                     <div className={'modalStudentsListItemFirstBlock'}>
                                         <Image
@@ -245,29 +177,37 @@ export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isM
                                     </div>
                                     <div className={`student-actions ${!recordedStudent.student && !recordedStudent.notRegisteredUser ? 'free-slot-actions' : ''}`}>
                                         {(recordedStudent.student || recordedStudent.notRegisteredUser) && (
-                                            <button 
-                                                className="student-action-button student-action-message" 
-                                                title="Написать студенту"
-                                                onClick={() => console.log('Написать студенту', recordedStudent)}
-                                            >
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 18H4V8L12 13L20 8V18ZM12 11L4 6H20L12 11Z" fill="currentColor"/>
-                                                </svg>
-                                            </button>
+                                            <>
+                                                <button
+                                                    className="student-action-button student-action-message"
+                                                    title="Написать студенту"
+                                                    onClick={() => console.log('Написать студенту', recordedStudent)}
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 18H4V8L12 13L20 8V18ZM12 11L4 6H20L12 11Z"
+                                                            fill="currentColor"/>
+                                                    </svg>
+                                                </button>
+                                                <button
+                                                    className="student-action-button student-action-cancel"
+                                                    title="Отменить запись"
+                                                    onClick={() => handleCancelRecord(recordedStudent, index)}
+                                                    disabled={loading[index]}
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"
+                                                            fill="currentColor"/>
+                                                    </svg>
+                                                </button>
+                                            </>
                                         )}
-                                        <button 
-                                            className="student-action-button student-action-cancel" 
-                                            title="Отменить запись"
-                                            onClick={() => handleCancelRecord(recordedStudent, index)}
-                                            disabled={loading[index]}
-                                        >
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
-                                            </svg>
-                                        </button>
                                     </div>
                                 </div>
-                            ))}
+                                ))}
                         </div>
                     </div>
                 </div>

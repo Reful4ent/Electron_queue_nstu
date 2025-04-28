@@ -63,6 +63,11 @@ $ant-select-selection-item-dark: #00CC73;
 $ant-select-selection-item-selected-light: #d1d1d1;
 $ant-select-selection-item-selected-dark: #057846;
 
+$ant-button-schedule-light: #f4f4f4;
+$ant-button-schedule-dark: #057846;
+
+$ant-modal-inner-dark: #242424;
+$ant-modal-inner-light: #F5F5F5;
 
 
 body{
@@ -83,6 +88,8 @@ body{
   --ant-select-item-option-active: #{$ant-select-item-option-active-light};
   --ant-select-selection-item: #{$ant-select-selection-item-light};
   --ant-select-selection-selected-item: #{$ant-select-selection-item-selected-light};
+  --ant-button-schedule: #{$ant-button-schedule-light};
+  --ant-modal-inner: #{$ant-modal-inner-light};
 
   &.dark{
     background-color: $theme-dark;
@@ -101,5 +108,7 @@ body{
     --ant-select-item-option-active: #{$ant-select-item-option-active-dark};
     --ant-select-selection-item: #{$ant-select-selection-item-dark};
     --ant-select-selection-selected-item: #{$ant-select-selection-item-selected-dark};
+    --ant-button-schedule: #{$ant-button-schedule-dark};
+    --ant-modal-inner: #{$ant-modal-inner-dark};
   }
 }
