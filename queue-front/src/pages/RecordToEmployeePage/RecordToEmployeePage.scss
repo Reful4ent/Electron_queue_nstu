@@ -16,122 +16,211 @@
     display: flex;
     flex-direction: row;
     gap: 24px;
+  }
+}
 
-    .consultationMeForm {
-      width: 110%;
-      padding: 23px;
-      height: 214px;
-      background-color: white;
-      border-radius: 15px;
-
-      .consultationMeFormInner {
+/* Стили для списка консультаций (аккордеон) */
+.consultations-collapse {
+  margin-top: 20px;
+  width: 100%;
+  
+  .ant-collapse-item {
+    background-color: var(--redirect-card-color);
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    
+    .ant-collapse-header {
+      padding: 14px 20px;
+      cursor: pointer;
+      background-color: var(--redirect-card-color);
+      display: flex;
+      align-items: center;
+      border-radius: 8px !important;
+      
+      .collapse-icon {
+        margin-right: 10px;
+        font-size: 16px;
+        color: var(--text-color);
+        font-weight: bold;
+        width: 24px;
+        height: 24px;
         display: flex;
-        flex-direction: column;
-        gap: 10px;
-
-        .consultationMeFormHead {
-          font-family: Stem;
-          font-weight: 500;
-          font-size: 24px;
-          margin-bottom: 20px;
-          margin-top: 0;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .consultation-subject {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        font-family: Stem;
+        font-weight: 500;
+        font-size: 16px;
+        color: var(--text-color);
+        
+        .room-number {
+          color: #7a7a7a;
+          font-size: 14px;
         }
+      }
+      
+      &:hover {
+        background-color: var(--ant-select-selection-item);
       }
     }
 
+    .ant-collapse-content {
+      background-color: var(--my-consultation-card-inner);
+      border-top: none;
+      
+      .ant-collapse-content-box {
+        padding: 0;
+      }
+    }
   }
 }
 
-.modalConsultationHead{
-  font-family: Stem;
-  font-weight: 500;
-  font-size: 28px;
-  margin-bottom: 20px;
-  margin-top: 0;
-
-}
-
-.modalConsultationList {
-  background-color: #F5F5F5;
-  border-radius: 10px;
-  overflow: hidden;
-
-  .modalConsultationTime, .modalConsultationHeadItem {
-    font-family: Stem;
-    font-weight: 500;
-    font-size: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+/* Стили для сетки с консультациями */
+.consultation-dates-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 14px;
+  column-gap: 16px;
+  padding: 14px 16px 18px;
+  background-color: var(--my-consultation-card-inner);
+  border-radius: 0 0 8px 8px;
+  
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .modalConsultationTime {
-    padding: 10px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
   }
-
-  .modalConsultationHeadItem {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #E5E3E3;
-    margin: 0;
-    padding: 5px;
-  }
-  .modalConsultationBody {
-    padding: 0px 10px 10px 10px;
+  
+  .consultation-date-item {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-
-    .modalStudentsListItem {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: none;
+    overflow: hidden;
+    
+    .consultation-header {
+      padding: 12px 16px;
       display: flex;
-      flex-direction: row;
       justify-content: space-between;
-      background-color: #FFFFFF;
-      padding: 10px;
-      align-items: center;
-      border-radius: 10px;
-
-      .modalStudentsListItemFirstBlock {
+      
+      .day-date {
         display: flex;
-        flex-direction: row;
-        gap: 10px;
-        .modalStudentsListItemProfileImage {
-          border-radius: 50%;
-
+        justify-content: space-between;
+        width: 100%;
+        
+        .day, .date {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: 16px;
+          color: #000;
         }
       }
     }
-  }
-}
-
-
-.profileCard {
-  width: calc(100% - 132px);
-  padding: 66px;
-  background-color: #FFFFFF;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: row;
-  gap: 98px;
-  margin-bottom: 105px;
-
-  .profileImage {
-    height: 128px;
-    width: 128px;
-    border-radius: 50%;
-  }
-
-  .profileFIO {
-    font-family: Stem;
-    font-weight: 500;
-    font-size: 36px;
-    margin-bottom: 3px;
-  }
-
-  .profileSubRole {
-    font-family: Stem;
-    font-weight: 500;
-    font-size: 24px;
+    
+    .consultation-separator {
+      height: 1px;
+      width: 100%;
+      background-color: #E0E0E0;
+    }
+    
+    .time-slots-container {
+      padding: 12px 16px;
+      
+      .error-message {
+        color: red;
+        font-family: Stem;
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+      
+      .time-form {
+        margin-bottom: 16px;
+      }
+      
+      .time-slots {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        
+        .time-slot-radio {
+          margin-right: 0 !important;
+          
+          .ant-radio {
+            display: none;
+          }
+          
+          .ant-radio + span {
+            padding: 6px 16px;
+            height: 34px;
+            border-radius: 17px;
+            font-family: Stem;
+            font-size: 14px;
+            color: #000;
+            background-color: white;
+            border: 1px solid #E0E0E0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+          }
+          
+          &.ant-radio-wrapper-checked {
+            .ant-radio + span {
+              background-color: #f5f5f5;
+              color: #00B265;
+              border-color: #00B265;
+            }
+          }
+          
+          &.ant-radio-wrapper-disabled {
+            .ant-radio + span {
+              color: #BDBDBD;
+              background-color: #F0F0F0;
+              border-color: #E0E0E0;
+              cursor: not-allowed;
+            }
+          }
+          
+          &:hover:not(.ant-radio-wrapper-disabled) {
+            .ant-radio + span {
+              border-color: #00B265;
+              color: #00B265;
+            }
+            
+            &.ant-radio-wrapper-checked .ant-radio + span {
+              color: #00B265;
+            }
+          }
+        }
+      }
+    }
+    
+    .check-time-button, .record-button {
+      margin: 12px 16px 16px;
+      height: 40px;
+      border-radius: 20px;
+      font-family: Stem;
+      border: 2px solid #333;
+      font-size: 14px;
+      color: #000;
+      background-color: white;
+      transition: all 0.2s;
+      
+      &:hover {
+        border-color: #00B265;
+        color: #00B265;
+      }
+    }
   }
 }

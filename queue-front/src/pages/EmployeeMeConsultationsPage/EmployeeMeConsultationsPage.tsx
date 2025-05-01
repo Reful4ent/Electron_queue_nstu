@@ -7,21 +7,31 @@ import {routeURL} from "../../shared/api/route.ts";
 import {ROLES} from "../HomePage/HomePage.tsx";
 import {useAuth} from "../../app/context/AuthProvider/context.ts";
 import './EmployeeMeConsultationsPage.scss'
-import {Button, Collapse, CollapseProps, DatePicker, Form} from "antd";
+import {Button, ConfigProvider} from "antd";
 import {ConsultationStudentModalList} from "../../entities/Consultation/ConsultationStudentsModalList.tsx";
+import dayjs from "dayjs";
+import 'dayjs/locale/ru';
+import locale from 'antd/locale/ru_RU';
+import { DownOutlined, RightOutlined } from '@ant-design/icons';
+import { DateRangePicker } from "../../widgets/DateRangePicker/DateRangePicker.tsx";
 
 export const EmployeeMeConsultationsPage: FC = () => {
     const auth = useAuth();
-    const [form] = Form.useForm();
     const [userData, setUserData] = useState<IUser | null>();
     const [currentRole, setCurrentRole] = useState<string>('')
-    const [consultationsList, setConsultationsList] = useState<CollapseProps['items']>([])
-    const [currentConsultationId, setCurrentConsultationId] = useState<string>('')
-    const [currentItem, setCurrentItem] = useState<string>('')
+    const [consultations, setConsultations] = useState<any[]>([])
     const [modalData, setModalData] = useState<IConsultation | null>();
+    const [currentItem, setCurrentItem] = useState<string>('')
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const [isModalUpdated, setIsModalUpdated] = useState<boolean>(true)
     const [modalItemHead, setModalItemHead] = useState<string>('')
+    const [dateRange, setDateRange] = useState<[dayjs.Dayjs, dayjs.Dayjs]>([
+        dayjs(),
+        dayjs().add(7, 'day')
+    ]);
+    const [isModalUpdated, setIsModalUpdated] = useState<boolean>(false);
+    const [currentConsultationId, setCurrentConsultationId] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    
     const itemsForBreadcrumbs = [
         {
             title: 'Электронная очередь',
@@ -34,7 +44,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
 
     const getMyData = useCallback(async () => {
         const myData = await axios.get(
-            `${routeURL}/users/me?populate[student][populate][group][populate]=*&populate[student][populate][socialLinks][populate]=*&populate[student][populate][faculty][populate]=*&populate[employee][populate][groups][populate]=*&populate[employee][populate][faculties][populate]=*&populate[employee][populate][consultations][populate]=*&populate[employee][populate][socialLinks][populate]=*
+            `${routeURL}/users/me?populate[student][populate][group][populate]=*&populate[student][populate][faculty][populate]=*&populate[employee][populate][groups][populate]=*&populate[employee][populate][faculties][populate]=*&populate[employee][populate][consultations][populate]=*
             `,
             {
                 headers: {
@@ -61,68 +71,109 @@ export const EmployeeMeConsultationsPage: FC = () => {
     }, [auth?.jwt]);
 
     const handleConsultation = useCallback( (consultationItem: IConsultation, item: string) => {
+        console.log(consultationItem)
         setModalData(consultationItem)
         setIsModalOpen(true)
-        setIsModalUpdated(false)
         setModalItemHead(item)
     },[])
 
-
     const handleFinish = useCallback(async () => {
         setIsModalUpdated(false)
+        setIsLoading(true)
+        try {
         const myEmployeeConsultationsData = await axios.post(
             `${routeURL}/getEmployeeConsultation`,
             {
                 employee: userData?.employee.id,
-                startPeriod: form.getFieldValue('period')[0],
-                endPeriod: form.getFieldValue('period')[1],
+                    startPeriod: dateRange[0],
+                    endPeriod: dateRange[1],
             },
             {
                 headers: {
                     Authorization: `Bearer ${auth?.jwt}`,
                 }
             }
-        )
-        let collapseConsultationsItems: CollapseProps['items'] = [];
+            );
+            
+            let collapseConsultationsItems = [];
         let idx = 1;
+            
         for (const item of Object.keys(myEmployeeConsultationsData.data)) {
-            collapseConsultationsItems.push(
-                {
+                const isFirstItem = idx === 1;
+                
+                const firstConsultation = myEmployeeConsultationsData.data[item][0];
+                const roomInfo = firstConsultation.corps && firstConsultation.audience
+                    ? `${firstConsultation.corps}-${firstConsultation.audience}`
+                    : 'Аудитория не указана';
+                
+                collapseConsultationsItems.push({
                     key: String(idx),
-                    label: item,
-                    children: (
-                        <div>
-                            {myEmployeeConsultationsData.data[item].map((consultationItem: IConsultation, idx: number) => (
-                                <div key={idx}>
-                                    <div>
-                                        <div className={'date'}>
-                                            {DAYS[new Date(consultationItem.dateOfStart).getDay()]}
-                                        </div>
-                                        <div className={'date'}>
-                                            {Intl.DateTimeFormat('ru-RU').format(new Date(consultationItem.dateOfStart))}
+                    label: (
+                        <div className="consultation-subject">
+                            <span>{item}</span>
+                            <span className="room-number">{roomInfo}</span>
+                        </div>
+                    ),
+                    children: isFirstItem, // Флаг для открытия/закрытия
+                    content: (
+                        <div className="consultation-dates-container">
+                            {myEmployeeConsultationsData.data[item]
+                                .sort((a: IConsultation, b: IConsultation) => {
+                                    const dateA = new Date(a.dateOfStart);
+                                    const dateB = new Date(b.dateOfStart);
+                                    return dateA.getTime() - dateB.getTime();
+                                })
+                                .map((consultationItem: IConsultation, idx: number) => {
+                                const dateObj = new Date(consultationItem.dateOfStart);
+                                const dayName = DAYS[dateObj.getDay()];
+                                const formattedDate = dateObj.getDate().toString().padStart(2, '0') + '.' + 
+                                    (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                                
+                                return (
+                                    <div key={idx} className="consultation-date-item">
+                                        <div className="consultation-date-info">
+                                            <div className="date-day">
+                                                {dayName}
+                                            </div>
+                                            <div className="date-value">
+                                                {formattedDate}
                                         </div>
                                     </div>
                                     <Button
-                                        onClick={() => {
-                                            handleConsultation(consultationItem, item)
-                                            setCurrentItem(item)
-                                        }}>
-
+                                            className="consultation-button"
+                                            onClick={() => {
+                                                handleConsultation(consultationItem, item)
+                                                setCurrentItem(item)
+                                            }}
+                                    >
                                         Узнать записавшихся
                                     </Button>
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     )
-                }
-            )
-            idx++;
+                });
+                idx++;
+            }
+            
+            setConsultations(collapseConsultationsItems);
+            if (isModalOpen) {
+                setModalData(myEmployeeConsultationsData.data[currentItem].find((cons: IConsultation) => cons.documentId == currentConsultationId))
+            }
+        } catch (error) {
+            console.error("Ошибка при получении консультаций:", error);
+            alert("Произошла ошибка при загрузке консультаций");
+        } finally {
+            setIsLoading(false);
         }
-        setConsultationsList(collapseConsultationsItems);
-        if (isModalOpen) {
-            setModalData(myEmployeeConsultationsData.data[currentItem].find((cons: IConsultation) => cons.documentId == currentConsultationId))
+    }, [userData, dateRange, auth?.jwt, handleConsultation, isModalOpen, currentConsultationId]);
+
+    const onDateRangeChange = (dates: any) => {
+        if (dates && dates.length === 2) {
+            setDateRange(dates);
         }
-    },[userData, isModalOpen, currentConsultationId])
+    };
 
     useEffect(() => {
         if(isModalUpdated) {
@@ -139,31 +190,49 @@ export const EmployeeMeConsultationsPage: FC = () => {
                     userData={userData ?? null}
                     currentRole={currentRole}
                 />
-                <div className={'consultationMeForm'}>
-                    <Form layout={'vertical'} className={'consultationMeFormInner'} onFinish={handleFinish} form={form}>
-                        <p className={'consultationMeFormHead'}>
-                            Выберите период
-                        </p>
-                        <Form.Item
-                            name={['period']}
-                            rules={[{required: true, message: "Выберите период!"}]}
-                        >
-                            <DatePicker.RangePicker/>
-                        </Form.Item>
-                        <Form.Item>
-                            <Button htmlType={'submit'}>Получить расписание</Button>
-                        </Form.Item>
-                    </Form>
-                </div>
+                <DateRangePicker 
+                    dateRange={dateRange}
+                    onDateRangeChange={onDateRangeChange}
+                    onFinish={handleFinish}
+                    isLoading={isLoading}
+                />
             </div>
-            <Collapse items={consultationsList}/>
+            {consultations.length > 0 && (
+                <div className="consultations-collapse">
+                    {consultations.map((item) => (
+                        <div key={item.key} className="ant-collapse-item">
+                            <div className="ant-collapse-header" onClick={() => {
+                                const newConsultations = [...consultations];
+                                const idx = newConsultations.findIndex(c => c.key === item.key);
+                                if (idx !== -1) {
+                                    newConsultations[idx].children = !newConsultations[idx].children;
+                                    setConsultations(newConsultations);
+                                }
+                            }}>
+                                {item.children ? <DownOutlined className="collapse-icon" /> : <RightOutlined className="collapse-icon" />}
+                                <div className="consultation-subject">
+                                    <span>{item.label.props.children[0]}</span>
+                                    <span className="room-number">{item.label.props.children[1].props.children}</span>
+                                </div>
+                            </div>
+                            {item.children && (
+                                <div className="ant-collapse-content ant-collapse-content-active">
+                                    <div className="ant-collapse-content-box">
+                                        {item.content}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            )}
             <ConsultationStudentModalList
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
-                setCurrentConsultationId={setCurrentConsultationId}
-                setIsModalUpdated={setIsModalUpdated}
                 modalItemHead={modalItemHead}
                 modalData={modalData}
+                setIsModalUpdated={setIsModalUpdated}
+                setCurrentConsultationId={setCurrentConsultationId}
             />
         </div>
     )

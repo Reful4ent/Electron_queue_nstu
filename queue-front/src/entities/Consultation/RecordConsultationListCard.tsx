@@ -14,12 +14,17 @@ export interface IRecordConsultationListCard {
 export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({consultationItem, studentId, handleFinish}) => {
     const [form] = Form.useForm();
     const [modalForm] = Form.useForm();
-    const [isOpenList, setIsOpenList] = useState<boolean>(false)
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isHovering, setIsHovering] = useState<boolean>(false);
     const [isError, setIsError] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
     const handleRecord = useCallback(async () => {
+        if (!form.getFieldValue('currentSelectedTime')) {
+            setIsError(true);
+            return;
+        }
+        
         const recordResult = await axios.post(
             `${routeURL}/recordStudentToEmployee`,
             {
@@ -36,97 +41,117 @@ export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({con
                 type: 'success',
                 content: 'Вы записаны!',
             });
+            form.resetFields();
         } else {
             messageApi.open({
                 type: 'error',
                 content: recordResult.data.message,
             });
         }
-    },[])
+    }, [form, consultationItem, studentId, modalForm, handleFinish, messageApi]);
+
+    const dateObj = new Date(consultationItem.dateOfStart);
+    const dayName = DAYS[dateObj.getDay()];
+    const formattedDate = dateObj.getDate().toString().padStart(2, '0') + '.' + 
+        (dateObj.getMonth() + 1).toString().padStart(2, '0');
+
+    
+    const availableTimes = consultationItem?.recordedStudents
+        .filter((a) => !a.isOffByEmployee && !a.isOffByStudent)
+        .sort((a, b) => new Date(a.dateStartConsultation).getTime() - new Date(b.dateStartConsultation).getTime());
+
+    const hasSelectedTime = !!form.getFieldValue('currentSelectedTime');
+    const shouldShowTimeSlots = isHovering || hasSelectedTime;
+    
+    // Обработчик клика по временному слоту
+    const handleTimeClick = (value: any) => {
+        if (form.getFieldValue('currentSelectedTime') === value) {
+            form.resetFields(); 
+            setIsHovering(false);
+        } else {
+            setIsError(false); 
+        }
+    };
 
     return (
-        <div className={'recordConsultationListCardContainer'}>
+        <div 
+            className="consultation-date-item"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+        >
             {contextHolder}
-            <div className={'dateAndCloseContainer'}>
-                <div>
-                    <div className={'date'}>
-                        {DAYS[new Date(consultationItem.dateOfStart).getDay()]}
-                    </div>
-                    <div className={'date'}>
-                        {Intl.DateTimeFormat('ru-RU').format(new Date(consultationItem.dateOfStart))}
-                    </div>
+            
+            <div className="consultation-header">
+                <div className="day-date">
+                    <span className="day">{dayName}</span>
+                    <span className="date">{formattedDate}</span>
                 </div>
-                {isOpenList &&
-                    <Button onClick={() => setIsOpenList(false)}>x</Button>
-                }
             </div>
-            <Form className={isOpenList ? 'timeList' : 'hiddenTimeList'} form={form}>
-                <div className={'downLine'}/>
-                <div className={isError ? 'errorText' : 'hiddenError'}>Выберите время для записи!</div>
-                <Form.Item
-                    name={'currentSelectedTime'}
-                >
-                    <Radio.Group
-                        defaultValue={false}
-                        style={{display: "flex", flexWrap: 'wrap'}}
-                    >
-                        {
-                            consultationItem?.recordedStudents
-                                .filter((a) => !a.isOffByEmployee && !a.isOffByStudent)
-                                .sort((a, b) => new Date(a?.dateStartConsultation).getTime() - new Date(b?.dateStartConsultation).getTime())
-                                .map((recordedStudent, index) => (
-                                    <Radio.Button
-                                        key={index}
-                                        disabled={!!(recordedStudent?.student || recordedStudent?.notRegisteredUser)}
-                                        value={recordedStudent.id}
-                                        style={{marginRight: 10, marginBottom: 10}}
-                                        onClick={() => setIsError(false)}
-                                    >
-                                        <div className={'interval'}>
-                                            {`${
-                                                new Date(recordedStudent?.dateStartConsultation).getHours()}
-                                                :
-                                                ${String(new Date(recordedStudent?.dateStartConsultation).getMinutes()) == '0' ? '00' : new Date(recordedStudent?.dateStartConsultation).getMinutes()}`}
-                                        </div>
-                                    </Radio.Button>
-                                ))
-                        }
-                    </Radio.Group>
-                </Form.Item>
-            </Form>
+            
+            <div className="consultation-separator"></div>
+            
+            {shouldShowTimeSlots && (
+                <div className="time-slots-container">
+                    {isError && <div className="error-message">Выберите время для записи!</div>}
+                    
+                    <Form form={form} className="time-form">
+                        <Form.Item name="currentSelectedTime">
+                            <Radio.Group className="time-slots">
+                                {availableTimes.map((recordedStudent, index) => {
+                                    const isDisabled = !!(recordedStudent.student || recordedStudent.notRegisteredUser);
+                                    const date = new Date(recordedStudent.dateStartConsultation);
+                                    const hours = date.getHours();
+                                    const minutes = date.getMinutes();
+                                    const timeText = `${hours}:${minutes === 0 ? '00' : minutes}`;
+                                    
+                                    return (
+                                        <Radio 
+                                            key={index}
+                                            value={recordedStudent.id}
+                                            disabled={isDisabled}
+                                            className="time-slot-radio"
+                                            onClick={() => handleTimeClick(recordedStudent.id)}
+                                        >
+                                            {timeText}
+                                        </Radio>
+                                    );
+                                })}
+                            </Radio.Group>
+                        </Form.Item>
+                    </Form>
+                </div>
+            )}
+            
             <Button
+                className="record-button"
                 onClick={() => {
-                    setIsError(false)
-                    if (!isOpenList) {
-                        setIsOpenList(true)
+                    if (!form.getFieldValue('currentSelectedTime')) {
+                        setIsError(true);
+                    } else if (form.getFieldValue('currentSelectedTime') && studentId) {
+                        handleRecord();
                     } else {
-                        if(typeof form.getFieldValue('currentSelectedTime') == 'undefined') {
-                            setIsError(true)
-                        } else if (typeof form.getFieldValue('currentSelectedTime') != 'undefined' && studentId) {
-                            handleRecord()
-                        } else {
-                            setIsModalOpen(true)
-                        }
+                        setIsModalOpen(true);
                     }
                 }}
             >
-
-                {isOpenList ? 'Записаться' : 'Узнать свободное время'}
+                Записаться
             </Button>
+            
             <Modal
                 open={isModalOpen}
                 onCancel={() => setIsModalOpen(false)}
                 footer={null}
+                title="Запись на консультацию в деканат"
+                destroyOnClose
             >
                 <Form
                     layout={'vertical'}
                     form={modalForm}
                     onFinish={() => {
-                        setIsModalOpen(false)
-                        handleRecord()
+                        setIsModalOpen(false);
+                        handleRecord();
                     }}
                 >
-                    <p>Запись на консультацию в деканат</p>
                     <Form.Item
                         name={'surname'}
                         rules={[{required: true, message: "Введите фамилию для записи"}]}
@@ -140,7 +165,7 @@ export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({con
                         <Input placeholder={'Имя'}/>
                     </Form.Item>
                     <Form.Item>
-                        <Button htmlType={'submit'}>Записаться</Button>
+                        <Button htmlType={'submit'} className="action-button primary">Записаться</Button>
                     </Form.Item>
                 </Form>
             </Modal>

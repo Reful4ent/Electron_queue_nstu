@@ -1,6 +1,7 @@
-import {FC, useCallback} from "react";
+import {FC, useState} from "react";
 import {DAYS, IConsultation} from "../../pages/MyProfilePage/MyProfilePage.tsx";
-import {Button, Image, Modal} from "antd";
+import {Button, Image, Modal, message, Popconfirm} from "antd";
+import './ConsultationStudentsModalList.css';
 import axios from "axios";
 import {routeURL} from "../../shared/api/route.ts";
 import {useAuth} from "../../app/context/AuthProvider/context.ts";
@@ -14,162 +15,203 @@ export interface IConsultationStudentsList {
     modalData?: IConsultation | null;
 }
 
-export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isModalOpen, setIsModalOpen, modalItemHead, modalData, setIsModalUpdated, setCurrentConsultationId}) => {
+// Функция форматирования времени
+const formatTime = (date: Date) => {
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+};
+
+export const ConsultationStudentModalList: FC<IConsultationStudentsList> = ({isModalOpen, setIsModalOpen, modalItemHead, modalData, setCurrentConsultationId, setIsModalUpdated}) => {
     const auth = useAuth();
-
-    const handleCancelRecord = useCallback( async (consId: string, recordId: number) => {
-        if (consId && recordId) {
-            try {
-                await axios.post(
-                    `${routeURL}/deleteStudentRecord`,
-                    {
-                        consultationId: consId,
-                        recordId: recordId,
-                        userType: 'Employee'
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${auth?.jwt}`,
-                        }
+    const [loading, setLoading] = useState<Record<number, boolean>>({});
+    const [cancelConsultationLoading, setCancelConsultationLoading] = useState(false);
+    const [messageApi, contextHolder] = message.useMessage();
+    
+    // Форматируем дату
+    const dateObj = modalData?.dateOfStart ? new Date(modalData.dateOfStart) : null;
+    const dayName = dateObj ? DAYS[dateObj.getDay()] : '';
+    const formattedDate = dateObj ? dateObj.getDate().toString().padStart(2, '0') + '.' + 
+        (dateObj.getMonth() + 1).toString().padStart(2, '0') : '';
+    
+    const handleCancelRecord = async (recordedStudent: any, index: number) => {
+        try {
+            setLoading(prev => ({ ...prev, [index]: true }));
+            
+            await axios.post(
+                `${routeURL}/deleteStudentRecord`,
+                {
+                    consultationId: modalData?.documentId,
+                    recordId: recordedStudent.id,
+                    userType: 'Employee'
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth?.jwt}`,
                     }
-                )
-                setCurrentConsultationId(consId);
+                }
+            )
+
+
+            messageApi.success('Запись успешно отменена');
+            if (modalData?.documentId) {
+                setCurrentConsultationId(modalData?.documentId);
                 setIsModalUpdated(true);
-            } catch (e) {
-                console.log(e)
             }
+            
+        } catch (error: any) {
+                messageApi.error('Не удалось отменить запись. Пожалуйста, обратитесь к администратору');
+        } finally {
+            setLoading(prev => ({ ...prev, [index]: false }));
         }
-    },[])
+    };
 
+    const handleCancelConsultation = async () => {
+        if (!modalData || !modalData.id) {
+            messageApi.error('Ошибка: данные консультации отсутствуют');
+            return;
+        }
 
-    const handleCancelConsultation = useCallback(async (id?: string) => {
-        if(id) {
-            try {
-                await axios.put(
-                    `${routeURL}/consultations/${id}`,
-                    {
-                        data: {
-                            isOffByEmployee: true,
-                        }
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${auth?.jwt}`,
-                        }
+        try {
+            setCancelConsultationLoading(true);
+
+            await axios.put(
+                `${routeURL}/consultations/${modalData?.documentId}`,
+                {
+                    data: {
+                        isOffByEmployee: true,
                     }
-                )
-                setIsModalUpdated(true);
-                setIsModalOpen(false);
-            } catch (e) {
-                console.log(e)
-            }
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth?.jwt}`,
+                    }
+                }
+            )
+            setIsModalUpdated(true);
+            setIsModalOpen(false);
+
+        } catch (error: any) {
+            messageApi.error('Не удалось отменить консультацию. Пожалуйста, обратитесь к администратору');
+        } finally {
+            setCancelConsultationLoading(false);
         }
-    },[])
+    };
 
     return (
-        <Modal
-            centered
-            open={isModalOpen}
-            onCancel={() => setIsModalOpen(false)}
-            footer={[
-                <Button key="submit" color="danger" variant="solid" onClick={() => handleCancelConsultation(modalData?.documentId)}>
-                    Отменить консультацию
-                </Button>,
-                <Button key="back" color="primary" variant="solid" onClick={() => setIsModalOpen(false)}>
-                    Ок
-                </Button>,
-            ]}
-        >
-            <p className={'modalConsultationHead'}>Записи на консультации</p>
-            <div className={'modalConsultationList'}>
-                <p className={'modalConsultationHeadItem'}>{modalItemHead}</p>
-                <div className={'modalConsultationTime'}>
-                    <div>
-                        {modalData?.dateOfStart && DAYS[new Date(modalData?.dateOfStart).getDay()]}
+        <>
+            {contextHolder}
+            <Modal
+                title="Записи на консультацию"
+                centered
+                open={isModalOpen}
+                onCancel={() => setIsModalOpen(false)}
+                footer={[
+                    <Popconfirm
+                        key="cancelConfirm"
+                        title="Отмена консультации"
+                        description="Вы уверены, что хотите отменить эту консультацию? Все записи будут удалены."
+                        onConfirm={handleCancelConsultation}
+                        okText="Да, отменить"
+                        cancelText="Нет"
+                    >
+                        <Button 
+                            key="cancel" 
+                            className="cancel-consultation-button"
+                            loading={cancelConsultationLoading}
+                        >
+                            Отменить консультацию
+                        </Button>
+                    </Popconfirm>
+                ]}
+                width={500}
+            >
+                <div className="modal-consultation-container">
+                    <div className={'modalConsultationHead'}>
+                        <div className="modalConsultationTitle">{modalItemHead}</div>
+                        {modalData?.corps && modalData?.audience && (
+                            <div className="modalConsultationLocation">
+                                Аудитория: {modalData.corps}-{modalData.audience}
+                            </div>
+                        )}
                     </div>
-                    <div>
-                        {modalData?.dateOfStart && Intl.DateTimeFormat('ru-RU').format(new Date(modalData.dateOfStart))}
-                    </div>
-                </div>
-                <div className={'modalConsultationBody'}>
-                    {
-                        modalData?.recordedStudents
-                            .sort((a, b) => new Date(a?.dateStartConsultation).getTime() - new Date(b?.dateStartConsultation).getTime())
-                            .filter((a) => !a.isOffByEmployee && !a.isOffByStudent)
-                            .map((recordedStudent, index) => (
-                            <>
-                                {(recordedStudent.student || recordedStudent.notRegisteredUser) ?
-                                    <div key={index} className={'modalStudentsListItem'}>
-                                        <div className={'modalStudentsListItemFirstBlock'}>
-                                            <Image
-                                                className={'modalStudentsListItemProfileImage'}
-                                                width={40}
-                                                height={40}
-                                                preview={false}
-                                                src={recordedStudent.student
-                                                    ?
-                                                    'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Example_of_SVG_code.png/330px-Example_of_SVG_code.png'
-                                                    :
-                                                    '../../../public/images/notRegisteredUser.png'
-                                                }
-                                            />
-                                            <div>
-                                                {recordedStudent.student ?
-                                                    <>
-                                                        <div>
-                                                            {`${recordedStudent.student.surname} ${recordedStudent.student.name[0]}.${recordedStudent.student.lastname[0]}.`}
-                                                        </div>
-                                                        <div>
-                                                            {recordedStudent.student.group.title}
-                                                        </div>
-                                                    </>
-                                                    :
-                                                    <div>
-                                                        {`${recordedStudent.notRegisteredUser.surname} ${recordedStudent.notRegisteredUser.name[0]}.`}
-                                                    </div>
+                    <div className={'modalConsultationTime'}>
+                        <div className={'modalConsultationTimeHeader'}>
+                            <div>{dayName}</div>
+                            <div>{formattedDate}</div>
+                        </div>
+                        <div className={'modalConsultationBody'}>
+                            {modalData?.recordedStudents
+                                .sort((a, b) => new Date(a?.dateStartConsultation).getTime() - new Date(b?.dateStartConsultation).getTime())
+                                .filter((a) => !a.isOffByEmployee && !a.isOffByStudent)
+                                .map((recordedStudent, index) => (
+                                <div key={index} className={'modalStudentsListItem'}>
+                                    <div className={'modalStudentsListItemFirstBlock'}>
+                                        <Image
+                                            className={'modalStudentsListItemProfileImage'}
+                                            width={40}
+                                            height={40}
+                                            preview={false}
+                                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Example_of_SVG_code.png/330px-Example_of_SVG_code.png"
+                                        />
+                                        <div className="student-info">
+                                            <div className="student-name">
+                                                {recordedStudent.student ? 
+                                                    `${recordedStudent.student.surname} ${recordedStudent.student.name[0]}.${recordedStudent.student.lastname ? recordedStudent.student.lastname[0] + '.' : ''}` :
+                                                    recordedStudent.notRegisteredUser ? 
+                                                        `${recordedStudent.notRegisteredUser.surname} ${recordedStudent.notRegisteredUser.name[0]}.` :
+                                                        'Свободная запись'
                                                 }
                                             </div>
-                                        </div>
-                                        <div>
-                                            <div>
-                                                <div className={'interval'}>
-                                                    {`${
-                                                        new Date(recordedStudent?.dateStartConsultation).getHours()}
-                                                        :
-                                                        ${String(new Date(recordedStudent?.dateStartConsultation).getMinutes()) == '0' ? '00' : new Date(recordedStudent?.dateStartConsultation).getMinutes()}
-                                                         - 
-                                                         ${new Date(recordedStudent?.dateEndConsultation).getHours()}
-                                                         :
-                                                         ${String(new Date(recordedStudent?.dateEndConsultation).getMinutes()) == '0' ? '00' : new Date(recordedStudent?.dateEndConsultation).getMinutes()}`}
+                                            {recordedStudent.student && recordedStudent.student.group && (
+                                                <div className="student-group">
+                                                    {recordedStudent.student.group.title}
                                                 </div>
-                                            </div>
-                                            <Button color="danger" variant="solid" onClick={() => handleCancelRecord(modalData?.documentId, recordedStudent?.id)}>
-                                                Отменить запись
-                                            </Button>
+                                            )}
                                         </div>
                                     </div>
-                                    :
-                                    <div key={index} className={'modalStudentsListItem'}>
-                                        <div>Свободная запись</div>
-                                        <div>
-                                            <div className={'interval'}>
-                                                {`${
-                                                    new Date(recordedStudent?.dateStartConsultation).getHours()}
-                                                        :
-                                                        ${String(new Date(recordedStudent?.dateStartConsultation).getMinutes()) == '0' ? '00' : new Date(recordedStudent?.dateStartConsultation).getMinutes()}
-                                                         - 
-                                                         ${new Date(recordedStudent?.dateEndConsultation).getHours()}
-                                                         :
-                                                         ${String(new Date(recordedStudent?.dateEndConsultation).getMinutes()) == '0' ? '00' : new Date(recordedStudent?.dateEndConsultation).getMinutes()}`}
-                                            </div>
-                                        </div>
+                                    <div className="consultation-time">
+                                        {recordedStudent.dateStartConsultation && recordedStudent.dateEndConsultation && 
+                                            `${formatTime(new Date(recordedStudent.dateStartConsultation))}-${formatTime(new Date(recordedStudent.dateEndConsultation))}`
+                                        }
                                     </div>
-                                }
-                            </>
-                        ))
-                    }
+                                    <div className={`student-actions ${!recordedStudent.student && !recordedStudent.notRegisteredUser ? 'free-slot-actions' : ''}`}>
+                                        {(recordedStudent.student || recordedStudent.notRegisteredUser) && (
+                                            <>
+                                                <button
+                                                    className="student-action-button student-action-message"
+                                                    title="Написать студенту"
+                                                    onClick={() => console.log('Написать студенту', recordedStudent)}
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 18H4V8L12 13L20 8V18ZM12 11L4 6H20L12 11Z"
+                                                            fill="currentColor"/>
+                                                    </svg>
+                                                </button>
+                                                <button
+                                                    className="student-action-button student-action-cancel"
+                                                    title="Отменить запись"
+                                                    onClick={() => handleCancelRecord(recordedStudent, index)}
+                                                    disabled={loading[index]}
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"
+                                                            fill="currentColor"/>
+                                                    </svg>
+                                                </button>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                                ))}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </Modal>
+            </Modal>
+        </>
     )
 }

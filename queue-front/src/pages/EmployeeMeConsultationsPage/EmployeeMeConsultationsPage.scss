@@ -2,7 +2,7 @@
   padding: 40px;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  min-height: 100vh;
 
   .consultationMeHead {
     margin-top: 76px;
@@ -15,90 +15,361 @@
   .consultationMeContent {
     display: flex;
     flex-direction: row;
-    gap: 24px;
+    gap: 80px;
+    margin-bottom: 24px;
+  }
 
-    .consultationMeForm {
-      width: 110%;
-      padding: 23px;
-      height: 214px;
-      background-color: white;
-      border-radius: 15px;
-
-      .consultationMeFormInner {
+  /* Стили для списка консультаций (accordeon) */
+  .consultations-collapse {
+    margin-top: 20px;
+    width: 100%;
+    
+    .ant-collapse-item {
+      background-color: var(--redirect-card-color);
+      margin-bottom: 10px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: none;
+      
+      .ant-collapse-header {
+        padding: 14px 20px;
+        cursor: pointer;
+        background-color: var(--redirect-card-color);
         display: flex;
-        flex-direction: column;
-        gap: 10px;
-
-        .consultationMeFormHead {
+        align-items: center;
+        border-radius: 8px !important;
+        
+        .collapse-icon {
+          margin-right: 10px;
+          font-size: 16px;
+          color: var(--text-color);
+          font-weight: bold;
+          width: 24px;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        .consultation-subject {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
           font-family: Stem;
           font-weight: 500;
-          font-size: 24px;
-          margin-bottom: 20px;
-          margin-top: 0;
+          font-size: 16px;
+          color: var(--text-color);
+          
+          .room-number {
+            color: #7a7a7a;
+            font-size: 14px;
+          }
+        }
+        
+        &:hover {
+          background-color: var(--ant-select-selection-item);
+        }
+      }
+
+      .ant-collapse-content {
+        background-color: var(--my-consultation-card-inner);
+        border-top: none;
+        
+        .ant-collapse-content-box {
+          padding: 0;
         }
       }
     }
+  }
+  
+  /* Стили для сетки с консультациями */
+  .consultation-dates-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 14px;
+    column-gap: 16px;
+    padding: 14px 16px 18px;
+    background-color: var(--my-consultation-card-inner);
+    border-radius: 0 0 8px 8px;
+    
+    .consultation-date-item {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--redirect-card-color);
+      padding: 10px 12px;
+      border-radius: 8px;
+      box-shadow: none;
+      
+      .consultation-date-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        
+        .date-day {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: 14px;
+          color: var(--text-color);;
+        }
+        
+        .date-value {
+          font-family: Stem;
+          font-size: 14px;
+          color: var(--text-color);
+        }
+      }
+      
+      .consultation-button {
+        width: 100%;
+        height: 34px;
+        border-radius: 17px;
+        font-family: Stem;
+        border: 1px solid var(--text-color);
+        font-size: 13px;
+        color: var(--text-color);
+        background-color: var(--redirect-card-color);
+        box-shadow: none;
+        transition: all 0.2s;
+        padding: 0;
 
+        &:hover {
+          border-color: #00B265;
+          color: #00B265;
+        }
+        
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
   }
 }
 
-.modalConsultationHead{
-  font-family: Stem;
-  font-weight: 500;
-  font-size: 28px;
-  margin-bottom: 20px;
-  margin-top: 0;
+/* Стили для модального окна */
+.ant-modal {
+  background-color: transparent;
+  .ant-modal-content {
+    border-radius: 10px;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--redirect-card-color);
+    
+    .ant-modal-header {
+      padding: 16px 24px;
+      margin: 0;
+      border-bottom: none;
+      background-color: var(--redirect-card-color);
+      
+      .ant-modal-title {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: 24px;
+        color: var(--text-color);
+      }
+    }
+    
+    .ant-modal-close {
+      top: 16px;
+      right: 16px;
+      border: none;
+      outline: none;
+      background: transparent;
+      
+      .ant-modal-close-x {
+        font-size: 16px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        outline: none;
+        box-shadow: none;
+        border: none;
+        color: var(--text-color);
+        
+        &:hover, &:focus {
+          outline: none;
+          box-shadow: none;
+          border: none;
+        }
+      }
+      
+      &:hover, &:focus {
+        outline: none;
+        box-shadow: none;
+        border: none;
+      }
+    }
+    
+    .ant-modal-body {
+      padding: 0;
+      background-color: var(--redirect-card-color);
+    }
+    
+    .ant-modal-footer {
+      border-top: none;
+      padding: 16px 24px 24px;
+      text-align: center;
+      background-color: var(--redirect-card-color);
+      
+      .ant-btn {
+        height: 40px;
+        font-family: Stem;
+        border-radius: 20px;
+        font-size: 16px;
+        padding: 0 32px;
+      }
+    }
+  }
+}
 
+.modalConsultationHead {
+  font-family: Stem;
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 22px;
+  padding: 16px 24px;
+  border-radius: 10px 10px 0 0;
+  margin: 0;
+  background-color: var(--my-consultation-card-inner);
 }
 
 .modalConsultationList {
-  background-color: #F5F5F5;
-  border-radius: 10px;
-  overflow: hidden;
-
-  .modalConsultationTime, .modalConsultationHeadItem {
+  background-color: var(--redirect-card-color);
+  
+  .modalConsultationTime {
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-family: Stem;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 16px;
+  }
+  
+  .modalConsultationBody {
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #F5F5F5;
+    border-radius: 0 0 10px 10px;
+  }
+  
+  .modalStudentsListItem {
+    background-color: white;
+    border-radius: 0;
+    padding: 12px 24px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-  }
-  .modalConsultationTime {
-    padding: 10px;
-  }
-
-  .modalConsultationHeadItem {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #E5E3E3;
-    margin: 0;
-    padding: 5px;
-  }
-  .modalConsultationBody {
-    padding: 0px 10px 10px 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    .modalStudentsListItem {
+    font-family: Stem;
+    border-bottom: 1px solid #F0F0F0;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    .modalStudentsListItemFirstBlock {
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
-      background-color: #FFFFFF;
-      padding: 10px;
+      gap: 16px;
       align-items: center;
-      border-radius: 10px;
-
-      .modalStudentsListItemFirstBlock {
+      
+      .modalStudentsListItemProfileImage {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      
+      .student-info {
         display: flex;
-        flex-direction: row;
-        gap: 10px;
-        .modalStudentsListItemProfileImage {
-          border-radius: 50%;
+        flex-direction: column;
+        
+        .student-name {
+          font-weight: 500;
+          font-size: 16px;
+          color: var(--text-color);
+        }
+        
+        .student-group {
+          font-size: 14px;
+          color: #666666;
+        }
+      }
+    }
+    
+    .consultation-time {
+      font-weight: 500;
+      font-size: 16px;
+      color: var(--text-color);
+    }
+  }
+}
 
+.cancel-consultation-button {
+  color: #333;
+  height: 40px;
+  font-family: Stem;
+  border-radius: 20px;
+  font-size: 16px;
+  padding: 0 32px;
+  
+  &:hover {
+    border-color: #B22034;
+    color: #B22034;
+  }
+}
+
+/* Стили для календаря */
+.ant-picker-dropdown {
+  .ant-picker-panel-container {
+    .ant-picker-panel {
+      .ant-picker-header {
+        color: #000;
+        font-weight: 500;
+        
+        .ant-picker-header-view {
+          font-weight: 500;
+          font-size: 16px;
+        }
+      }
+      
+      .ant-picker-body {
+        .ant-picker-content {
+          th {
+            font-weight: 500;
+          }
+          
+          .ant-picker-cell {
+            &.ant-picker-cell-in-view {
+              &.ant-picker-cell-selected, 
+              &.ant-picker-cell-range-start,
+              &.ant-picker-cell-range-end {
+                .ant-picker-cell-inner {
+                  background-color: #00B265;
+                }
+              }
+              
+              &.ant-picker-cell-in-range {
+                &::before {
+                  background-color: rgba(0, 178, 101, 0.1);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    .ant-picker-footer {
+      .ant-picker-ranges {
+        .ant-picker-ok {
+          .ant-btn {
+            background-color: #00B265;
+          }
         }
       }
     }
