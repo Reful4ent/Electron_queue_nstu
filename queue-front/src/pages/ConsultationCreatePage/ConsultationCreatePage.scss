@@ -67,6 +67,8 @@
 
   .formItem {
     position: relative;
+    color: #808080;
+
     margin-bottom: 12px !important;
 
     // Стили для сообщения об ошибке
@@ -108,6 +110,7 @@
     position: relative;
     
     .ant-select-selector {
+      
       height: 44px !important;
       border-radius: 8px !important;
       padding: 0 15px !important;
@@ -432,6 +435,8 @@
     
     &.ant-select-open .ant-select-selector {
       border-color: #00B265 !important;
+    color: #808080;
+
     }
   }
 
@@ -509,14 +514,6 @@
     }
   }
   
-  // Убираю дополнительный padding для полей с иконками, так как они теперь выравнены глобально
-  .datePickerItem, .timePickerItem, .durationItem, .corpsItem, .audienceItem {
-    .formSelect, .corpsSelect, .audienceSelect {
-      .ant-select-selector {
-        // Отступы уже настроены правильно глобально
-      }
-    }
-  }
 
   // Стили для RangePicker
   .ant-picker-range {

@@ -7,14 +7,13 @@ import {routeURL} from "../../shared/api/route.ts";
 import {ROLES} from "../HomePage/HomePage.tsx";
 import {useAuth} from "../../app/context/AuthProvider/context.ts";
 import './EmployeeMeConsultationsPage.scss'
-import {Button, DatePicker, ConfigProvider} from "antd";
+import {Button, ConfigProvider} from "antd";
 import {ConsultationStudentModalList} from "../../entities/Consultation/ConsultationStudentsModalList.tsx";
 import dayjs from "dayjs";
 import 'dayjs/locale/ru';
 import locale from 'antd/locale/ru_RU';
-import { CalendarOutlined, DownOutlined, RightOutlined } from '@ant-design/icons';
-
-const { RangePicker } = DatePicker;
+import { DownOutlined, RightOutlined } from '@ant-design/icons';
+import { DateRangePicker } from "../../widgets/DateRangePicker/DateRangePicker.tsx";
 
 export const EmployeeMeConsultationsPage: FC = () => {
     const auth = useAuth();
@@ -31,6 +30,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
     ]);
     const [isModalUpdated, setIsModalUpdated] = useState<boolean>(false);
     const [currentConsultationId, setCurrentConsultationId] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     
     const itemsForBreadcrumbs = [
         {
@@ -79,6 +79,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
 
     const handleFinish = useCallback(async () => {
         setIsModalUpdated(false)
+        setIsLoading(true)
         try {
         const myEmployeeConsultationsData = await axios.post(
             `${routeURL}/getEmployeeConsultation`,
@@ -163,6 +164,8 @@ export const EmployeeMeConsultationsPage: FC = () => {
         } catch (error) {
             console.error("Ошибка при получении консультаций:", error);
             alert("Произошла ошибка при загрузке консультаций");
+        } finally {
+            setIsLoading(false);
         }
     }, [userData, dateRange, auth?.jwt, handleConsultation, isModalOpen, currentConsultationId]);
 
@@ -187,63 +190,12 @@ export const EmployeeMeConsultationsPage: FC = () => {
                     userData={userData ?? null}
                     currentRole={currentRole}
                 />
-                <div className={'consultationMeForm'}>
-                    <div className={'consultationMeFormInner'}>
-                        <p className={'consultationMeFormHead'}>
-                            Выберите период
-                        </p>
-                        <ConfigProvider locale={locale} theme={{
-                            token: {
-                                colorPrimary: '#00B265',
-                                colorSuccess: '#00B265',
-                                fontSizeLG: 16,
-                                borderRadiusSM: 8,
-                            },
-                            components: {
-                                DatePicker: {
-                                    activeBorderColor: '#00B265',
-                                    hoverBorderColor: '#00B265',
-                                    cellActiveWithRangeBg: '#e6f7ff'
-                                }
-                            }
-                        }}>
-                            <div className="date-picker-wrapper">
-                                <RangePicker
-                                    className="date-range-picker"
-                                    value={dateRange}
-                                    onChange={onDateRangeChange}
-                                    format="DD.MM.YYYY"
-                                    allowClear={false}
-                                    placeholder={['', '']}
-                                    inputReadOnly
-                                />
-                                <div className="date-fields-container">
-                                    <div className="date-field">
-                                        <CalendarOutlined className="calendar-icon" />
-                                        <div className="date-text">
-                                            {dateRange[0]?.format('DD.MM.YYYY')}
-                                        </div>
-                                    </div>
-                                    <div className="arrow-separator">
-                                        →
-                                    </div>
-                                    <div className="date-field">
-                                        <CalendarOutlined className="calendar-icon" />
-                                        <div className="date-text">
-                                            {dateRange[1]?.format('DD.MM.YYYY')}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </ConfigProvider>
-                        <Button 
-                            onClick={handleFinish} 
-                            className="get-schedule-button"
-                        >
-                            Получить расписание
-                        </Button>
-                    </div>
-                </div>
+                <DateRangePicker 
+                    dateRange={dateRange}
+                    onDateRangeChange={onDateRangeChange}
+                    onFinish={handleFinish}
+                    isLoading={isLoading}
+                />
             </div>
             {consultations.length > 0 && (
                 <div className="consultations-collapse">

@@ -309,7 +309,7 @@ export const ConsultationCreatePage: FC = () => {
                                     rules={[{ required: true, message: 'Пожалуйста, выберите группу' }]}
                                 >
                                     <Select
-                                        placeholder="Выберите группу"
+                                        placeholder="Выберите группу"style={{ color: '#00B265' }}
                                         options={groupOptions}
                                         mode="multiple"
                                         suffixIcon={null}
