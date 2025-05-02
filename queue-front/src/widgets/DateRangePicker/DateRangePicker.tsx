@@ -42,7 +42,7 @@ export const DateRangePicker: FC<DateRangePickerProps> = ({
             DatePicker: {
               activeBorderColor: '#00B265',
               hoverBorderColor: '#00B265',
-              cellActiveWithRangeBg: '#e6f7ff'
+              cellActiveWithRangeBg: '#efffe6'
             }
           }
         }}>

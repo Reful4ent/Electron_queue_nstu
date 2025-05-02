@@ -4,7 +4,6 @@ import axios from "axios";
 import {routeURL} from "../../shared/api/route.ts";
 import {RedirectCard} from "../../widgets/RedirectCard/RedirectCard.tsx";
 import './HomePage.scss'
-import {Col, Row} from "antd";
 import {CardSVGDean} from "../../shared/ui/CardSVG/CardSVGDean.tsx";
 import {CardSVGEmployee} from "../../shared/ui/CardSVG/CardSVGEmployee.tsx";
 import {CardSVGEmployeeCon} from "../../shared/ui/CardSVG/CardSVGEmployeeCon.tsx";
@@ -50,45 +49,40 @@ export const HomePage: FC = () => {
         <div className={'containerHome'}>
             <p className={'headerText'}>Электронная очередь</p>
             {(currentRole == ROLES[1] || currentRole == ROLES[2]) &&
-                <Row gutter={[52,52]} style={{marginBottom: 52}}>
-                    <Col>
-                        <RedirectCard
-                            url={`/profile/${id}/my-consultations`}
-                            svgIcon={<CardSVGEmployeeCon/>}
-                            name={'Мои консультации'}
-                            text={'Просмотр информации существующих консультаций'}
-                        />
-                    </Col>
-                    <Col>
-                        <RedirectCard
-                            url={`/profile/${id}/my-consultations/create`}
-                            svgIcon={<CardSVGCreate/>}
-                            name={'Создание консультации'}
-                            text={'Добавление новых дополнительных консультаций для студентов'}/>
-                    </Col>
-                </Row>
+                <div className={'cardContainer'}>
+                    <RedirectCard
+                        url={`/profile/${id}/my-consultations`}
+                        svgIcon={<CardSVGEmployeeCon/>}
+                        name={'Мои консультации'}
+                        text={'Просмотр информации существующих консультаций'}
+                    />
+
+
+                    <RedirectCard
+                        url={`/profile/${id}/my-consultations/create`}
+                        svgIcon={<CardSVGCreate/>}
+                        name={'Создание консультации'}
+                        text={'Добавление новых дополнительных консультаций для студентов'}
+                    />
+                </div>
             }
             {currentRole !== ROLES[1] &&
-                <Row gutter={[52,52]}>
+                <div className={'cardContainer'}>
                     {(currentRole == ROLES[0] || currentRole == ROLES[2]) &&
-                        <Col>
-                            <RedirectCard
-                                url={'/consultations/employees'}
-                                svgIcon={<CardSVGEmployee/>}
-                                name={'Консультации'}
-                                text={'Запись к преподавателю на консультацию'}
-                            />
-                        </Col>
-                    }
-                    <Col>
                         <RedirectCard
-                            url={'/consultations/deans'}
-                            svgIcon={<CardSVGDean/>}
-                            name={'Деканат'}
-                            text={'Запись на прием в деканат'}
+                            url={'/consultations/employees'}
+                            svgIcon={<CardSVGEmployee/>}
+                            name={'Консультации'}
+                            text={'Запись к преподавателю на консультацию'}
                         />
-                    </Col>
-                </Row>
+                    }
+                    <RedirectCard
+                        url={'/consultations/deans'}
+                        svgIcon={<CardSVGDean/>}
+                        name={'Деканат'}
+                        text={'Запись на прием в деканат'}
+                    />
+                </div>
             }
         </div>
     )

@@ -2,6 +2,15 @@
   padding: 40px 139px;
   display: flex;
   flex-direction: column;
+  position: relative;
+  gap: 40px;
+
+  .cardContainer {
+    display: flex;
+    flex-direction: row;
+    position: relative !important;
+    gap: 40px
+  }
 
   .headerText {
     font-family: Stem;
@@ -10,7 +19,20 @@
     color: var(--text-color);
     margin: {
       top: 0;
-      bottom: 40px;
+      bottom: 0px;
+    }
+  }
+}
+
+@media (max-width: 1080px) {
+  .containerHome {
+    padding: 50px 50px;
+    position: relative;
+
+    .cardContainer {
+      display: flex;
+      flex-direction: column;
+      position: relative !important;
     }
   }
 }

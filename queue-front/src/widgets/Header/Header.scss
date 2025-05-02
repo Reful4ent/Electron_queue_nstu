@@ -16,6 +16,20 @@
     align-items: center;
     background: var(--header-buttons-color);
     border: none;
+
+   span {
+     svg {
+       fill: var(--input-color-text);
+     }
+   }
+
+   &:hover {
+     span {
+       svg {
+         fill: var(--exit-hover);
+       }
+     }
+   }
  }
  .themeButton:hover {
     opacity: 1;
@@ -43,8 +57,19 @@
     }
 
     .exitButton {
-      background: #F8F8F8;
       border: none;
+      span {
+        svg {
+          fill: var(--input-color-text);
+        }
+      }
+      &:hover {
+        span {
+          svg {
+            fill: var(--exit-hover);
+          }
+        }
+      }
     }
 
     

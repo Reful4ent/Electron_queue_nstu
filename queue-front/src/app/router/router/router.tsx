@@ -11,6 +11,7 @@ import {
     EmployeeMeConsultationsPage, RecordToEmployeePage
 } from "../lazyPages/lazyPages.tsx";
 import {PrivateRoute} from "../../../features/PrivateRoute/PrivateRoute.tsx";
+import {SignLayout} from "../../layout/SIgnInLayout/SignInLayout.tsx";
 
 
 export const router: RouteObject[] = [
@@ -63,7 +64,7 @@ export const router: RouteObject[] = [
     },
     {
         path: 'auth/',
-        element: <MainLayout/>,
+        element: <SignLayout/>,
         errorElement: <ErrorPage/>,
         children: [
             {

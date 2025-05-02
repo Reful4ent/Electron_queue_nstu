@@ -26,10 +26,10 @@
     max-width: 100%;
     margin: 0 auto;
 
-    @media (min-width: 992px) {
+    @media (min-width: 1440px) {
       flex-direction: row;
       align-items: flex-start;
-      
+
       & > div {
         flex: 1;
         width: 50%;
@@ -131,7 +131,7 @@
       
       .ant-select-selection-item {
         font-family: Stem;
-        color: #000000 !important;
+        color: var(--text-color) !important;
         font-weight: 500;
         line-height: 1 !important;
         margin: 0 !important;
@@ -212,6 +212,7 @@
     padding: 0 15px !important;
     font-family: Stem;
     border: 3px solid #d9d9d9 !important;
+    background-color:  var(--profile-card-color);
     
     &:hover, &:focus {
       border-color: #00B265 !important;
@@ -223,7 +224,7 @@
     }
     
     &, &:not(:placeholder-shown) {
-      color: #000000;
+      color: var(--text-color);
       font-weight: 500;
     }
   }
@@ -396,6 +397,7 @@
     align-items: center !important;
   }
 
+
   // Стиль для "галочки" в правом углу поля
   .ant-select-selection-search {
     display: flex !important;
@@ -484,6 +486,10 @@
 
   // Стили для полей с датой и временем
   .datePicker, .timePicker {
+    background-color: var(--redirect-card-color);
+    .ant-picker-input > input {
+        color: var(--text-color) !important;
+    }
     input {
       padding-left: 28px !important;
     }
@@ -615,4 +621,45 @@
   }
 
   
+}
+
+.groupSelect {
+  .ant-select-selector {
+    overflow-y: scroll;
+    .ant-select-selection-wrap {
+      .ant-select-selection-overflow {
+        .ant-select-selection-overflow-item {
+          margin-right: 10px;
+          .ant-select-selection-item {
+            background-color: var(--ant-select-selection-item) !important
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1440px) {
+  .consultationCreateContainer {
+    .consultationCreateContent {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+    }
+    .consultationCreateForm {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .consultationCreateContainer {
+    .locationRow {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
 }

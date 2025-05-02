@@ -22,6 +22,9 @@ export default {
                             populate: '*'
                         }
                     },
+                },
+                groups: {
+                    populate: '*'
                 }
             },
             filters: {
@@ -48,7 +51,22 @@ export default {
             },
         })
 
-        const groupedByDisciplineTitle = employeeConsultation.reduce((acc, consultation) => {
+        let filteredEmployeeConsultation = employeeConsultation;
+        if (data.group) {
+            filteredEmployeeConsultation = employeeConsultation.filter((consultation) => {
+                if (!consultation.groups || consultation.groups.length === 0) {
+                    return true;
+                }
+                for (const group of consultation.groups) {
+                    if (group.title == data.group) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+
+        const groupedByDisciplineTitle = filteredEmployeeConsultation.reduce((acc, consultation) => {
             const disciplineTitle = consultation.discipline.title;
             if (!acc[disciplineTitle]) {
                 acc[disciplineTitle] = [];

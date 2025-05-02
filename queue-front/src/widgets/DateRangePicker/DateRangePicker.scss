@@ -1,7 +1,7 @@
 .dateRangePickerForm {
   width: 100%;
   padding: 20px;
-  height: 214px;
+  height: 220px;
   background-color: var(--redirect-card-color);
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
@@ -97,4 +97,12 @@
       }
     }
   }
-} 
+}
+
+@media (max-width: 1440px) {
+  .dateRangePickerForm {
+    width: auto;
+    height: auto; /* высота зависит от контента */
+    min-height: auto
+  }
+}

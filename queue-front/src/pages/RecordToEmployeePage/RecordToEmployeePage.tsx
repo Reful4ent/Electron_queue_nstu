@@ -56,7 +56,7 @@ export const RecordToEmployeePage: FC = () => {
 
     const getStudentId = useCallback(async () => {
         const myData = await axios.get(
-            `${routeURL}/users/me?populate[student]=*
+            `${routeURL}/users/me?populate[student][populate][group]=*
             `,
             {
                 headers: {
@@ -65,6 +65,7 @@ export const RecordToEmployeePage: FC = () => {
             }
         )
         setUserData(myData.data)
+        console.log(myData.data)
     },[])
 
     const onDateRangeChange = (dates: any) => {
@@ -82,6 +83,7 @@ export const RecordToEmployeePage: FC = () => {
                     employee: currentEmployee?.id,
                     startPeriod: dateRange[0],
                     endPeriod: dateRange[1],
+                    group: userData?.student?.group?.title,
                 },
                 {
                     headers: {
