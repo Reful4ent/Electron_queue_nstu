@@ -25,13 +25,13 @@ export const RecordToEmployeePage: FC = () => {
     const { id} = useParams();
     const [currentEmployee, setCurrentEmployee] = useState<IEmployee | null>()
     const [consultationsList, setConsultationsList] = useState<ConsultationItem[]>([])
-    const [userData, setUserData] = useState<IUser | null>();
+    const [userData, setUserData] = useState<IUser | null>(null);
     const [dateRange, setDateRange] = useState<[dayjs.Dayjs, dayjs.Dayjs]>([
         dayjs(),
-        dayjs().add(7, 'day')
+        dayjs().add(1, 'month')
     ]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-
+    const [initialLoad, setInitialLoad] = useState(true);
 
     const itemsForBreadcrumbs = [
         {
@@ -137,6 +137,7 @@ export const RecordToEmployeePage: FC = () => {
             alert("Произошла ошибка при загрузке консультаций");
         } finally {
             setIsLoading(false);
+            setInitialLoad(false);
         }
     }, [currentEmployee, dateRange, userData, auth?.jwt])
 
@@ -146,6 +147,12 @@ export const RecordToEmployeePage: FC = () => {
         }
         getEmployee();
     }, []);
+
+    useEffect(() => {
+      if (initialLoad && currentEmployee && userData != null && dateRange) {
+        handleFinish();
+      }
+  }, [currentEmployee, userData, dateRange, initialLoad, handleFinish]);
 
     return (
         <div className={'consultationMeContainer'}>
