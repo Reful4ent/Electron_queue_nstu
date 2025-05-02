@@ -75,12 +75,12 @@
       font-size: 16px;
       font-weight: 500;
       border-radius: 20px;
-      background-color: #fff;
+      background-color: var(--redirect-card-color);
       border: 2px solid #000;
-      color: #000;
+      color: var(--text-color);
       
       &:hover:not(:disabled) {
-        background-color: #f5f5f5;
+        background-color: var(--redirect-card-color);;
         border-color: #00B265;
         color: #00B265;
       }
