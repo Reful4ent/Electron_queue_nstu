@@ -7,17 +7,16 @@ import {routeURL} from "../../shared/api/route.ts";
 import {ROLES} from "../HomePage/HomePage.tsx";
 import {useAuth} from "../../app/context/AuthProvider/context.ts";
 import './EmployeeMeConsultationsPage.scss'
-import {Button, ConfigProvider} from "antd";
+import {Button} from "antd";
 import {ConsultationStudentModalList} from "../../entities/Consultation/ConsultationStudentsModalList.tsx";
 import dayjs from "dayjs";
 import 'dayjs/locale/ru';
-import locale from 'antd/locale/ru_RU';
 import { DownOutlined, RightOutlined } from '@ant-design/icons';
 import { DateRangePicker } from "../../widgets/DateRangePicker/DateRangePicker.tsx";
 
 export const EmployeeMeConsultationsPage: FC = () => {
     const auth = useAuth();
-    const [userData, setUserData] = useState<IUser | null>();
+    const [userData, setUserData] = useState<IUser | null>(null);
     const [currentRole, setCurrentRole] = useState<string>('')
     const [consultations, setConsultations] = useState<any[]>([])
     const [modalData, setModalData] = useState<IConsultation | null>();
@@ -26,11 +25,12 @@ export const EmployeeMeConsultationsPage: FC = () => {
     const [modalItemHead, setModalItemHead] = useState<string>('')
     const [dateRange, setDateRange] = useState<[dayjs.Dayjs, dayjs.Dayjs]>([
         dayjs(),
-        dayjs().add(7, 'day')
+        dayjs().add(1, 'month')
     ]);
     const [isModalUpdated, setIsModalUpdated] = useState<boolean>(false);
     const [currentConsultationId, setCurrentConsultationId] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [initialLoad, setInitialLoad] = useState(true);
     
     const itemsForBreadcrumbs = [
         {
@@ -63,12 +63,6 @@ export const EmployeeMeConsultationsPage: FC = () => {
         }
 
     },[])
-
-    useEffect(() => {
-        if(auth?.jwt) {
-            getMyData()
-        }
-    }, [auth?.jwt]);
 
     const handleConsultation = useCallback( (consultationItem: IConsultation, item: string) => {
         console.log(consultationItem)
@@ -166,6 +160,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
             alert("Произошла ошибка при загрузке консультаций");
         } finally {
             setIsLoading(false);
+            setInitialLoad(false);
         }
     }, [userData, dateRange, auth?.jwt, handleConsultation, isModalOpen, currentConsultationId]);
 
@@ -176,10 +171,22 @@ export const EmployeeMeConsultationsPage: FC = () => {
     };
 
     useEffect(() => {
+      if(auth?.jwt) {
+          getMyData()
+      }
+  }, [auth?.jwt]);
+
+    useEffect(() => {
         if(isModalUpdated) {
             handleFinish();
         }
     }, [isModalUpdated, currentConsultationId]);
+
+    useEffect(() => {
+      if (initialLoad && userData != null && dateRange) {
+        handleFinish();
+      }
+  }, [userData, dateRange, initialLoad]);
 
     return (
         <div className={'consultationMeContainer'}>
