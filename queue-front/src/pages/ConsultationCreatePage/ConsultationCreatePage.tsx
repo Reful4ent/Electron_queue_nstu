@@ -169,8 +169,6 @@ export const ConsultationCreatePage: FC = () => {
         const timeEnd = formatTime(form.getFieldValue('time')[1]);
         const date = formatDate(form.getFieldValue('date'));
 
-        console.log(form.getFieldValue('duration'))
-
         try {
             await axios.post(
                 `${routeURL}/consultations`,

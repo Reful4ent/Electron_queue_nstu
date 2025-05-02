@@ -2,7 +2,6 @@ import { IEmployee } from "../../pages/MyProfilePage/MyProfilePage";
 
 
 export const employeesSearchFunction = (employees: IEmployee[] | null, searchValue: string) => {
-      console.log(searchValue);
       if (!searchValue.trim()) {
         return employees; // Если строка пустая, возвращаем всех сотрудников
       }
