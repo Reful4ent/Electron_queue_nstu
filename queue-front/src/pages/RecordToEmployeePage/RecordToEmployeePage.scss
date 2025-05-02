@@ -226,3 +226,13 @@
     }
   }
 }
+
+@media (max-width: 1440px) {
+  .consultationMeContainer{
+    .consultationMeContent {
+      gap: 0;
+      flex-direction: column;
+      margin-bottom: 40px;
+    }
+  }
+}

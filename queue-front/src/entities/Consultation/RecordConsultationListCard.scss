@@ -130,3 +130,63 @@
     }
   }
 }
+
+
+.formToRecord {
+  div {
+    .ant-modal-content {
+      .ant-modal-close {
+        color: var(--text-color);
+      }
+      background-color: var(--redirect-card-color);
+      .ant-modal-header {
+        background-color: var(--redirect-card-color);
+        .ant-modal-title {
+          color: var(--text-color);
+        }
+      }
+      .ant-modal-body {
+        .ant-form {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+    }
+  }
+}
+
+.inputToRecord {
+  background-color: var(--redirect-card-color) !important;
+  color: var(--text-color);
+
+  border: 1px solid #00CC73 ;
+
+  &:active, &:focus {
+
+    border: 1px solid #00CC73 ;
+  }
+
+  &:hover, &:focus-within {
+    background-color: var(--redirect-card-color);
+    box-shadow: none;
+    border: 1px solid #00CC73 ;
+  }
+
+
+  &::placeholder {
+    color: #a39f9f;;
+  }
+}
+
+.buttonToRecord {
+  background-color: #00CC73;
+  border: none;
+  color: var(--text-color);
+
+  &:hover {
+    background-color: #04a35f !important;
+    border: none;
+    color: var(--text-color) !important;
+  }
+}

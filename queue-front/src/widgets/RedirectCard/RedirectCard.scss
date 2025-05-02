@@ -43,3 +43,46 @@
     transition: box-shadow 0.4s ease;
   }
 }
+
+@media (max-width: 1440px) and (min-width: 1080px) {
+  .redirectCard {
+    width: calc(499px * 0.75);
+    height: calc(216px * 0.8);
+    border-radius: 15px;
+    background-color: var(--redirect-card-color);
+    padding: calc(30px * 0.75) calc(28px * 0.75);
+    overflow: hidden;
+
+    .redirectCardLogo {
+      width: calc(80px * 0.75);
+      height: calc(80px * 0.75);
+      margin-bottom: calc(15px * 0.75);
+    }
+
+    .redirectCardName {
+      font-weight: 500;
+      font-size: calc(36px * 0.75);
+      color: var(--text-color);
+      font-family: Stem;
+      margin: {
+        bottom: calc(24px * 0.75);
+        top: 0;
+      };
+    }
+
+    .redirectCardText {
+      color: #808080;
+      font-size: calc(24px * 0.75);
+      font-weight: 500;
+      font-family: Stem;
+    }
+  }
+}
+
+@media (max-width: 1080px) {
+  .redirectCard {
+    width: auto;
+    height: auto; /* высота зависит от контента */
+    min-height: auto
+  }
+}

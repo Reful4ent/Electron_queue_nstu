@@ -4,7 +4,26 @@
   font-family: Stem;
   font-weight: 500;
   font-size: 22px;
-  color: #808080;
+  color: var(--text-color);
+  background-color: var(--redirect-card-color);
+  border: 1px solid var(--redirect-card-color) !important;
+  border-radius: 32px; /* добавляем радиус для более круглых краев */
+
+  input::placeholder {
+    color: #d8d6d6;
+  }
+
+
+
+  &:hover, &:focus-within {
+    background-color: var(--redirect-card-color);
+    box-shadow: none;
+  }
+  .ant-input-suffix {
+    .ant-input-clear-icon {
+      color: var(--text-color) !important;
+    }
+  }
 }
 
 .icon {
@@ -12,4 +31,10 @@
   margin-right: 10px;
   margin-left: 5px;
   color: #00CC73;
+}
+
+@media (max-width: 998px) {
+  .searchInput {
+    width: auto;
+  }
 }

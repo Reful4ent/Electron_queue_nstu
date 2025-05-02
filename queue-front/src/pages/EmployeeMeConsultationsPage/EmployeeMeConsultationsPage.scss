@@ -376,3 +376,25 @@
     }
   }
 }
+
+
+@media (max-width: 1440px) {
+  .consultationMeContainer{
+    .consultationMeContent {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 24px;
+      position: relative;
+    }
+  }
+}
+
+@media (max-width: 1080px) {
+  .consultationMeContainer{
+    .consultation-dates-container {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

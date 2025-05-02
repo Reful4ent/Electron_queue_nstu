@@ -5,7 +5,7 @@ import {routeURL} from "../../shared/api/route.ts";
 import {ROLES} from "../HomePage/HomePage.tsx";
 import {useAuth} from "../../app/context/AuthProvider/context.ts";
 import {IUser} from "../MyProfilePage/MyProfilePage.tsx";
-import {Button, Checkbox, DatePicker, Form, message, Select, TimePicker, ConfigProvider, Row, Col} from "antd";
+import {Button, DatePicker, Form, message, Select, TimePicker, ConfigProvider, Row, Col} from "antd";
 import './ConsultationCreatePage.scss'
 import {Breadcrumbs} from "../../widgets/Breadcrumbs/Breadcrumbs.tsx";
 import {IGroup, OptionsType} from "../RegistrationPage/RegistrationPage.tsx";
@@ -199,9 +199,7 @@ export const ConsultationCreatePage: FC = () => {
             });
             setSelectedGroups([]);
             setSelectedDiscipline(null);
-            form.setFieldValue('audience', null)
             form.setFieldValue('groups', null)
-            form.setFieldValue('corps', null)
             form.setFieldValue('date', null)
             form.setFieldValue('discipline', null)
             form.setFieldValue('duration', null)

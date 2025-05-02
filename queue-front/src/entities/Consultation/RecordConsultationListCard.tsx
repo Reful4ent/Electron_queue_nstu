@@ -143,6 +143,7 @@ export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({con
                 footer={null}
                 title="Запись на консультацию в деканат"
                 destroyOnClose
+                className={'formToRecord'}
             >
                 <Form
                     layout={'vertical'}
@@ -156,16 +157,16 @@ export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({con
                         name={'surname'}
                         rules={[{required: true, message: "Введите фамилию для записи"}]}
                     >
-                        <Input placeholder={'Фамилия'}/>
+                        <Input placeholder={'Фамилия'} className={'inputToRecord'}/>
                     </Form.Item>
                     <Form.Item
                         name={'name'}
                         rules={[{required: true, message: "Введите имя для записи"}]}
                     >
-                        <Input placeholder={'Имя'}/>
+                        <Input placeholder={'Имя'} className={'inputToRecord'}/>
                     </Form.Item>
                     <Form.Item>
-                        <Button htmlType={'submit'} className="action-button primary">Записаться</Button>
+                        <Button htmlType={'submit'} className="action-button primary buttonToRecord">Записаться</Button>
                     </Form.Item>
                 </Form>
             </Modal>
