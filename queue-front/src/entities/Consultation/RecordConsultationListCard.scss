@@ -1,7 +1,7 @@
 .consultation-date-item {
   display: flex;
   flex-direction: column;
-  background-color: #F5F5F5;
+  background-color: var(--redirect-card-dark);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);

@@ -60,8 +60,7 @@ export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({con
         .filter((a) => !a.isOffByEmployee && !a.isOffByStudent)
         .sort((a, b) => new Date(a.dateStartConsultation).getTime() - new Date(b.dateStartConsultation).getTime());
 
-    const hasSelectedTime = !!form.getFieldValue('currentSelectedTime');
-    const shouldShowTimeSlots = isHovering || hasSelectedTime;
+    const shouldShowTimeSlots = isHovering;
     
     // Обработчик клика по временному слоту
     const handleTimeClick = (value: any) => {
@@ -74,14 +73,12 @@ export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({con
     };
 
     return (
-        <div 
+        <div
             className="consultation-date-item"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
         >
             {contextHolder}
             
-            <div className="consultation-header">
+            <div className="consultation-header" onClick={() => setIsHovering(!isHovering)}>
                 <div className="day-date">
                     <span className="day">{dayName}</span>
                     <span className="date">{formattedDate}</span>
@@ -125,6 +122,9 @@ export const RecordConsultationListCard: FC<IRecordConsultationListCard> = ({con
             <Button
                 className="record-button"
                 onClick={() => {
+                    if(!isHovering) {
+                        setIsHovering(true)
+                    }
                     if (!form.getFieldValue('currentSelectedTime')) {
                         setIsError(true);
                     } else if (form.getFieldValue('currentSelectedTime') && studentId) {

@@ -9,10 +9,12 @@ import './MainLayout.scss';
 export const MainLayout: FC = () => {
     return (
         <div className='mainContent'>
-            <Header/>
-            <Suspense fallback={<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%'}}><Loader/></div>}>
-                <Outlet></Outlet>
-            </Suspense>
+            <div>
+                <Header/>
+                <Suspense fallback={<div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%'}}><Loader/></div>}>
+                    <Outlet></Outlet>
+                </Suspense>
+            </div>
             <Footer/>
         </div>
     )
