@@ -177,7 +177,7 @@
           
           &.ant-radio-wrapper-checked {
             .ant-radio + span {
-              background-color: #f5f5f5;
+              background-color: var(--redirect-card-color);
               color: #00B265;
               border-color: #00B265;
             }

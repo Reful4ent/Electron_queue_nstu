@@ -309,11 +309,11 @@ export const ConsultationCreatePage: FC = () => {
                                     rules={[{ required: true, message: 'Пожалуйста, выберите группу' }]}
                                 >
                                     <Select
-                                        placeholder="Выберите группу"style={{ color: '#00B265' }}
+                                        placeholder="Выберите группу" style={{ color: '#00B265' }}
                                         options={groupOptions}
                                         mode="multiple"
                                         suffixIcon={null}
-                                        className={`formSelect ${isGroupOpen ? 'ant-select-open' : ''}`}
+                                        className={`formSelect groupSelect ${isGroupOpen ? 'ant-select-open' : ''}`}
                                         dropdownStyle={{ borderRadius: '12px' }}
                                         menuItemSelectedIcon={<CheckOutlined style={{ color: '#00B265' }} />}
                                         onDropdownVisibleChange={(open) => setIsGroupOpen(open)}
