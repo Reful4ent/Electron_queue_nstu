@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_common_not_registered_users",
+  "info": {
+    "displayName": "notRegisteredUser"
+  },
+  "options": {},
+  "attributes": {
+    "surname": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}

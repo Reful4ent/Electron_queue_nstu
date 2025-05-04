@@ -1,0 +1,192 @@
+.consultation-date-item {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--redirect-card-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .consultation-header {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--redirect-card-color);
+    
+    .day-date {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      
+      .day, .date {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: 16px;
+        color: var(--text-color);
+      }
+    }
+  }
+  
+  .consultation-separator {
+    height: 1px;
+    width: 100%;
+    background-color: #E0E0E0;
+  }
+  
+  .time-slots-container {
+    padding: 12px 16px;
+    background-color: var(--redirect-card-color);
+    border-radius: 0 0 8px 8px;
+    
+    .error-message {
+      color: red;
+      font-family: Stem;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    .time-form {
+      margin-bottom: 0;
+    }
+    
+    .time-slots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+      
+      .time-slot-radio {
+        margin-right: 0 !important;
+        
+        .ant-radio {
+          display: none;
+        }
+        
+        .ant-radio + span {
+          padding: 6px 12px;
+          height: 32px;
+          border-radius: 16px;
+          font-family: Stem;
+          font-size: 14px;
+          color: var(--text-color);
+          background-color: var(--redirect-card-color);;
+          border: 1px solid #E0E0E0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+        }
+        
+        &.ant-radio-wrapper-checked {
+          .ant-radio + span {
+            background-color: #00B265;
+            color: white;
+            border-color: #00B265;
+          }
+        }
+        
+        &.ant-radio-wrapper-disabled {
+          .ant-radio + span {
+            color: #BDBDBD;
+            background-color: #F0F0F0;
+            border-color: #E0E0E0;
+            cursor: not-allowed;
+          }
+        }
+        
+        &:hover:not(.ant-radio-wrapper-disabled) {
+          .ant-radio + span {
+            border-color: #00B265;
+            color: #00B265;
+          }
+          
+          &.ant-radio-wrapper-checked .ant-radio + span {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+  
+  .record-button {
+    width: calc(100% - 32px);
+    margin: 0 16px 16px;
+    height: 40px;
+    border-radius: 20px;
+    font-family: Stem;
+    border: 1px solid #E0E0E0;
+    font-size: 14px;
+    color: var(--text-color);
+    background-color: var(--redirect-card-color);
+    transition: all 0.2s;
+    
+    &:hover {
+      border-color: #00B265;
+      color: #00B265;
+    }
+  }
+}
+
+
+.formToRecord {
+  div {
+    .ant-modal-content {
+      .ant-modal-close {
+        color: var(--text-color);
+      }
+      background-color: var(--redirect-card-color);
+      .ant-modal-header {
+        background-color: var(--redirect-card-color);
+        .ant-modal-title {
+          color: var(--text-color);
+        }
+      }
+      .ant-modal-body {
+        .ant-form {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+    }
+  }
+}
+
+.inputToRecord {
+  background-color: var(--redirect-card-color) !important;
+  color: var(--text-color);
+
+  border: 1px solid #00CC73 ;
+
+  &:active, &:focus {
+
+    border: 1px solid #00CC73 ;
+  }
+
+  &:hover, &:focus-within {
+    background-color: var(--redirect-card-color);
+    box-shadow: none;
+    border: 1px solid #00CC73 ;
+  }
+
+
+  &::placeholder {
+    color: #a39f9f;;
+  }
+}
+
+.buttonToRecord {
+  background-color: #00CC73;
+  border: none;
+  color: var(--text-color);
+
+  &:hover {
+    background-color: #04a35f !important;
+    border: none;
+    color: var(--text-color) !important;
+  }
+}

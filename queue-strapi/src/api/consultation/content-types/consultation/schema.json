@@ -42,6 +42,25 @@
     },
     "duration": {
       "type": "string"
+    },
+    "isOffByEmployee": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    },
+    "corps": {
+      "type": "string"
+    },
+    "audience": {
+      "type": "string"
+    },
+    "groups": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::group.group"
+    },
+    "durationNumber": {
+      "type": "integer"
     }
   }
 }

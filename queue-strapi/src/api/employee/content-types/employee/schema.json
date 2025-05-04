@@ -23,12 +23,6 @@
       "target": "api::faculty.faculty",
       "inversedBy": "employees"
     },
-    "groups": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::group.group",
-      "inversedBy": "employees"
-    },
     "consultations": {
       "type": "relation",
       "relation": "oneToMany",
@@ -43,9 +37,28 @@
         "INSPECTOR"
       ]
     },
+    "groups": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::group.group",
+      "inversedBy": "employees"
+    },
+    "surname": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
+    },
     "fio": {
-      "type": "string",
-      "required": true
+      "type": "string"
+    },
+    "socialLinks": {
+      "type": "component",
+      "repeatable": false,
+      "component": "common.social-l-inks"
     }
   }
 }

@@ -1,0 +1,60 @@
+.footer{
+  font-family: Stem, sans-serif;
+  min-height: 80px;
+  width: 100%;
+  background-color: var(--footer-color);
+  transition: 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 30px 40px;
+}
+
+.contentContainer {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+  max-width: 700px;
+}
+
+.contentBlock {
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.text {
+  margin: 0;
+  color: #808080;
+  font-size: 14px;
+}
+
+.span {
+  color: #808080;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.contact {
+  align-self: flex-start;
+  color: #808080;
+  font-size: 14px;
+}
+
+.link {
+  color: #808080;
+}
+
+.contact:hover, .link:hover {
+  color: var(--text-color);
+}

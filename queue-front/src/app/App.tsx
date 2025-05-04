@@ -1,10 +1,12 @@
+import {useRoutes} from "react-router-dom";
+import {router} from "./router/router/router.tsx";
+import '../index.scss';
+import '../normalize.css';
+
 function App() {
   return (
     <>
-
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+        { useRoutes(router) }
     </>
   )
 }

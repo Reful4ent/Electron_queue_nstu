@@ -1,0 +1,76 @@
+{
+  "key": "plugin_content_manager_configuration_components::common.not-registered-user",
+  "value": {
+    "settings": {
+      "bulkable": true,
+      "filterable": true,
+      "searchable": true,
+      "pageSize": 10,
+      "mainField": "surname",
+      "defaultSortBy": "surname",
+      "defaultSortOrder": "ASC"
+    },
+    "metadatas": {
+      "id": {
+        "edit": {},
+        "list": {
+          "label": "id",
+          "searchable": false,
+          "sortable": false
+        }
+      },
+      "surname": {
+        "edit": {
+          "label": "surname",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "surname",
+          "searchable": true,
+          "sortable": true
+        }
+      },
+      "name": {
+        "edit": {
+          "label": "name",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "name",
+          "searchable": true,
+          "sortable": true
+        }
+      }
+    },
+    "layouts": {
+      "list": [
+        "id",
+        "surname",
+        "name"
+      ],
+      "edit": [
+        [
+          {
+            "name": "surname",
+            "size": 6
+          },
+          {
+            "name": "name",
+            "size": 6
+          }
+        ]
+      ]
+    },
+    "uid": "common.not-registered-user",
+    "isComponent": true
+  },
+  "type": "object",
+  "environment": null,
+  "tag": null
+}

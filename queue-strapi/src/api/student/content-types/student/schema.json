@@ -29,9 +29,23 @@
       "target": "api::group.group",
       "inversedBy": "students"
     },
+    "surname": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
+    },
     "fio": {
-      "type": "string",
-      "required": true
+      "type": "string"
+    },
+    "socialLinks": {
+      "displayName": "socialLInks",
+      "type": "component",
+      "repeatable": false,
+      "component": "common.social-l-inks"
     }
   }
 }

@@ -1,0 +1,238 @@
+.consultationMeContainer{
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  flex-grow: 1;
+
+  .consultationMeHead {
+    margin-top: 76px;
+    font-family: Stem;
+    font-weight: 500;
+    font-size: 36px;
+    color: var(--text-color);
+  }
+
+  .consultationMeContent {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+  }
+}
+
+/* Стили для списка консультаций (аккордеон) */
+.consultations-collapse {
+  margin-top: 20px;
+  width: 100%;
+  
+  .ant-collapse-item {
+    background-color: var(--redirect-card-color);
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    
+    .ant-collapse-header {
+      padding: 14px 20px;
+      cursor: pointer;
+      background-color: var(--redirect-card-color);
+      display: flex;
+      align-items: center;
+      border-radius: 8px !important;
+      
+      .collapse-icon {
+        margin-right: 10px;
+        font-size: 16px;
+        color: var(--text-color);
+        font-weight: bold;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .consultation-subject {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        font-family: Stem;
+        font-weight: 500;
+        font-size: 16px;
+        color: var(--text-color);
+        
+        .room-number {
+          color: #7a7a7a;
+          font-size: 14px;
+        }
+      }
+      
+      &:hover {
+        background-color: var(--ant-select-selection-item);
+      }
+    }
+
+    .ant-collapse-content {
+      background-color: var(--my-consultation-card-inner);
+      border-top: none;
+      
+      .ant-collapse-content-box {
+        padding: 0;
+      }
+    }
+  }
+}
+
+/* Стили для сетки с консультациями */
+.consultation-dates-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 14px;
+  column-gap: 16px;
+  padding: 14px 16px 18px;
+  background-color: var(--my-consultation-card-inner);
+  border-radius: 0 0 8px 8px;
+  
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+  
+  .consultation-date-item {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--redirect-card-color);
+    border-radius: 8px;
+    box-shadow: none;
+    overflow: hidden;
+    
+    .consultation-header {
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      
+      .day-date {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        
+        .day, .date {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: 16px;
+          color: var(--text-color);
+        }
+      }
+    }
+    
+    .consultation-separator {
+      height: 1px;
+      width: 100%;
+      background-color: #E0E0E0;
+    }
+    
+    .time-slots-container {
+      padding: 12px 16px;
+      
+      .error-message {
+        color: red;
+        font-family: Stem;
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+      
+      .time-form {
+        margin-bottom: 16px;
+      }
+      
+      .time-slots {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        
+        .time-slot-radio {
+          margin-right: 0 !important;
+          
+          .ant-radio {
+            display: none;
+          }
+          
+          .ant-radio + span {
+            padding: 6px 16px;
+            height: 34px;
+            border-radius: 17px;
+            font-family: Stem;
+            font-size: 14px;
+            color: var(--text-color);
+            background-color: var(--redirect-card-color);
+            border: 1px solid #E0E0E0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+          }
+          
+          &.ant-radio-wrapper-checked {
+            .ant-radio + span {
+              background-color: var(--redirect-card-color);
+              color: #00B265;
+              border-color: #00B265;
+            }
+          }
+          
+          &.ant-radio-wrapper-disabled {
+            .ant-radio + span {
+              color: #BDBDBD;
+              background-color: #F0F0F0;
+              border-color: #E0E0E0;
+              cursor: not-allowed;
+            }
+          }
+          
+          &:hover:not(.ant-radio-wrapper-disabled) {
+            .ant-radio + span {
+              border-color: #00B265;
+              color: #00B265;
+            }
+            
+            &.ant-radio-wrapper-checked .ant-radio + span {
+              color: #00B265;
+            }
+          }
+        }
+      }
+    }
+    
+    .check-time-button, .record-button {
+      margin: 12px 16px 16px;
+      height: 40px;
+      border-radius: 20px;
+      font-family: Stem;
+      border: 2px solid #333;
+      font-size: 14px;
+      color: var(--text-color);
+      background-color: var(--redirect-card-color);
+      transition: all 0.2s;
+      
+      &:hover {
+        border-color: #00B265;
+        color: #00B265;
+        background-color: var(--redirect-card-color);;
+      }
+    }
+  }
+}
+
+@media (max-width: 1440px) {
+  .consultationMeContainer{
+    .consultationMeContent {
+      gap: 0;
+      flex-direction: column;
+      margin-bottom: 40px;
+    }
+  }
+}

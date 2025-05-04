@@ -1,0 +1,51 @@
+.deanSmallCardContainer {
+  padding: 12px;
+  width: 412px;
+  height: 67px;
+  background-color: var(--redirect-card-color);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  .innerDeanSmallCardContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    .employeeDeanImage {
+      width: 67px;
+      height: 67px;
+      border-radius: 50%;
+    }
+
+    .textDeanContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+
+      .employeeDeanFIO {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: 22px;
+        color: var(--text-color);
+        text-decoration: none;
+      }
+
+      .employeeDeanSubRole {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: 18px;
+        color: #808080;
+      }
+    }
+  }
+}
+
+@media (max-width: 998px) {
+  .deanSmallCardContainer {
+    width: auto;
+  }
+}

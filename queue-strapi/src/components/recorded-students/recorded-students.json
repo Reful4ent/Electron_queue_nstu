@@ -9,13 +9,28 @@
     "student": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "target": "api::student.student"
     },
     "dateStartConsultation": {
       "type": "datetime"
     },
     "dateEndConsultation": {
       "type": "datetime"
+    },
+    "notRegisteredUser": {
+      "displayName": "notRegisteredUser",
+      "type": "component",
+      "repeatable": false,
+      "component": "common.not-registered-user"
+    },
+    "isOffByStudent": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    },
+    "isOffByEmployee": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

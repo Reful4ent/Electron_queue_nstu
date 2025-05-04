@@ -76,6 +76,15 @@
       "relation": "oneToOne",
       "target": "api::employee.employee",
       "inversedBy": "user"
+    },
+    "surname": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
     }
   }
 }

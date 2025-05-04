@@ -382,6 +382,8 @@ export interface ApiConsultationConsultation
     draftAndPublish: false;
   };
   attributes: {
+    audience: Schema.Attribute.String;
+    corps: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -392,7 +394,11 @@ export interface ApiConsultationConsultation
       'api::discipline.discipline'
     >;
     duration: Schema.Attribute.String;
+    durationNumber: Schema.Attribute.Integer;
     employee: Schema.Attribute.Relation<'manyToOne', 'api::employee.employee'>;
+    groups: Schema.Attribute.Relation<'oneToMany', 'api::group.group'>;
+    isOffByEmployee: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -463,18 +469,22 @@ export interface ApiEmployeeEmployee extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     faculties: Schema.Attribute.Relation<'manyToMany', 'api::faculty.faculty'>;
-    fio: Schema.Attribute.String & Schema.Attribute.Required;
+    fio: Schema.Attribute.String;
     groups: Schema.Attribute.Relation<'manyToMany', 'api::group.group'>;
+    lastname: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::employee.employee'
     > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    socialLinks: Schema.Attribute.Component<'common.social-l-inks', false>;
     subRole: Schema.Attribute.Enumeration<
       ['LECTURER', 'DEPUTY_DEAN', 'INSPECTOR']
     >;
+    surname: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -526,6 +536,7 @@ export interface ApiFacultyFaculty extends Struct.CollectionTypeSchema {
 export interface ApiGroupGroup extends Struct.CollectionTypeSchema {
   collectionName: 'groups';
   info: {
+    description: '';
     displayName: '\u0413\u0440\u0443\u043F\u043F\u044B';
     pluralName: 'groups';
     singularName: 'group';
@@ -604,15 +615,19 @@ export interface ApiStudentStudent extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     faculty: Schema.Attribute.Relation<'manyToOne', 'api::faculty.faculty'>;
-    fio: Schema.Attribute.String & Schema.Attribute.Required;
+    fio: Schema.Attribute.String;
     group: Schema.Attribute.Relation<'manyToOne', 'api::group.group'>;
+    lastname: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::student.student'
     > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    socialLinks: Schema.Attribute.Component<'common.social-l-inks', false>;
+    surname: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1092,12 +1107,14 @@ export interface PluginUsersPermissionsUser
         minLength: 6;
       }>;
     employee: Schema.Attribute.Relation<'oneToOne', 'api::employee.employee'>;
+    lastname: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    name: Schema.Attribute.String;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
@@ -1111,6 +1128,7 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.role'
     >;
     student: Schema.Attribute.Relation<'oneToOne', 'api::student.student'>;
+    surname: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

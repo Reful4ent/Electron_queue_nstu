@@ -1,0 +1,146 @@
+.myConsultationCard {
+  padding: 25px;
+  width: 524px;
+  height: 504px;
+  border-radius: 15px;
+  background-color: var(--profile-card-color);
+  display: flex;
+  flex-direction: column;
+
+  .cardDate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .date {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: 36px;
+      color: var(--text-color);
+    }
+    margin-bottom: 6px;
+  }
+
+  .interval {
+    font-family: Stem;
+    font-weight: 500;
+    font-size: 22px;
+    margin-bottom: 23px;
+    color: var(--text-color);
+  }
+
+  .employeePart {
+    padding: 20px 21px 20px 14px;
+    width: calc(100% - 40px);
+    height: 186px;
+    background-color: var(--my-consultation-card-inner);
+    border-radius: 10px;
+    margin-bottom: 23px;
+  }
+
+  .contacts {
+    font-family: Stem;
+    font-weight: 500;
+    font-size: 18px;
+    color: #808080;
+  }
+
+  .employeeMailLink {
+    font-family: Stem;
+    font-weight: 500;
+    font-size: 18px;
+    color: #00CC73;
+    text-decoration: underline;
+  }
+
+  .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .revokeButton {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: 22px;
+    }
+
+    .cardStatus {
+      padding: 10px;
+      border-radius: 10px;
+      background-color: var(--profile-dropdown-color);
+      color: #00CC73;
+      font-family: Stem;
+      font-weight: 500;
+      font-size: 22px;
+    }
+
+    .cardStatusFalse {
+      padding: 10px;
+      border-radius: 10px;
+      background-color: var(--my-consultation-card-status);
+      color: #6A6A6A;
+      font-family: Stem;
+      font-weight: 500;
+      font-size: 22px;
+    }
+  }
+
+  .employeeInfo {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 26px;
+
+    .employeeImage{
+      width: 107px;
+      height: 107px;
+      border-radius: 50%;
+    }
+
+    .employeeTextCard {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .employeeSubRole {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: 18px;
+        color: #808080;
+      }
+
+      .employeeProfileLink {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: 18px;
+        color: #00CC73;
+        text-decoration: underline;
+      }
+
+      .employeeFIO {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: 22px;
+        color: var(--text-color);
+      }
+    }
+  }
+
+  .cardDiscipline {
+    font-family: Stem;
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 23px;
+    color: var(--text-color);
+  }
+  .cardFooter {
+    font-family: Stem;
+    font-weight: 500;
+    font-size: 18px;
+    color: #808080;
+  }
+
+  &.disabled {
+    opacity: 0.36;
+  }
+}

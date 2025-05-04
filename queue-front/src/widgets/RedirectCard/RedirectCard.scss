@@ -1,0 +1,88 @@
+.redirectCard {
+  width: 499px;
+  height: 216px;
+  border-radius: 15px;
+  background-color: var(--redirect-card-color);
+  padding: 30px 28px;
+  overflow: hidden;
+
+  .redirectCardLogo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+  }
+  .redirectCardName {
+    font-weight: 500;
+    font-size: 36px;
+    color: var(--text-color);
+    font-family: Stem;
+    margin: {
+      bottom: 24px;
+      top: 0;
+    };
+  }
+  .redirectCardText {
+    color: #808080;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: Stem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    -webkit-box-shadow: 0px 0px 6px 4px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 6px 4px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 6px 4px rgba(34, 60, 80, 0.2);
+    transition: box-shadow 0.4s ease;
+  }
+
+  & {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    transition: box-shadow 0.4s ease;
+  }
+}
+
+@media (max-width: 1440px) and (min-width: 1080px) {
+  .redirectCard {
+    width: calc(499px * 0.75);
+    height: calc(216px * 0.8);
+    border-radius: 15px;
+    background-color: var(--redirect-card-color);
+    padding: calc(30px * 0.75) calc(28px * 0.75);
+    overflow: hidden;
+
+    .redirectCardLogo {
+      width: calc(80px * 0.75);
+      height: calc(80px * 0.75);
+      margin-bottom: calc(15px * 0.75);
+    }
+
+    .redirectCardName {
+      font-weight: 500;
+      font-size: calc(36px * 0.75);
+      color: var(--text-color);
+      font-family: Stem;
+      margin: {
+        bottom: calc(24px * 0.75);
+        top: 0;
+      };
+    }
+
+    .redirectCardText {
+      color: #808080;
+      font-size: calc(24px * 0.75);
+      font-weight: 500;
+      font-family: Stem;
+    }
+  }
+}
+
+@media (max-width: 1080px) {
+  .redirectCard {
+    width: auto;
+    height: auto; /* высота зависит от контента */
+    min-height: auto
+  }
+}

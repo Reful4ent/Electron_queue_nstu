@@ -1,0 +1,71 @@
+.containerDeansConsultations {
+  padding: 40px 139px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-grow: 1;
+
+  .containerDeansHead {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .consultationMeHeadSearch {
+      width: 404px;
+      height: 65px;
+    }
+
+    .consultationDeansHeadText {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: 36px;
+      color: var(--text-color);
+    }
+  }
+}
+
+.filtersButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 178px;
+  height: 45px;
+  background: var(--redirect-card-color);
+  border-radius: 10px;
+  margin-bottom: 55px;
+
+  .filtersButtonText {
+    font-family: Stem;
+    font-weight: 500;
+    font-size: 25px;
+    color: #808080;
+  }
+}
+
+.employeeList {
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1280px) {
+  .containerDeansConsultations {
+    padding: 40px 50px;
+    .containerDeansHead {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      margin-bottom: 50px;
+    }
+  }
+}
+
+@media (max-width: 998px) {
+  .employeeList {
+    display: flex;
+    gap: 26px;
+    flex-direction: column;
+    position: relative;
+  }
+}

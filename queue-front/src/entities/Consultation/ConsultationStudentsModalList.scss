@@ -1,0 +1,109 @@
+.modalConsultationHead {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.modalConsultationList {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.modalConsultationHeadItem {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.modalConsultationTime {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.modalConsultationBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--ant-modal-inner);
+}
+
+.modalStudentsListItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.modalStudentsListItem:last-child {
+  border-bottom: none;
+}
+
+.modalStudentsListItemFirstBlock {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modalStudentsListItemProfileImage {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.studentInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.studentName {
+  font-weight: 500;
+}
+
+.studentRoom {
+  color: #666;
+  font-size: 14px;
+}
+
+.appointmentTime {
+  font-weight: 500;
+}
+
+.actionIcons {
+  display: flex;
+  gap: 8px;
+}
+
+.acceptIcon {
+  color: #52c41a;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.rejectIcon {
+  color: #f5222d;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.freeSlot {
+  color: #666;
+  font-style: italic;
+}
+
+.noRecords {
+  padding: 20px 0;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 8px;
+  
+  .freeSlot {
+    font-size: 16px;
+    color: #888;
+    font-style: normal;
+  }
+} 
