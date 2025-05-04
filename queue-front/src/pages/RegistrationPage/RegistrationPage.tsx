@@ -50,7 +50,7 @@ export interface IUserRegistration {
     username: string;
     email: string;
     password: string;
-    roleID?: number | null,
+    roleName?: string | null,
     faculty?: number | null,
     speciality?: number | null,
     group?: number | null,
@@ -94,7 +94,7 @@ export const RegistrationPage: FC = () => {
                 if (form.getFieldValue('role') == 'Student') {
                     data = {
                         ...data,
-                        roleID: 14,
+                        roleName: 'Student',
                         faculty: form.getFieldValue('faculty'),
                         speciality: form.getFieldValue('speciality'),
                         group: form.getFieldValue('group'),
@@ -102,7 +102,7 @@ export const RegistrationPage: FC = () => {
                 } else if (form.getFieldValue('role') == 'Employee') {
                     data = {
                         ...data,
-                        roleID: 15,
+                        roleName: 'Employee',
                         faculties: form.getFieldValue('faculties'),
                         specialities: form.getFieldValue('specialities'),
                         groups: form.getFieldValue('groups'),
@@ -111,7 +111,7 @@ export const RegistrationPage: FC = () => {
                 } else if (form.getFieldValue('role') == 'StudentEmployee') {
                     data = {
                         ...data,
-                        roleID: 16,
+                        roleName: 'StudentEmployee',
                         faculty: form.getFieldValue('faculty'),
                         speciality: form.getFieldValue('speciality'),
                         group: form.getFieldValue('group'),
