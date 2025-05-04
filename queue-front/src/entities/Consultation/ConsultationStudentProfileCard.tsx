@@ -84,11 +84,11 @@ export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard>
                             {`${
                                 new Date(recordedStudent?.dateStartConsultation).getHours()}
                                     :
-                                    ${new Date(recordedStudent?.dateStartConsultation).getMinutes() == '0' ? '00' : new Date(recordedStudent?.dateStartConsultation).getMinutes()}
+                                    ${String(new Date(recordedStudent?.dateStartConsultation).getMinutes()) == '0' ? '00' : new Date(recordedStudent?.dateStartConsultation).getMinutes()}
                                      -
                                      ${new Date(recordedStudent?.dateEndConsultation).getHours()}
                                      :
-                                     ${new Date(recordedStudent?.dateEndConsultation).getMinutes() == '0' ? '00' : new Date(recordedStudent?.dateEndConsultation).getMinutes()}`}
+                                     ${String(new Date(recordedStudent?.dateEndConsultation).getMinutes()) == '0' ? '00' : new Date(recordedStudent?.dateEndConsultation).getMinutes()}`}
                         </div>
                         <div className={'employeePart'}>
                             <div className={'employeeInfo'}>

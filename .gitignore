@@ -1,0 +1,4 @@
+.idea
+/queue-front/.env
+/queue-strapi/.env
+docker-compose.yaml

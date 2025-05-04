@@ -62,6 +62,7 @@ export interface IConsultation {
     dateOfStart: string;
     dateOfEnd: string;
     duration: string;
+    durationNumber: number;
     recordedStudents: {
         id: number;
         student: {
@@ -72,6 +73,7 @@ export interface IConsultation {
             lastname: string;
             group: IGroup;
         };
+        timeRecord: any;
         isOffByEmployee: boolean;
         isOffByStudent: boolean;
         dateStartConsultation: string;

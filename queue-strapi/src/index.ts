@@ -31,16 +31,21 @@ export default {
        */
       async afterCreate(event: any) {
         const { result, params } = event;
+        const role = await strapi.documents("plugin::users-permissions.role").findMany({
+
+        });
+        const roleID = role.find((item) => item.name == event.params.data.roleName).id;
+
         await strapi.documents("plugin::users-permissions.user").update({
           documentId: event.result.documentId,
           data: {
             role: {
-              id: event.params.data.roleID,
+              id: roleID,
             },
           }
         })
 
-        if(event?.params?.data?.roleID == 14) {
+        if(event?.params?.data?.roleName == 'Student') {
           await strapi.documents('api::student.student').create({
             data: {
               faculty: event.params.data.faculty,
@@ -52,7 +57,7 @@ export default {
               group: event.params.data.group
             }
           })
-        } else if (event?.params?.data?.roleID == 15) {
+        } else if (event?.params?.data?.roleName == 'Employee') {
           await strapi.documents('api::employee.employee').create({
             data: {
               faculties: event.params.data.faculties,
@@ -65,7 +70,7 @@ export default {
               subRole: event.params.data.subRole
             }
           })
-        } else if (event?.params?.data?.roleID == 16) {
+        } else if (event?.params?.data?.roleName == 'StudentEmployee') {
           await strapi.documents('api::student.student').create({
             data: {
               faculty: event.params.data.faculty,

@@ -7,7 +7,7 @@ export default ({ env }) => ({
                     "surname",
                     "name",
                     "lastname",
-                    'roleID',
+                    'roleName',
                     'faculty',
                     'faculties',
                     'speciality',

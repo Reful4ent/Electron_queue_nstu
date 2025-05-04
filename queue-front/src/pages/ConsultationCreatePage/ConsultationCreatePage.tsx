@@ -140,6 +140,7 @@ export const ConsultationCreatePage: FC = () => {
     useEffect(() => {
         if (auth?.jwt) {
             getMyData();
+            setIsLoading(true);
         }
     }, [auth?.jwt, getMyData]);
 
