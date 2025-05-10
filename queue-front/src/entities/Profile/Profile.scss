@@ -33,6 +33,11 @@
   z-index: 10;
 }
 
+.smallSizeButtons{
+  display: none;
+}
+
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -76,6 +81,19 @@
   }
 }
 
+
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+@media (max-width: 475px) {
+  .smallSizeButtons{
+    display: flex;
+    gap: 10px;
+    padding-bottom: 10px;
+  }
+
+  .dropdown-content {
+    width: 100%;
+  }
 }

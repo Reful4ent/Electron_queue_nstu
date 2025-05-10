@@ -22,3 +22,31 @@
     text-decoration: none;
   }
 }
+
+
+@media (max-width: 1080px) {
+  .breadcrumbsContainer {
+    display: flex;
+    flex-wrap: wrap;
+
+    .breadcrumbsLink {
+      font-family: Stem;
+      color: var(--text-color);
+      font-size: 20px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .breadcrumbsItem {
+      margin: 0;
+    }
+
+    .breadcrumbsItem {
+      font-family: Stem;
+      color: #808080;
+      font-size: 20px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+  }
+}

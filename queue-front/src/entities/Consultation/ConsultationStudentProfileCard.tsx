@@ -16,9 +16,6 @@ export interface IConsultationStudentProfileCard {
 
 export const ConsultationStudentProfileCard: FC<IConsultationStudentProfileCard> = ({consultation, userData, setIsModalOpen, setCurrentConsultationId, setCurrentRecordId}) => {
 
-    console.log(consultation?.recordedStudents
-        ?.filter((student) => student?.student?.id == userData?.student.id))
-    console.log(consultation)
     return (
         <>
             {consultation?.recordedStudents

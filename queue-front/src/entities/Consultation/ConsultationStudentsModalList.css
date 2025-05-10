@@ -206,15 +206,29 @@
   margin-right: 0;
 }
 
+
 .modalStudentsListItem:hover .consultation-time {
   opacity: 1;
   visibility: visible;
   transform: translateX(-80px);
+  transition: all 0.3s ease; /* Добавляем transition здесь */
 }
 
 .modalStudentsListItem:hover .student-actions {
   opacity: 1;
   visibility: visible;
+  transition: all 0.3s ease; /* И здесь */
+}
+
+@media (max-width: 475px) {
+  .modalStudentsListItem:hover .consultation-time,
+  .modalStudentsListItem:hover .student-actions {
+    transition: none !important;
+  }
+
+  .modalStudentsListItem:hover .consultation-time {
+    transform: translateX(0px) !important;
+  }
 }
 
 .student-action-button {

@@ -58,3 +58,14 @@
 .contact:hover, .link:hover {
   color: var(--text-color);
 }
+
+@media (max-width: 475px) {
+  .footer{
+    flex-direction: column;
+    gap: 20px;
+    align-items: start;
+  }
+  .contentContainer {
+    flex-direction: column;
+  }
+}

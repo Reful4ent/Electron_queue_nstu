@@ -144,3 +144,604 @@
     opacity: 0.36;
   }
 }
+
+@media (min-width: 1512px) and (max-width: 1919px) {
+  .myConsultationCard {
+    padding: calc(25px * 0.9);
+    width: calc(524px * 0.9);
+    height: calc(504px * 0.9);
+    border-radius: 15px;
+    background-color: var(--profile-card-color);
+    display: flex;
+    flex-direction: column;
+
+    .cardDate {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .date {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(36px * 0.9);
+        color: var(--text-color);
+      }
+      margin-bottom: 6px;
+    }
+
+    .interval {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(22px * 0.9);
+      margin-bottom: calc(23px * 0.9);
+      color: var(--text-color);
+    }
+
+    .employeePart {
+      padding: calc(20px * 0.9) calc(21px * 0.9) calc(20px * 0.9) calc(14px * 0.9);
+      width: auto;
+      height: calc(186px * 0.9);
+      background-color: var(--my-consultation-card-inner);
+      border-radius: 10px;
+      margin-bottom: calc(23px * 0.9);
+    }
+
+    .contacts {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(18px * 0.9);
+      color: #808080;
+    }
+
+    .employeeMailLink {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(18px * 0.9);
+      color: #00CC73;
+      text-decoration: underline;
+    }
+
+    .cardHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .revokeButton {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(22px * 0.9);
+      }
+
+      .cardStatus {
+        padding: calc(10px * 0.9);
+        border-radius: 10px;
+        background-color: var(--profile-dropdown-color);
+        color: #00CC73;
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(22px * 0.9);
+      }
+
+      .cardStatusFalse {
+        padding: calc(10px * 0.9);
+        border-radius: 10px;
+        background-color: var(--my-consultation-card-status);
+        color: #6A6A6A;
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(22px * 0.9);
+      }
+    }
+
+    .employeeInfo {
+      display: flex;
+      flex-direction: row;
+      gap: calc(20px * 0.9);
+      margin-bottom: calc(26px * 0.9);
+
+      .employeeImage{
+        width: 107px;
+        height: 107px;
+        border-radius: 50%;
+      }
+
+      .employeeTextCard {
+        display: flex;
+        flex-direction: column;
+        gap: calc(15px * 0.9);
+
+        .employeeSubRole {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: calc(18px * 0.9);
+          color: #808080;
+        }
+
+        .employeeProfileLink {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: calc(18px * 0.9);
+          color: #00CC73;
+          text-decoration: underline;
+        }
+
+        .employeeFIO {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: calc(22px * 0.9);
+          color: var(--text-color);
+        }
+      }
+    }
+
+    .cardDiscipline {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(24px * 0.9);
+      margin-bottom: calc(23px * 0.9);
+      color: var(--text-color);
+    }
+    .cardFooter {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(18px * 0.9);
+      color: #808080;
+    }
+
+    &.disabled {
+      opacity: 0.36;
+    }
+  }
+}
+
+@media (max-width: 1080px) {
+  .myConsultationCard {
+    padding: 20px;
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    background-color: var(--profile-card-color);
+    display: flex;
+    flex-direction: column;
+
+    .cardDate {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .date {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(36px * 0.9);
+        color: var(--text-color);
+      }
+      margin-bottom: 6px;
+    }
+
+    .interval {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(22px * 0.9);
+      margin-bottom: calc(23px * 0.9);
+      color: var(--text-color);
+    }
+
+    .employeePart {
+      padding: calc(20px * 0.9) calc(21px * 0.9) calc(20px * 0.9) calc(14px * 0.9);
+      width: auto;
+      height: calc(186px * 0.9);
+      background-color: var(--my-consultation-card-inner);
+      border-radius: 10px;
+      margin-bottom: calc(23px * 0.9);
+    }
+
+    .contacts {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(18px * 0.9);
+      color: #808080;
+    }
+
+    .employeeMailLink {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(18px * 0.9);
+      color: #00CC73;
+      text-decoration: underline;
+    }
+
+    .cardHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .revokeButton {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(22px * 0.9);
+      }
+
+      .cardStatus {
+        padding: calc(10px * 0.9);
+        border-radius: 10px;
+        background-color: var(--profile-dropdown-color);
+        color: #00CC73;
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(22px * 0.9);
+      }
+
+      .cardStatusFalse {
+        padding: calc(10px * 0.9);
+        border-radius: 10px;
+        background-color: var(--my-consultation-card-status);
+        color: #6A6A6A;
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(22px * 0.9);
+      }
+    }
+
+    .employeeInfo {
+      display: flex;
+      flex-direction: row;
+      gap: calc(20px * 0.9);
+      margin-bottom: calc(26px * 0.9);
+
+      .employeeImage{
+        width: 107px;
+        height: 107px;
+        border-radius: 50%;
+      }
+
+      .employeeTextCard {
+        display: flex;
+        flex-direction: column;
+        gap: calc(15px * 0.9);
+
+        .employeeSubRole {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: calc(18px * 0.9);
+          color: #808080;
+        }
+
+        .employeeProfileLink {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: calc(18px * 0.9);
+          color: #00CC73;
+          text-decoration: underline;
+        }
+
+        .employeeFIO {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: calc(22px * 0.9);
+          color: var(--text-color);
+        }
+      }
+    }
+
+    .cardDiscipline {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(24px * 0.9);
+      margin-bottom: calc(23px * 0.9);
+      color: var(--text-color);
+    }
+    .cardFooter {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(18px * 0.9);
+      color: #808080;
+    }
+
+    &.disabled {
+      opacity: 0.36;
+    }
+  }
+}
+
+@media (max-width: 475px) {
+  .myConsultationCard {
+    padding: 20px;
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    background-color: var(--profile-card-color);
+    display: flex;
+    flex-direction: column;
+
+    .cardDate {
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      flex-direction: column;
+
+      .date {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(36px * 0.9);
+        color: var(--text-color);
+      }
+      margin-bottom: 6px;
+    }
+
+    .interval {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(22px * 0.9);
+      margin-bottom: calc(23px * 0.9);
+      color: var(--text-color);
+    }
+
+    .employeePart {
+      padding: calc(20px * 0.9) calc(21px * 0.9) calc(20px * 0.9) calc(14px * 0.9);
+      width: auto;
+      height: auto;
+      background-color: var(--my-consultation-card-inner);
+      border-radius: 10px;
+      margin-bottom: calc(23px * 0.9);
+    }
+
+    .contacts {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(18px * 0.9);
+      color: #808080;
+    }
+
+    .employeeMailLink {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(18px * 0.9);
+      color: #00CC73;
+      text-decoration: underline;
+    }
+
+    .cardHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .revokeButton {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(22px * 0.9);
+      }
+
+      .cardStatus {
+        padding: calc(10px * 0.9);
+        border-radius: 10px;
+        background-color: var(--profile-dropdown-color);
+        color: #00CC73;
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(22px * 0.9);
+      }
+
+      .cardStatusFalse {
+        padding: calc(10px * 0.9);
+        border-radius: 10px;
+        background-color: var(--my-consultation-card-status);
+        color: #6A6A6A;
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(22px * 0.9);
+      }
+    }
+
+    .employeeInfo {
+      display: flex;
+      flex-direction: row;
+      gap: calc(20px * 0.9);
+      margin-bottom: calc(26px * 0.9);
+
+      .employeeImage{
+        width: 107px;
+        height: 107px;
+        border-radius: 50%;
+      }
+
+      .employeeTextCard {
+        display: flex;
+        flex-direction: column;
+        gap: calc(15px * 0.9);
+
+        .employeeSubRole {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: calc(18px * 0.9);
+          color: #808080;
+        }
+
+        .employeeProfileLink {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: calc(18px * 0.9);
+          color: #00CC73;
+          text-decoration: underline;
+        }
+
+        .employeeFIO {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: calc(22px * 0.9);
+          color: var(--text-color);
+        }
+      }
+    }
+
+    .cardDiscipline {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(24px * 0.9);
+      margin-bottom: calc(23px * 0.9);
+      color: var(--text-color);
+    }
+    .cardFooter {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(18px * 0.9);
+      color: #808080;
+    }
+
+    &.disabled {
+      opacity: 0.36;
+    }
+  }
+}
+
+
+@media (max-width: 365px) {
+  .myConsultationCard {
+    padding: 20px;
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    background-color: var(--profile-card-color);
+    display: flex;
+    flex-direction: column;
+
+    .cardDate {
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      flex-direction: column;
+
+
+      .date {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(36px * 0.9);
+        color: var(--text-color);
+      }
+      margin-bottom: 6px;
+    }
+
+    .interval {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(22px * 0.9);
+      margin-bottom: calc(23px * 0.9);
+      color: var(--text-color);
+    }
+
+    .employeePart {
+      padding: calc(20px * 0.9) calc(21px * 0.9) calc(20px * 0.9) calc(14px * 0.9);
+      width: auto;
+      height: auto;
+      background-color: var(--my-consultation-card-inner);
+      border-radius: 10px;
+      margin-bottom: calc(23px * 0.9);
+    }
+
+    .contacts {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(18px * 0.9);
+      color: #808080;
+    }
+
+    .employeeMailLink {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(18px * 0.9);
+      color: #00CC73;
+      text-decoration: underline;
+    }
+
+    .cardHeader {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 10px;
+
+      .revokeButton {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(22px * 0.9);
+      }
+
+      .cardStatus {
+        padding: calc(10px * 0.9);
+        border-radius: 10px;
+        background-color: var(--profile-dropdown-color);
+        color: #00CC73;
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(22px * 0.9);
+      }
+
+      .cardStatusFalse {
+        padding: calc(10px * 0.9);
+        border-radius: 10px;
+        background-color: var(--my-consultation-card-status);
+        color: #6A6A6A;
+        font-family: Stem;
+        font-weight: 500;
+        font-size: calc(22px * 0.9);
+      }
+    }
+
+    .employeeInfo {
+      display: flex;
+      flex-direction: column;
+      gap: calc(20px * 0.9);
+      margin-bottom: calc(26px * 0.9);
+
+      .employeeImage{
+        width: 107px;
+        height: 107px;
+        border-radius: 50%;
+      }
+
+      .employeeTextCard {
+        display: flex;
+        flex-direction: column;
+        gap: calc(15px * 0.9);
+
+        .employeeSubRole {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: calc(18px * 0.9);
+          color: #808080;
+        }
+
+        .employeeProfileLink {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: calc(18px * 0.9);
+          color: #00CC73;
+          text-decoration: underline;
+        }
+
+        .employeeFIO {
+          font-family: Stem;
+          font-weight: 500;
+          font-size: calc(22px * 0.9);
+          color: var(--text-color);
+        }
+      }
+    }
+
+    .cardDiscipline {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(24px * 0.9);
+      margin-bottom: calc(23px * 0.9);
+      color: var(--text-color);
+    }
+    .cardFooter {
+      font-family: Stem;
+      font-weight: 500;
+      font-size: calc(18px * 0.9);
+      color: #808080;
+    }
+
+    &.disabled {
+      opacity: 0.36;
+    }
+  }
+}

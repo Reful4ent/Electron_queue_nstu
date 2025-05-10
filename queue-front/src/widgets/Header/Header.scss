@@ -47,6 +47,22 @@
     justify-content: center;
     gap: 20px;
 
+    .headerItemsButtons{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .headerItemsButtonsNonAuth{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
     .select {
       min-width: 65px;
       
@@ -98,4 +114,21 @@
   -moz-box-shadow: 0px 0px 6px 4px rgba(34, 60, 80, 0.2);
   box-shadow: 0px 0px 6px 4px rgba(34, 60, 80, 0.2);
   opacity: 0.7;
+}
+
+
+@media (max-width: 1080px) {
+  .header{
+    padding: 0 25px;
+  }
+}
+
+@media (max-width: 475px) {
+  .header{
+    .headerItems{
+      .headerItemsButtons{
+        display: none;
+      }
+    }
+  }
 }

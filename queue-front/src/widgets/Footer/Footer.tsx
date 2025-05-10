@@ -19,9 +19,9 @@ export const Footer: FC = ({}) => {
           <a className="contact" href="mailto:e-queue@ciu.nstu.ru">e-queue@ciu.nstu.ru</a>
         </div>
       </div>
-        <div className="linkContainer">
-          <Link to={'https://www.nstu.ru/'} className={'link'}>Портал НГТУ</Link>
-        </div>
+      <div className="linkContainer">
+        <Link to={'https://www.nstu.ru/'} className={'link'}>Портал НГТУ</Link>
+      </div>
     </div>
   )
 }

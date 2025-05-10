@@ -1,5 +1,5 @@
 .containerDeansConsultations {
-  padding: 40px 139px;
+  padding: 40px 40px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -67,5 +67,36 @@
     gap: 26px;
     flex-direction: column;
     position: relative;
+  }
+}
+
+
+@media (max-width: 1080px) {
+  .containerDeansConsultations {
+    padding: 50px 25px;
+  }
+}
+
+@media (max-width: 475px) {
+  .containerDeansConsultations {
+    padding: 50px 25px;
+    .containerDeansHead {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+
+      .consultationMeHeadSearch {
+        width: 404px;
+        height: 45px;
+      }
+
+      .consultationDeansHeadText {
+        font-family: Stem;
+        font-weight: 500;
+        font-size: 30px;
+        color: var(--text-color);
+      }
+    }
   }
 }

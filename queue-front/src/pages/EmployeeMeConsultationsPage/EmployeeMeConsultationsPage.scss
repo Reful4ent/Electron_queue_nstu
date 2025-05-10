@@ -310,6 +310,13 @@
   }
 }
 
+@media (max-width: 475px) {
+  .modalStudentsListItem {
+    flex-direction: column;
+    align-items: start !important;
+  }
+}
+
 .cancel-consultation-button {
   color: #333;
   height: 40px;
@@ -395,6 +402,18 @@
     .consultation-dates-container {
       display: flex;
       flex-direction: column;
+    }
+    .consultationMeHead {
+      margin-top: 36px;
+    }
+  }
+}
+
+@media (max-width: 475px) {
+  .consultationMeContainer {
+    padding: 50px 25px;
+    .consultationMeHead {
+      font-size: 30px;
     }
   }
 }

@@ -627,8 +627,11 @@
   .ant-select-selector {
     overflow-y: scroll;
     .ant-select-selection-wrap {
+      gap: 8px;
       .ant-select-selection-overflow {
+        gap: 8px;
         .ant-select-selection-overflow-item {
+          gap: 8px;
           margin-right: 10px;
           .ant-select-selection-item {
             background-color: var(--ant-select-selection-item) !important
@@ -654,12 +657,104 @@
   }
 }
 
+@media (max-width: 1080px) {
+  .consultationCreateContainer{
+    .consultationCreateHead {
+      margin-top: 36px;
+    }
+  }
+}
+
+.consultationCreateCol{
+  padding: {
+    left: 5px !important;
+    right: 5px !important;
+  };
+}
+
 @media (max-width: 575px) {
   .consultationCreateContainer {
+    .dateTimeRow, .locationRow {
+      width: 100%;
+      margin: 0 0 !important;
+    }
     .locationRow {
       display: flex;
       flex-direction: column;
       gap: 10px;
+    }
+  }
+  .consultationCreateCol{
+    padding: {
+      left: 0 !important;
+      right: 0 !important;
+    };
+  }
+}
+
+@media (max-width: 475px) {
+  .consultationCreateContainer {
+    padding: 50px 25px;
+    .consultationCreateHead {
+      font-size: 30px;
+    }
+  }
+}
+
+
+@media (max-width: 475px) {
+  .dateRangePickerForm {
+    .dateRangePickerFormInner {
+      .date-picker-wrapper {
+        .date-fields-container {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-direction: column;
+          gap: 10px;
+
+          .date-field {
+            width: calc(100% - 32px);
+            padding: 15px 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+@media (max-width: 375px) {
+  .ant-picker-dropdown{
+    position: absolute;
+    width: calc(100% - 120px);
+    .ant-picker-panel-container.ant-picker-date-panel-container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      .ant-picker-panel-layout {
+          div {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            .ant-picker-panel {
+              .ant-picker-date-panel {
+                .ant-picker-header {
+                  flex-direction: row;
+                }
+              }
+            }
+          }
+        }
+      }
+  }
+  .ant-picker-cell {
+    .ant-picker-cell-inner {
+      flex: 1;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

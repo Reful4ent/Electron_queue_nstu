@@ -330,7 +330,7 @@ export const ConsultationCreatePage: FC = () => {
                                 </Form.Item>
                                 
                                 <Row className="dateTimeRow" gutter={10}>
-                                    <Col xs={24} sm={8}>
+                                    <Col xs={24} sm={8} className={'consultationCreateCol'}>
                                         <Form.Item 
                                             name="date" 
                                             className="formItem datePickerItem"
@@ -354,7 +354,7 @@ export const ConsultationCreatePage: FC = () => {
                                             />
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={24} sm={8}>
+                                    <Col xs={24} sm={8} className={'consultationCreateCol'}>
                                         <Form.Item 
                                             name="time" 
                                             className="formItem timePickerItem"
@@ -382,7 +382,7 @@ export const ConsultationCreatePage: FC = () => {
                                             />
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={24} sm={8}>
+                                    <Col xs={24} sm={8} className={'consultationCreateCol'}>
                                         <Form.Item 
                                             name={['duration']}
                                             className="formItem durationItem"
@@ -403,8 +403,8 @@ export const ConsultationCreatePage: FC = () => {
                                     </Col>
                                 </Row>
 
-                                <Row className="locationRow" gutter={10}>
-                                    <Col xs={24} sm={12}>
+                                <Row className="locationRow" gutter={10} >
+                                    <Col xs={24} sm={12} className={'consultationCreateCol'}>
                                         <Form.Item 
                                             name="corps" 
                                             className="formItem corpsItem"
@@ -427,7 +427,7 @@ export const ConsultationCreatePage: FC = () => {
                                             <RightOutlined className="select-arrow" />
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={24} sm={12}>
+                                    <Col xs={24} sm={12} className={'consultationCreateCol'}>
                                         <Form.Item 
                                             name="audience" 
                                             className="formItem audienceItem"

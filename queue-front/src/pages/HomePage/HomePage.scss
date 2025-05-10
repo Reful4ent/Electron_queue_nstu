@@ -26,13 +26,21 @@
 
 @media (max-width: 1080px) {
   .containerHome {
-    padding: 50px 50px;
+    padding: 50px 25px;
     position: relative;
 
     .cardContainer {
       display: flex;
       flex-direction: column;
       position: relative !important;
+    }
+  }
+}
+
+@media (max-width: 475px) {
+  .containerHome {
+    .headerText {
+      font-size: 30px;
     }
   }
 }

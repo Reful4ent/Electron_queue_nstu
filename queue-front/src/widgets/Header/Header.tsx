@@ -20,7 +20,7 @@ export interface HeaderProps {
 
 type CustomIconComponentProps = GetProps<typeof Icon>;
 
-const RussianFlagIcon = (props: Partial<CustomIconComponentProps>) => (
+export const RussianFlagIcon = (props: Partial<CustomIconComponentProps>) => (
   <Icon component={RussianFlagSvg} {...props} />
 );
 const ExitIcon = (props: Partial<CustomIconComponentProps>) => (
@@ -62,9 +62,11 @@ export const Header: FC = ({}) => {
         <div className={'header'}>
             <LogoIcon className='headerItem' link={'/home'}/>
             <div onClick={() => {}} className={'headerItems'}>
-                <ThemeButton/>
-               
-                <Select disabled className={'select headerItem'} defaultValue={'russian'} options={[{value: 'russian', label: <RussianFlagIcon />}]} />
+                <div className={auth?.jwt ? 'headerItemsButtons' : 'headerItemsButtonsNonAuth'}>
+                    <ThemeButton/>
+
+                    <Select disabled className={'select headerItem'} defaultValue={'russian'} options={[{value: 'russian', label: <RussianFlagIcon />}]} />
+                </div>
                     
                 {!auth?.jwt && location?.pathname?.split('/')?.[1] !== 'auth' &&
                     <Button className={'exitButton headerItem'} onClick={() => {
