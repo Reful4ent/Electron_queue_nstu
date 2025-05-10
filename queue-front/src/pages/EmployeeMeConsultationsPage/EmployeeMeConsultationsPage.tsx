@@ -88,7 +88,7 @@ export const EmployeeMeConsultationsPage: FC = () => {
                 }
             }
             );
-            
+            console.log(myEmployeeConsultationsData.data)
             let collapseConsultationsItems = [];
         let idx = 1;
             
@@ -131,18 +131,31 @@ export const EmployeeMeConsultationsPage: FC = () => {
                                             </div>
                                             <div className="date-value">
                                                 {formattedDate}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <Button
+                                        <div className="consultation-date-info">
+                                            <div className="date-day">
+                                                Группы:
+                                            </div>
+                                            <div className="date-value">
+                                                {!consultationItem.groups || !consultationItem.groups.length
+                                                    ? 'Для всех'
+                                                    : consultationItem.groups
+                                                        .map((group) => group.title).join(', ')
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <Button
                                             className="consultation-button"
                                             onClick={() => {
                                                 handleConsultation(consultationItem, item)
                                                 setCurrentItem(item)
                                             }}
-                                    >
-                                        Узнать записавшихся
-                                    </Button>
-                                </div>
+                                        >
+                                            Узнать записавшихся
+                                        </Button>
+                                    </div>
                                 );
                             })}
                         </div>

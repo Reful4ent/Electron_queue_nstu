@@ -56,6 +56,9 @@ export interface IConsultation {
         id: number
         title: string;
     };
+    groups: {
+        title: string;
+    }[];
     isOffByEmployee: boolean;
     corps: string;
     audience: string;
