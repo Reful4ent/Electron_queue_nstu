@@ -26,6 +26,7 @@ export const RecordToEmployeePage: FC = () => {
     const [currentEmployee, setCurrentEmployee] = useState<IEmployee | null>()
     const [consultationsList, setConsultationsList] = useState<ConsultationItem[]>([])
     const [userData, setUserData] = useState<IUser | null>(null);
+    const currentPage = window.location.pathname.split('/')[2];
     const [dateRange, setDateRange] = useState<[dayjs.Dayjs, dayjs.Dayjs]>([
         dayjs(),
         dayjs().add(1, 'month')
@@ -39,8 +40,8 @@ export const RecordToEmployeePage: FC = () => {
             link: '/'
         },
         {
-            title: 'Консультации',
-            link: '/consultations/employees'
+            title: currentPage == 'deans' ? 'Деканат' : 'Консультации',
+            link: currentPage == 'deans' ? '/consultations/deans' : '/consultations/employees'
         },
         {
             title: `${currentEmployee?.surname} ${currentEmployee?.name[0]}. ${currentEmployee?.lastname ? currentEmployee?.lastname[0] + '.' : ''}`
@@ -65,7 +66,6 @@ export const RecordToEmployeePage: FC = () => {
             }
         )
         setUserData(myData.data)
-        console.log(myData.data)
     },[])
 
     const onDateRangeChange = (dates: any) => {
@@ -159,7 +159,7 @@ export const RecordToEmployeePage: FC = () => {
     return (
         <div className={'consultationMeContainer'}>
             <Breadcrumbs items={itemsForBreadcrumbs}/>
-            <p className={'consultationMeHead'}>Консультации</p>
+            <p className={'consultationMeHead'}>{currentPage == 'deans' ? 'Запись в деканат' : 'Запись на консультацию'}</p>
             <div className={'consultationMeContent'}>
                 <div className={'profileCard'}>
                     <Image className={'profileImage'} width={128} height={128} preview={false}
